@@ -1,0 +1,1259 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{geometry}
+\usepackage{charter}
+\usepackage{xcolor}
+\usepackage{enumerate}
+\usepackage{float}
+\newcommand\todo[1]{\textcolor{red}{#1}}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{indentfirst}
+\setlength{\parindent}{0em}
+\captionsetup[table]{aboveskip=10pt}
+\captionsetup[table]{belowskip=10pt}
+%\usepackage{indentfirst}
+\linespread{1.25}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+%\raggedright
+\begin{document}
+
+
+\title{Java Smart Phone Group Project \\ Compile Project Requirements }
+\author{\begin{tabular}{l l l}
+  Team Name:      & Brynhildr      & \\
+  Project Name:   &  Events Manager & \\
+  Group Member: & Shuqin Ye	 & shuqiny \\
+  			   & Liqin Shan   & liqins \\
+  			   & Kai Qian 	 & kaiq \\
+\end{tabular}}
+\date{}
+\maketitle
+
+
+\tableofcontents
+\newpage
+
+
+\noindent\textbf{Description: }
+This app notifies users of events that are happening nearby. It will track the user's
+location and displays all events in Google map API. Organizers upload events to database and the users can refresh the event list by scrolling down.
+Users can register selected events and the app can manage the event list for the users. For example, it can send reminders when the event date comes closer or when something changes about the event information.
+The main purpose for the app is to inform users of events happening around esp. when they don't know what to do during weekends or holidays.
+
+\section{User Story}
+
+\subsection{For Event Seekers}
+
+
+Qin Shan is a Chinese student in Carnegie Mellon University and just moved to Pittsburgh. He is a graduate student with Information Networking Institute studying Master of Information Technology. He is an out-going person and loves to go to parties with friends. He also loves getting to know new people from different cultures and countries. However, a majority of his classmates are Chinese and he only knows people from his own country. It's Halloween tomorrow and he really wants to get to know more local people and participate in a Halloween party, which he has heard of in China but never had a chance to attend one. Course load of his program is very heavy and everybody almost has no leisure time. All his friends are too focused on studies and have no interest in going with him. But the more important problem is that he doesn't know where to go to attend such a party.
+
+\vspace{1em}
+Just at the right time, one of his friends recommends the app Event Manager to him, telling him that he can use it to browse events in the city, register himself if interested. He's very excited and downloads the app. First, he creates a user profile with his name, email, phone number and other necessary personal information. He uploads a very handsome picture as his profile picture. Then he logs in with his credentials and cannot wait to explore what information he can get from the app.
+
+\vspace{1em}
+He is presented with a list of event categories and is asked to select which ones interest him most and how far he is willing to go to attend events. He selects three categories: Festival Parties, Food Tasting, Wine Tasting and selects ``within 10 miles'' as the event venue range that he can accept. Upon clicking show events, he sees a calendar's weekly view of all event names listed for every single day. Two events catch his attention immediately: ``Qin Qian's House Halloween Party'' on Oct 31st, 8pm and ``Weikan Dan's Haunted House Party'' on Oct 30th, 9pm. He refers to his own schedule to see which time he's free. He found out that he is actually free for both dates and times. He's very happy and clicks the event 'Qin Qian's House Halloween Party', a drop down menu appears with 4 options: Register, Invite Friends, Contact Organizer and Waitlist Event. He clicks ``Register'' without hesitation. A window pops up and says: You information will be sent to the event organizer as a confirmation, would you like to proceed? He clicks yes and does exactly the same thing for ``Weikan Dan's Haunted House Party''. Although he sometimes gets scared easily, but he could not afford to miss this opportunity to experience a Haunted House Party in US. 
+
+\vspace{1em}
+Then he happily waits until the event date comes. But one day he gets a push notification from Event Manager app that ``Weikan Dan's Haunted House Party'' has been modified. He opens the app and sees that the venue of the event has been changed to a different address. He notes it down and realizes that he doesn't know whether he needs to dress up like what people do in Halloween parties. He clicks ``My Registered Events'' and then ``Contact Event Organizer'', asking what he should wear. He receives the feedback within 15min through the Message Center of the Event Manager app that he should be dressed up! Now he is really excited!
+He goes to the party and really enjoys it! He comes to know a lot of other people from America, Germany, Singapore and so on. He has a great night, although really scared!
+
+\subsection{For Event Organizers}
+Weikan Dan is a American born Chinese who is a Pittsburgh citizen. For some reason his favorite festival is Halloween and organizes Halloween party or haunted house party every year, hoping to know more international people and also help international students in the local universities get in touch with local culture. In 2015, he starts to use Event Manager app, which is created by 3 CMU students and he really likes it after a while. Halloween is coming and this year he thinks of hosting a ``Haunted House Party'' for students.
+
+
+After registering and logging into the app Event Manager, he clicks ``Launch Events'', and fills in all necessary information such as Event name, Venue, Date and time, Description, Dress code, Target audience. He also uploads a very well-designed poster in order to attract university students.
+
+
+After about a week, he realizes that the venue he originally books is not available anymore, so he reopens the app after one week and goes to ``Manage Events'' => ``My launched events'' => ``Modify'', to modify the venue information. The app automatically broadcasts the change by sending push notifications to all registered participants. He also checks his Message Center. He answers all enquires and one of them is from Qin Shan, who is from the same town as his parents. He's excited to meet him.
+
+
+He meets Qin Shan at the event and they have a wonderful time together! They discuss the app Event Manager and they both really love it! It's the best app ever!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%
+%%%%	Section: High Level Overview
+%%%% 
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{High Level Overview}
+There are hundreds of events that are happening in a city everyday. Sometimes it can be really difficult for people to seek relative events they want to participate and for event organizers to promote their events to target audience. Our app Event Manager will bring event seekers and organizers to the same platform. Event seekers can view and select events to participate and organizers can post and broadcast their events. 
+
+\subsection{Sub-problems for Two Types of User}
+\subsubsection{Event Seekers: }
+There are always times when people want to participate an event in order to achieve certain goals, be it to know more people, to pass time, to have fun or to learn something together. Especially when one is new to a city, this becomes extremely difficult without knowing anybody who can provide them with useful information. If this happens to you and when information can be limited and not always goes to the right target audience:
+
+\begin{itemize}
+	\item How would you know what are happening around you?
+	\item How would you participate events that you are interested in?
+	\item Even if you find a list of events to participate, how would you organize and manage them?
+	\item What if you find something interesting but not sure whether you can attend it and want to save it for later?
+\end{itemize}
+
+\subsubsection{Event Organizers: }
+Now let's look at the same problem from the organizers' point of view. Imagine tomorrow is Halloween, you just moved to Pittsburgh and would like to organise a Halloween party at your place in order to know more people.
+
+\begin{itemize}
+	\item How would you inform the right people?
+	\item How would you have enough people to participate so that everybody will have fun?
+	\item How do you manage the list of participants?
+	\item What if you want to change the event information, how would you inform all the confirmed participants?
+\end{itemize}
+
+\subsection{Context Diagram}
+
+Our app can help you solve all the problems, as shown in Figure \ref{fig:ContextDiagram}, illustrating how event seekers and organizers can interact with the app to achieve their goals.
+
+ \begin{figure}[H]
+\includegraphics[width=1.0\textwidth]{Pictures/ContextDiagram.jpg}
+  \caption{Context Diagram for App Event Manager)}
+  \label{fig:ContextDiagram}
+   \vspace{-0.6cm}
+ \end{figure}
+
+
+\subsection{Product Vision}
+\subsubsection{For Event Seekers}
+	An event seeker can easily search for any events he is interested in through this app. Moreover, he can easily register for the event with this app. A calendar view is also provided in our app so that one can easily view and organize his events. Another easy-using feature is also provided in this app that a waitlist which can hold the event which one has not decided to attend or not so that he can decide it later.
+\subsubsection{For Event Organizers}
+	For an event organizer, he definitely want the right people to attend his event. Our app can help so that he can broadcast his event. He can also decide how many people that can attend how how is the requirement of the attenders. Besides, our app also provides a functionality that the organizer can push the notifications to all participants.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%
+%%%%	Section: Estimated Andorid Features
+%%%% 
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Estimated Andorid Features}
+\begin{itemize}
+	\item Location
+	\item Touchscreen
+	\item Web Services
+	\item SQL Lite DB
+	\item Third-Party API: Google Calendar
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%
+%%%%	Section: Page Flows
+%%%% 
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Page Flows}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Subsection: Detailed User activities
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Detailed User activities}
+\begin{enumerate}
+	\item View Profile
+	\begin{enumerate}
+		\item Profile page with edit option
+	\end{enumerate}
+	
+	\item View Events
+	\begin{enumerate}
+		\item calendar with filter (event, location)
+		\begin{enumerate}
+			\item register event
+			\item invite friend
+			\item contact organizer
+			\item add to event waitlist
+		\end{enumerate}
+	\end{enumerate}
+	
+	\item Launch Events
+	\begin{enumerate}
+		\item Event name
+		\item Venue
+		\item Date and time
+		\item Description
+		\item Dress code
+		\item Upload poster
+		\item Target audience
+		\item Maximum participants
+	\end{enumerate}
+	
+	\item Manage Events
+	\begin{enumerate}
+		\item My launched events
+		\begin{enumerate}
+			\item list view
+			\begin{enumerate}
+				\item view participants
+				\item modify event information
+				\item delete event
+				\item broadcast event
+				\item invite friends
+			\end{enumerate}
+		\end{enumerate} 
+		
+		\item My registered events
+		\begin{enumerate}
+			\item list view
+			\begin{enumerate}
+				\item unregister
+				\item invite friends
+				\item contact organizer
+			\end{enumerate}
+		\end{enumerate} 
+		
+		\item Waitlisted events
+		\begin{enumerate}
+			\item list view
+			\begin{enumerate}
+				\item unlike
+				\item register this event
+			\end{enumerate}
+		\end{enumerate} 
+	\end{enumerate}
+	
+	\item Inbox/Message Center
+	
+	\item Settings
+	\begin{enumerate}
+		\item Push notification enable?
+		\item Share my location?
+		\item Frequency of update?
+	\end{enumerate}
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Subsection: User Flow Diagram
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{User Flow Diagram}
+\begin{figure}[H]
+\includegraphics[width=1.0\textwidth]{Pictures/ViewEventActivity(MainActivity).png}
+  \caption{View Event Activity}
+  \label{fig:ViewEventActivity}
+   \vspace{-0.6cm}
+ \end{figure}
+ 
+\begin{figure}[H]
+\includegraphics[width=1.0\textwidth]{Pictures/ManageEvent(Launch).png}
+  \caption{Manage Event Activity (Launched Events)}
+  \label{fig:ManageEventActivity(Launch)}
+   \vspace{-0.6cm}
+ \end{figure}
+ 
+ \begin{figure}[H]
+\includegraphics[width=1.0\textwidth]{Pictures/ManageEvent(Register).png}
+  \caption{Manage Event Activity (Registered Events)}
+  \label{fig:ManageEventActivity(Register)}
+   \vspace{-0.6cm}
+ \end{figure}
+ 
+ \begin{figure}[H]
+\includegraphics[width=1.0\textwidth]{Pictures/ManageEvent(Waitlist).png}
+  \caption{Manage Event Activity (Waitlist Events)}
+  \label{fig:ManageEventActivity(Waitlist)}
+   \vspace{-0.6cm}
+ \end{figure}
+ 
+  \begin{figure}[H]
+\includegraphics[width=1.0\textwidth]{Pictures/LaunchEvent.png}
+  \caption{Manage Event Activity (Launch Events)}
+  \label{fig:ManageEventActivity(LaunchEvent)}
+   \vspace{-0.6cm}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%
+%%%%	Section: Use Cases
+%%%% 
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Use Cases}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: User Register
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{User Register}
+\label{User Register}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID: USR-RGST		&	Use Case Name: User Register \\
+	\hline
+	Primary Actor(s)			&	All users of Events Manager\\
+	\hline
+	Secondary Actor(s)			&	N/A\\
+	\hline
+	Description				&	Request user name, password, email, gender, phone number, age and upload profile picture and do the registration\\
+	\hline
+	Preconditions				&	User registration display dialog is available and waiting for user input\\
+	\hline
+	Normal Flow of Events		& 1. User enters user name in name field textbox,  then tabs or clicks into password field to enter password, then tabs or clicks into email field to enter email, then tabs or clicks into gender field to enter gender, then tabs or clicks into phone number field to enter phone number, then tabs or clicks into age field to enter age, then upload profile picture in image field \\
+ 							& 2. User clicks Register''\\
+	\hline
+	Postconditions:				& After step 2, the main Events Manager display appears\\
+	\hline
+	Frequency of Use:			& Low\\
+	\hline
+	Alternative Flows:			& User can click cancel within the register dialog display to cancel or clear a misspelled user name, password, email, gender, phone number and profile picture\\
+	\hline
+	Exceptions:				& User does not enter data in any or all dialog box and is given a message that all fields need to contain information or has entered an invalid data\\
+	\hline
+	Assumptions:				& Events Manager is up and running, user is the first time using the APP or want to register for another account\\
+	\hline
+	Issues:					& TBD\\
+	\hline
+	Source:					& TBD \\
+	\hline
+	Includes:					& TBD \\
+	\hline
+	Associated Requirements:		& TBD\\
+	\hline
+\end{tabular}
+\end{table}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Authenticate User
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Authenticate User}
+\label{Authenticate User}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& AUTH-USR\\
+	\hline
+	Use Case Name: 	& Authenticate User\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Request user name and password and authenticates user into Events Manager\\
+	\hline
+	Preconditions		& User login display dialog is available and waiting for user input\\
+	\hline
+	Normal Flow of Events:	& 1. User enters user ID in ID field textbox and then tabs or clicks into password field and enters password\\	
+						& 2. User clicks ok\\
+	\hline
+	Postconditions:			& After step 2, the main Events Manager display appears\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can click cancel within the login dialog display to cancel or clear a misspelled ID or password\\
+	\hline
+	Exceptions:			& User does not enter data in the ID and password dialog box and is given a message that all fields need to contain information or has entered an invalid ID or password\\
+	\hline
+	Assumptions:			& Events Manager is up and running, user has obtained a valid ID and password from the system administrator.\\
+	\hline
+	Issues:				& User never has id or password\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Register Event
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Register Event}
+\label{Register Event}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& RGST-EVNT\\
+	\hline
+	Use Case Name: 	& Register events\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Learn the details of the the event and register the event, or invite friends, contact the organizer or list the event into the waitlist\\
+	\hline
+	Preconditions		& User has choosen the category and all related events have been shown\\
+	\hline
+	Normal Flow of Events:	& 1. User learns the details of the event\\
+                        & 2. Events Manager displays the following buttons\\
+			&   	a. Register an Event\\	
+			&   	b. Invite Friends\\	
+			&   	c. Contact Organizer\\	
+			&   	d. Watch\\	
+						& 3. User selects Register an Event\\
+& 4. Events Manager displays the message showing that the user has successfully register the event if there is still vacancy\\
+	\hline
+	Postconditions:			& After step 4, the button is disabled. User can not press the button again\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& N/A\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& User has an event which he wants to attend and has not registered it\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Invite Frient
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Invite Friend}
+\label{Invite Friend}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& INVT-FRNDS\\
+	\hline
+	Use Case Name: 	& Invite Friends\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Invite other friends to come to the event together\\
+	\hline
+	Preconditions		& User has choose the category and all related events have been shown\\
+	\hline
+	Normal Flow of Events:	& 1. User learns the details of the event\\             	
+						& 2. User selects Register an Event\\
+& 3. Events Manager displays people the user can send invitations to\\
+& 4. User choose the people and send the invitations\\
+	\hline
+	Postconditions:			& After step 4, user stays at the invitation page\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose cancel to not send invitations\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& There are friends in the list which the user can send invitations\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Contact Organizer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Authenticate User}
+\label{Authenticate User}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& CNCT-OGNZ\\
+	\hline
+	Use Case Name: 	& Contact Organizer\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Contact the organizer about the details about the event\\
+	\hline
+	Preconditions		& User has chosen the category and all related events have been shown\\
+	\hline
+	Normal Flow of Events:	& 1. User learns the details of the event\\
+						& 2. User selects Contact Organizer\\
+& 3. Events Manager shows the page the user can edit text and send it to the organizer\\
+& 4. User press the send button and send the letter\\
+& 5. User gets the confirmation message\\
+	\hline
+	Postconditions:			& After step 5, user returns to the event detail page\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose cancel to not send the letter\\
+	\hline
+	Exceptions:			& The event is not available any longer\\
+	\hline
+	Assumptions:			& The event is still available and there are still positions the user can attend\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Watch Event
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Watch Event}
+\label{Watch Event}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& WTCH-EVNT\\
+	\hline
+	Use Case Name: 	& Watch the event\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& The user can put the event into the waitlist so that user can make decision in the future\\
+	\hline
+	Preconditions		& User has chosen the category and all related events have been shown\\
+	\hline
+	Normal Flow of Events:	& 1. User learns the details of the event\\
+						& 2. User selects Watch\\
+& 3. The Watch button is on\\
+& 4. If the user does not want to watch the event, he can press the button again and the button is off\\
+	\hline
+	Postconditions:			& After step 4, if the Watch button is on, then the event is put in waitlist. If the Watch button is off, the event is removed from the waitlist\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& N/A\\
+	\hline
+	Exceptions:			& The event is not available any longer\\
+	\hline
+	Assumptions:			& The event is still available\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Launch Event
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Launch Event}
+\label{Launch Event}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& LNCH-EVNT\\
+	\hline
+	Use Case Name: 	& Launch Event\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Launch the event the user is going to have\\
+	\hline
+	Preconditions		& User has an event which is going to be launched\\
+	\hline
+	Normal Flow of Events:	& 1. User press the Launch Event button\\
+                        & 2. There shows the event launch page\\\	
+						& 3. User can type in the event, name, venue, date and time, description, dress code, target audience, maximum participants and upload the poster\\
+& 4. User press the Launch button\\
+	\hline
+	Postconditions:			& After step 4, user will have the confirmation message and the event is launched\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose cancel to cancel the launch\\
+	\hline
+	Exceptions:			& User does not type in the event's information and click the launch button\\
+	\hline
+	Assumptions:			& User has an event to launch\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: List Events
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{List Events}
+\label{List Events}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& LST-EVNT\\
+	\hline
+	Use Case Name: 	& List Events\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& List all events which have been launched\\
+	\hline
+	Preconditions		& User has launched a few events\\
+	\hline
+	Normal Flow of Events:	& 1. User press the My Launched Events button\\
+                        & 2. There shows the events which have been launched\\\	
+						& 3. User can view the number of participants and their information\\
+& 4. There are a few buttons which user can use\\
+&   a. Modify the Event\\	
+&   b. Delete the Event\\	
+&   c. Broadcast the Event\\	
+&   d. Invite Friends\\
+& 5. User chooses to modify the event\\
+& 6. User enters the information page of the event where user can modify the event's information\\
+& 7. After modification, user press the Finish button\\
+
+
+	\hline
+	Postconditions:			& After step 7, user successfully modifies the event\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose return button to return to the previous page\\
+	\hline
+	Exceptions:			& User delete important information, like time and so on and press the Finish button\\
+	\hline
+	Assumptions:			& User has some modifications to make\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Delete Event
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Delete Event}
+\label{Delete Event}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& DLT-EVNT\\
+	\hline
+	Use Case Name: 	& Delete Event\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Delete an event which has been launched\\
+	\hline
+	Preconditions		& User has launched a few events\\
+	\hline
+	Normal Flow of Events:	& 1. User press the My Launched Events button\\
+                        & 2. There shows the events which have been launched\\\	
+						& 3. User can view the number of participants and their information\\
+& 4. User chooses to delete an event\\
+& 5. User presses the ok button on the the confirmation message\\
+	\hline
+	Postconditions:			& After step 5, user successfully delete the event\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose return button to return to the previous page\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& User wants to delete an event and there are events in the launched list\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD\\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Broadcast an Event
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Broadcast an Event}
+\label{Broadcast an Event}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& BRDCST-EVNT\\
+	\hline
+	Use Case Name: 	& Broadcast an Event\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Broadcast an event which has been launched\\
+	\hline
+	Preconditions		& User has launched a few events\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the My Launched Events button\\
+                        & 2. There shows the events which have been launched\\\	
+						& 3. User can view the number of participants and their information\\
+& 4. User chooses to broadcast an event\\
+& 5. User presses the ok button on the the confirmation message\\
+	\hline
+	Postconditions:			& After step 5, user successfully broadcast the event\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose return button to return to the previous page\\
+	\hline
+	Exceptions:			& There are no friends in the broadcast list\\
+	\hline
+	Assumptions:			& User wants to broadcast an event and there are events in the launched list\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD\\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Invite Friends
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Invite Friends}
+\label{Invite Friends}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& INVT-FRNDS\\
+	\hline
+	Use Case Name: 	& Invite Friends\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Invite other friends to come to the event together\\
+	\hline
+	Preconditions		& User has launched a few events\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the My Launched Events button\\
+                        & 2. There shows the events which have been launched\\\	
+						& 3. User can view the number of participants and their information\\
+& 4. User chooses to broadcast an event\\
+& 5. User presses the ok button on the the confirmation message\\
+	\hline
+	Postconditions:			& After step5, user stays at the invitation page\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose cancel to not send invitations\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& There are friends in the list which the user can send invitations\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Unregister Event
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Unregister Event}
+\label{Unregister Event}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& UNRGSR-EVNT\\
+	\hline
+	Use Case Name: 	& Unregister Event\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Unregister an event which has been registered\\
+	\hline
+	Preconditions		& User has registered a few events, at least one\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the My Registered Events button\\
+                        & 2. There shows the events which have been registered\\\	
+						& 3. User can view event's details\\
+    & 4. There are two buttons user can use\\
+    &   a. Unregister the Event\\	
+&   b. Invite Friends\\
+& 4. User presses the Unregister the Event button\\
+& 5. User presses the ok button on the the confirmation message\\
+	\hline
+	Postconditions:			& After step 5, user successfully unregister the event\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose cancel button to not unregister the event\\
+	\hline
+	Exceptions:			& There are no registered event in the list\\
+	\hline
+	Assumptions:			& User wants to unregister an event and there are events in the registered list\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD\\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Invite Friends (Registered Events)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Invite Friends (Registered Events)}
+\label{Invite Friends (Registered Events)}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& INVT-FRNDS\\
+	\hline
+	Use Case Name: 	& Invite Friends\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Invite other friends to come to the event together\\
+	\hline
+	Preconditions		& User has launched a few events\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the My Registered Events button\\
+                        & 2. There shows the events which have been launched\\\	
+						& 3. User can view vent's details\\
+& 4. User presses the Invite Friends button\\
+& 5. User presses the ok button on the the confirmation message\\
+	\hline
+	Postconditions:			& After step5, user stays at the invitation page and invitations are sent\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose cancel to not send invitations\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& There are friends in the list which the user can send invitations\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Unwatch the event (Wailist)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Unwatch the event (Wailist)}
+\label{Unwatch the event (Wailist)}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& UNWTCH-EVNT\\
+	\hline
+	Use Case Name: 	& Unwatch the event\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& The user can remove the event from the waitlist if they do not want the pay attention to the event\\
+	\hline
+	Preconditions		& User does not want to pay attention to a certain event\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the My Waitlisted Events button. There are events which user selects to watch them for further decision\\
+    & 2. User learns the details of the event\\
+    & 3. There are three buttons user can choose\\
+    &   a. Unwatch the Event\\	
+        &   b. Register Event\\
+        &   c. Invite Friends\\
+						& 4. User selects Unwatch the Event button\\
+& 5. The event is removed from the waitlist\\
+	\hline
+	Postconditions:			& After step 3, user will not watch the event any longer\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& N/A\\
+	\hline
+	Exceptions:			& The event is not available any longer\\
+	\hline
+	Assumptions:			& The event is still available\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Register events (Wailist)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Register events (Wailist)}
+\label{Register events (Wailist)}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& RGST-EVNT\\
+	\hline
+	Use Case Name: 	& Register events\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Learn the details of the the event and register the event which is in the wiatlist\\
+	\hline
+	Preconditions		& User has an event in the waitlist and want to attend it\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the My Waitlisted Events button. There are events which user selects to watch them for further decision\\
+    & 2. User learns the details of the event\\
+						& 3. User selects Register the Event button\\
+& 4. Events Manager displays the message showing that the user has successfully register the event if there is still vacancy\\
+	\hline
+	Postconditions:			& After step 4, the button is disabled. User can not press the button again\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& N/A\\
+	\hline
+	Exceptions:			& The event is not available any longer or no events in the waitlist\\
+	\hline
+	Assumptions:			& User has an event which he wants to attend and has not registered it\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Invite Friends (Wailist)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Invite Friends (Wailist)}
+\label{Invite Friends (Wailist)}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& INVT-FRNDS\\
+	\hline
+	Use Case Name: 	& Invite Friends\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& Invite other friends to come to the event together\\
+	\hline
+	Preconditions		& User has a few events in the waitlist\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the My Waitlisted Events button\\
+       				   & 2. There are events which user selects to watch them for further decision\\
+    & 3. User learns the details of the event\\
+& 4. User presses the Invite Friends button\\
+& 5. User presses the ok button on the the confirmation message\\
+	\hline
+	Postconditions:			& After step5, user stays at the invitation page and invitations are sent\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& User can choose cancel to not send invitations\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& There are friends in the list which the user can send invitations\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Push Notification
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Push Notification}
+\label{Push Notification}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& PSH-NTFC\\
+	\hline
+	Use Case Name: 	& Push Notification\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& The user can choose whether to enable the Push Notification function\\
+	\hline
+	Preconditions		& N/A\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the Setting button.\\
+    & 2. There are three choices user can choose\\
+    &   a. Push Notification\\	
+        &   b. Share My Location\\
+        &   c. Frequency of Update\\
+						& 3. User press the Push Notification button\\
+	\hline
+	Postconditions:			& After step 3, if the button is on, user enables the Push Notification function. If the button is off, user disables the Push Notification function\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& N/A\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& N/A\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Share Location
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Share Location}
+\label{Share Location}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& SHR-LCTN\\
+	\hline
+	Use Case Name: 	& Share Location\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& The user can choose whether to share user's location\\
+	\hline
+	Preconditions		& N/A\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the Setting button.\\
+						& 2. User press the Share My Location button\\
+	\hline
+	Postconditions:			& After step 2, if the button is on, user will share his location. If the button is off, user will not share his location\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& N/A\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& N/A\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Section: Select Frequecy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!htbp]
+\centering
+\caption{Select Frequecy}
+\label{Select Frequecy}
+\begin{tabular}{ | l | p{11cm} | }
+	\hline
+	Use Case ID 		& SLT-FQCY\\
+	\hline
+	Use Case Name: 	& Select Frequecy\\
+	\hline
+	Primary Actor(s)	& All authorized users of Events Manager\\
+	\hline
+	Secondary Actor(s)	& N/A\\
+	\hline
+	Description		& The user can choose the frequency of events update\\
+	\hline
+	Preconditions		& N/A\\
+	\hline
+	Normal Flow of Events:	& 1. User presses the Setting button.\\
+						& 2. User type in the Frequency of Update in the text field\\
+	\hline
+	Postconditions:			& After step 3, user determines the frequency of event update\\
+	\hline
+	Frequency of Use:		& High\\
+	\hline
+	Alternative Flows:		& N/A\\
+	\hline
+	Exceptions:			& N/A\\
+	\hline
+	Assumptions:			& N/A\\
+	\hline
+	Issues:				& N/A\\
+	\hline
+	Source:				& TBD \\
+	\hline
+	Includes:				& TBD\\
+	\hline
+	Associated Requirements: &TBD\\
+	\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%
+%%%%	Section: Wireframes
+%%%% 
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Wireframes}
+
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/Menu.png}
+    \caption{Menu}
+    \label{fig:Menu}
+  \end{subfigure}
+  %
+  \qquad\qquad\qquad
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/CreateNewAccount.png}
+    \caption{Create New Account}
+    \label{fig:CreateNewAccount}
+  \end{subfigure}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/ViewEvents(1).png}
+    \caption{View Events (1)}
+    \label{fig:ViewEvents}
+  \end{subfigure}
+  %
+  \qquad\qquad\qquad
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/ViewEvents(2).png}
+    \caption{View Events (2)}
+    \label{fig:ViewEvents(2)}
+  \end{subfigure}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/ManageEvents(Launched).png}
+    \caption{Manage Events (Launched)}
+    \label{fig:ManageEvents(Launched)}
+  \end{subfigure}
+  %
+  \qquad\qquad\qquad
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/ManageEvents(Registered).png}
+    \caption{Manage Events (Registered)}
+    \label{fig:ManageEvents(Registered)}
+  \end{subfigure}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/ManageEvents(Waitlisted).png}
+    \caption{Manage Events (Waitlisted)}
+    \label{fig:ManageEvents(Waitlisted)}
+  \end{subfigure}
+  %
+  \qquad\qquad\qquad
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{Wireframes/Settings.png}
+    \caption{Settings}
+    \label{fig:Settings}
+  \end{subfigure}
+\end{figure}
+
+
+\end{document}

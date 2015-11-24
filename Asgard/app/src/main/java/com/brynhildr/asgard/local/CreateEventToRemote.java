@@ -1,0 +1,133 @@
+package com.brynhildr.asgard.local;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.brynhildr.asgard.entities.Event;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by lqshan on 11/19/15.
+ */
+public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
+
+    private static final String TAG = "HttpGetTask";
+    private static final String URL = "http://52.34.9.132/create-event";
+    private static final String query = "";
+    private String response = "";
+
+    protected String doInBackground(Event... para1) {
+        try {
+            HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(URL)
+                    .openConnection();
+            httpUrlConnection.setReadTimeout(15000);
+            httpUrlConnection.setConnectTimeout(15000);
+            httpUrlConnection.setRequestMethod("POST");
+            httpUrlConnection.setRequestProperty("HTTP_X_SKIP_CSRF", "True");
+            httpUrlConnection.setDoInput(true);
+            httpUrlConnection.setDoOutput(true);
+
+            OutputStream os = httpUrlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("username", "test");
+
+            writer.write(getPostDataString(postDataParams));
+
+            writer.flush();
+            writer.close();
+            os.close();
+            int responseCode = httpUrlConnection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br=new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    response += line;
+                }
+            }
+            else {
+                response = "";
+
+            }
+            System.out.println(responseCode + " " + response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return response;
+    }
+
+    protected void onProgressUpdate(Integer... progress) {
+        //setProgressPercent(progress[0]);
+    }
+
+    protected void onPostExecute(String result) {
+        //showDialog("Downloaded " + result + " bytes");
+    }
+
+    private String readStream(InputStream in) {
+        BufferedReader reader = null;
+        StringBuffer data = new StringBuffer("");
+        try {
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                data.append(line);
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "IOException");
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return data.toString();
+    }
+
+    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(Map.Entry<String, String> entry : params.entrySet()){
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+
+        return result.toString();
+    }
+}

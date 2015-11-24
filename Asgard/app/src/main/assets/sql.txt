@@ -1,0 +1,2 @@
+create table User(UserID integer primary key autoincrement, Username varchar(20), Email varchar(20));
+create table UserPrivacy( PrivacyID integer primary key, Password varchar(20), Phonenum varchar(20), Sex varchar(20), foreign key(PrivacyID) references User(UserID));

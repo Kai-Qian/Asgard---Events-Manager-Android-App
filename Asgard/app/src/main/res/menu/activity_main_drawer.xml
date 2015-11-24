@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_view_profile" android:icon="@drawable/ic_profile"
+            android:title="View Profile" />
+        <item android:id="@+id/nav_view_events" android:icon="@drawable/ic_view"
+            android:title="View Events" />
+        <item android:id="@+id/nav_launch_events" android:icon="@drawable/ic_launch"
+            android:title="Launch Events" />
+        <item android:id="@+id/nav_manage_events" android:icon="@drawable/ic_manage"
+            android:title="Manage Events" />
+        <item android:id="@+id/nav_inbox" android:icon="@drawable/ic_inbox"
+            android:title="Inbox" />
+        <item android:id="@+id/nav_settings" android:icon="@drawable/ic_setting"
+            android:title="Settings" />
+    </group>
+
+    <item android:title="About Us &amp; Log Out">
+        <menu>
+            <item android:id="@+id/nav_intro" android:icon="@drawable/ic_intro"
+                android:title="App Introduction" />
+            <item android:id="@+id/logout" android:icon="@drawable/ic_logout"
+                android:title="Log out" />
+        </menu>
+    </item>
+</menu>

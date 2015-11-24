@@ -1,0 +1,1 @@
+[{% for relationship in relationships %}{%spaceless%}{% include 'relationship.json' %}{% endspaceless %}{% if not forloop.last %},{% endif %}{% endfor %}]

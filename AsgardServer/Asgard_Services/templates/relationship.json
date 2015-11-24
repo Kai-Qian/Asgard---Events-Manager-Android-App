@@ -1,0 +1,4 @@
+{
+  "event_id":{{relationship.event_id}},
+  "username":{{relationship.participant_username}}
+}

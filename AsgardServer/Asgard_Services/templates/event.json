@@ -1,0 +1,13 @@
+{
+  "id":{{event.id}},
+  "modified":{{event.modified_date}},
+  "name":"{{event.name}}",
+  "venue":"{{event.venue}}",
+  "timestamp":{{event.date}},
+  "description":"{{event.description}}",
+  "dress_code":"{{event.dress_code}}"
+  "launcher":"{{event.poster.user.username}}",
+  "target_audience":"{{event.target_audience}}",
+  "max_people":{{event.max_people}},
+  "poster":{{event.post}}
+}
