@@ -11,22 +11,17 @@ public class EventDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + EventSchema.EventEntry.TABLE_NAME + " (" +
-                    EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID + " integer primary key autoincrement, " +
+                    EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID + " integer primary key, " +
                     EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME + " TEXT, " +
                     EventSchema.EventEntry.COLUMN_NAME_VENUE + " TEXT, " +
                     EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME + " TEXT, " +
-//                    EventSchema.EventEntry.COLUMN_NAME_YEAR + " INTEGER, " +
-//                    EventSchema.EventEntry.COLUMN_NAME_MONTH + " INTEGER, " +
-//                    EventSchema.EventEntry.COLUMN_NAME_DAY + " INTEGER, " +
-//                    EventSchema.EventEntry.COLUMN_NAME_HOUR + " INTEGER, " +
-//                    EventSchema.EventEntry.COLUMN_NAME_MINUTE + " INTEGER, " +
                     EventSchema.EventEntry.COLUMN_NAME_DESCRIPTION + " TEXT, " +
                     EventSchema.EventEntry.COLUMN_NAME_DRESS_CODE + " TEXT, " +
                     EventSchema.EventEntry.COLUMN_NAME_POSTER + " TEXT, " +
                     EventSchema.EventEntry.COLUMN_NAME_TARGET_AUDIENCE + " TEXT, " +
                     EventSchema.EventEntry.COLUMN_NAME_MAX_PEOPLE + " TEXT, " +
-                    "foreign key(" + EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID +
-                    ") references User(UserID) " +
+                    EventSchema.EventEntry.COLUMN_NAME_LAUNCHER_ID + "TEXT" +
+                    EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP + "TEXT" +
                     ")";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -49,7 +44,7 @@ public class EventDatabaseHelper extends SQLiteOpenHelper {
 //        db.execSQL(SQL_DELETE_ENTRIES);
         db.execSQL(SQL_CREATE_ENTRIES);
     }
-//    @Override
+    //    @Override
 //    public void onOpen(SQLiteDatabase db) {
 //        super.onOpen(db);
 //        if (!db.isReadOnly())
