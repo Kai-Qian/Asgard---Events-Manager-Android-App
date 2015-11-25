@@ -5,9 +5,9 @@
   "venue":"{{event.venue}}",
   "timestamp":{{event.date}},
   "description":"{{event.description}}",
-  "dress_code":"{{event.dress_code}}"
-  "launcher":"{{event.poster.user.username}}",
+  "dress_code":"{{event.dress_code}}",
+  "launcher":"{{event.launcher}}",
   "target_audience":"{{event.target_audience}}",
   "max_people":{{event.max_people}},
-  "poster":{{event.post}}
+  "poster":"{{event.post}}"
 }

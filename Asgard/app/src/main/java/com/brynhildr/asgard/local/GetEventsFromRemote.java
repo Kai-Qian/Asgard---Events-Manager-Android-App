@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -22,6 +23,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.global.MyApplication;
 
 /**
  * Created by lqshan on 11/18/15.
@@ -42,6 +46,26 @@ public class GetEventsFromRemote extends AsyncTask<Void, Integer, String> {
 
             InputStream in = new BufferedInputStream(
                     httpUrlConnection.getInputStream());
+
+            UpdateLocalDB updateLocalDB = new UpdateLocalDB(in);
+            EventDatabase eventDatabase = new EventDatabase(MyApplication.getAppContext());
+            updateLocalDB.compareAndUpdate(eventDatabase);
+
+            ArrayList<EventWithID> events = eventDatabase.readRowWithID();
+
+            for (int i = 0; i < events.size(); ++i) {
+                System.out.println("ID = " + events.get(i).getEventID());
+                System.out.println("Event name = " + events.get(i).getCOLUMN_NAME_EVENT_NAME());
+                System.out.println("Venue = " + events.get(i).getCOLUMN_NAME_VENUE());
+                System.out.println("Date and Time = " + events.get(i).getCOLUMN_NAME_DATEANDTIME());
+                System.out.println("Description = " + events.get(i).getCOLUMN_NAME_DESCRIPTION());
+                System.out.println("Dress code = " + events.get(i).getCOLUMN_NAME_DRESS_CODE());
+                System.out.println("Launcher ID = " + events.get(i).getCOLUMN_NAME_LAUNCHER_ID());
+                System.out.println("Max people = " + events.get(i).getCOLUMN_NAME_MAX_PEOPLE());
+                System.out.println("poster URL = " + events.get(i).getCOLUMN_NAME_POSTER());
+                System.out.println("Target = " + events.get(i).getCOLUMN_NAME_TARGET());
+                System.out.println("Timestamp = " + events.get(i).getCOLUMN_NAME_TIMESTAMP());
+            }
 
             //data = readStream(in);
 
