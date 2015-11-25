@@ -276,7 +276,7 @@ public class LaunchEventFragment extends Fragment {
                                     eventDetails.add(i.getmEditText().getText().toString());
                                 }
                                 eventDetails.add(posterName + ((MainActivity)getActivity()).getNum());
-                                edb.insertRow(eventDetails);
+                                //edb.insertRow(eventDetails);
                                 FragmentManager fm = ((MainActivity)getActivity()).getFragmentManager();
                                 FragmentTransaction transaction = fm.beginTransaction();
                                 LaunchEventFragment mLaunchEvent = new LaunchEventFragment();

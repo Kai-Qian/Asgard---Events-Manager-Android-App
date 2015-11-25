@@ -52,8 +52,18 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
 
+            Event event = para1[0];
             HashMap<String, String> postDataParams = new HashMap<>();
-            postDataParams.put("username", "test");
+            postDataParams.put("name", event.getCOLUMN_NAME_EVENT_NAME());
+            postDataParams.put("venue", event.getCOLUMN_NAME_VENUE());
+            postDataParams.put("description", event.getCOLUMN_NAME_DESCRIPTION());
+            postDataParams.put("dress_code", event.getCOLUMN_NAME_DRESS_CODE());
+            postDataParams.put("target_audience", event.getCOLUMN_NAME_TARGET());
+            postDataParams.put("max_people", event.getCOLUMN_NAME_MAX_PEOPLE());
+            postDataParams.put("username", event.getCOLUMN_NAME_LAUNCHER_ID());
+            postDataParams.put("time", event.getCOLUMN_NAME_DATEANDTIME());
+
+            System.out.println(event.getCOLUMN_NAME_DATEANDTIME());
 
             writer.write(getPostDataString(postDataParams));
 
@@ -71,14 +81,12 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             }
             else {
                 response = "";
-
             }
             System.out.println(responseCode + " " + response);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         return response;
     }

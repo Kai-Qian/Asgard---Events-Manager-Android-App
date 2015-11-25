@@ -165,7 +165,7 @@ public class HostEventDetailsActivity extends AppCompatActivity {
                                     eventDetails.add(i.getmEditText().getText().toString());
                                 }
                                 eventDetails.add(posterName + 3);
-                                edb.insertRow(eventDetails);
+                                //edb.insertRow(eventDetails);
                                 Snackbar snackbar = Snackbar.make(v, "ActionClick", Snackbar.LENGTH_LONG);
                                 snackbar.show();
                             }

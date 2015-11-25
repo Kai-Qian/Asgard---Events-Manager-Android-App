@@ -2,15 +2,17 @@ package com.brynhildr.asgard.entities;
 
 import android.content.Context;
 
+import java.io.Serializable;
+
 /**
  * Created by lqshan on 11/13/15.
  */
-public class Event {
+public class Event implements Serializable {
 
     //    private int COLUMN_NAME_ENTRY_ID;
     private String COLUMN_NAME_EVENT_NAME;
     private String COLUMN_NAME_VENUE;
-    private String COLUMN_NAME_DATEANDTIME;
+    private String COLUMN_NAME_DATEANDTIME; // long type presented in string (timestamp)
 
     private String COLUMN_NAME_DESCRIPTION;
 
@@ -19,7 +21,7 @@ public class Event {
     private String COLUMN_NAME_POSTER;
     private String COLUMN_NAME_TARGET;
     private String COLUMN_NAME_MAX_PEOPLE;
-    private String COLUMN_NAME_LAUNCHER_ID;
+    private String COLUMN_NAME_LAUNCHER_ID; // This is Username
     private String COLUMN_NAME_TIMESTAMP;
 
     public Event() {
