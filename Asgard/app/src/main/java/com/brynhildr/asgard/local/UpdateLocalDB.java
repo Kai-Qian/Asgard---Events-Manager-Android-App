@@ -98,12 +98,11 @@ public class UpdateLocalDB {
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-            //reader.ne
             System.out.println(name);
             switch (name) {
                 case "id": id = Long.toString(reader.nextLong());
                     break;
-                case "modified": modifiedTime = getDateTime(reader.nextLong());
+                case "modified": modifiedTime = Long.toString(reader.nextLong());
                     break;
                 case "name": eventName = reader.nextString();
                     break;
