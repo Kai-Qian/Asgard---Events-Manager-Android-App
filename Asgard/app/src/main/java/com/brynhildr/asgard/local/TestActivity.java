@@ -28,7 +28,9 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        //new GetEventsFromRemote().execute();
+        new GetEventsFromRemote().execute();
+
+        /*
         Event event = new Event();
         event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST").setCOLUMN_NAME_DATEANDTIME("1449878400")
                 .setCOLUMN_NAME_DRESS_CODE("DRESS CODE").setCOLUMN_NAME_EVENT_NAME("KTV")
@@ -37,6 +39,7 @@ public class TestActivity extends AppCompatActivity {
 
 
         new CreateEventToRemote().execute(event);
+        */
     }
 
 }

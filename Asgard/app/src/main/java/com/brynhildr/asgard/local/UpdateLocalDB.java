@@ -98,7 +98,8 @@ public class UpdateLocalDB {
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-
+            //reader.ne
+            System.out.println(name);
             switch (name) {
                 case "id": id = Long.toString(reader.nextLong());
                     break;
@@ -113,6 +114,8 @@ public class UpdateLocalDB {
                 case "description": description = reader.nextString();
                     break;
                 case "dress_code": dressCode = reader.nextString();
+                    break;
+                case "launcher": launcher = reader.nextString();
                     break;
                 case "target_audience": targetAudience = reader.nextString();
                     break;
@@ -154,7 +157,7 @@ public class UpdateLocalDB {
 //    }
 
 
-    private void compareAndUpdate(EventDatabase edb) {
+    public void compareAndUpdate(EventDatabase edb) {
         // All entries from local database.
         List<EventWithID> localList = edb.readRowWithID();
         HashMap<String, EventWithID> localMap = new HashMap<String, EventWithID>();
@@ -184,59 +187,33 @@ public class UpdateLocalDB {
 
         while(iter.hasNext()) {
             String curID = iter.next();
-            if (remoteMap.get(curID) == null) edb.deleteRow(localMap.get(curID));
+            if (remoteMap.get(curID) == null)
+                edb.deleteRow(localMap.get(curID));
             else if (!remoteMap.get(curID).getCOLUMN_NAME_TIMESTAMP().equals(localMap.get(curID).getCOLUMN_NAME_TIMESTAMP())) {
                 // If the entry is different, update the local database.
                 edb.updateRow(remoteMap.get(curID));
 
                 // Remove the event after updating the local database.
                 remoteMap.remove(curID);
+            } else if (remoteMap.get(curID).getCOLUMN_NAME_TIMESTAMP().equals(localMap.get(curID).getCOLUMN_NAME_TIMESTAMP())) {
+                remoteMap.remove(curID);
             }
         }
 
         // If the remote map still has events to be added, add them to local.
-        while(!remoteMap.isEmpty()) {
+        if (!remoteMap.isEmpty()) {
             iter = remoteMap.keySet().iterator();
             while(iter.hasNext()) {
                 String curID = iter.next();
                 edb.insertRow(remoteMap.get(curID));
+                //remoteMap.remove(curID);
             }
         }
+
+
 
         // Done with updating local database.
         return;
     }
 
-
-/*
-    public List readDoublesArray(JsonReader reader) throws IOException {
-        List doubles = new ArrayList();
-
-        reader.beginArray();
-        while (reader.hasNext()) {
-            doubles.add(reader.nextDouble());
-        }
-        reader.endArray();
-        return doubles;
-    }
-
-    public User readUser(JsonReader reader) throws IOException {
-        String username = null;
-        int followersCount = -1;
-
-        reader.beginObject();
-        while (reader.hasNext()) {
-            String name = reader.nextName();
-            if (name.equals("name")) {
-                username = reader.nextString();
-            } else if (name.equals("followers_count")) {
-                followersCount = reader.nextInt();
-            } else {
-                reader.skipValue();
-            }
-        }
-        reader.endObject();
-        return new User(username, followersCount);
-    }
-*/
 }

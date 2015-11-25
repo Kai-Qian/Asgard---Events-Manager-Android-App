@@ -126,7 +126,8 @@ public class EventDatabase {
     public ArrayList<EventWithID> readRowWithID() {
         SQLiteDatabase db = eventDatabaseHelper.getReadableDatabase();
         Cursor cursor = db.query(EventSchema.EventEntry.TABLE_NAME,
-                new String[]{EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID,
+                new String[]{
+                        EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID,
                         EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME,
                         EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME,
                         EventSchema.EventEntry.COLUMN_NAME_VENUE,
@@ -136,7 +137,8 @@ public class EventDatabase {
                         EventSchema.EventEntry.COLUMN_NAME_DESCRIPTION,
                         EventSchema.EventEntry.COLUMN_NAME_POSTER,
                         EventSchema.EventEntry.COLUMN_NAME_LAUNCHER_ID,
-                        EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP},
+                        EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP
+                },
                 null, null, null, null, null);
         ArrayList<EventWithID> events = new ArrayList<EventWithID>();
         while (cursor.moveToNext()) {
