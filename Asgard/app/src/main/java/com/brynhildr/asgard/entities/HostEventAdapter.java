@@ -86,10 +86,10 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
                     Palette.Swatch DarkMuted = palette.getDarkMutedSwatch();//柔和 暗色
                     Palette.Swatch LightMuted = palette.getLightMutedSwatch();//柔和 亮色
 
-                    if (LightMuted != null) {
-                        int color1 = LightMuted.getBodyTextColor();//内容颜色
-                        int color2 = LightMuted.getTitleTextColor();//标题颜色
-                        int color3 = LightMuted.getRgb();//rgb颜色
+                    if (vibrant != null) {
+                        int color1 = vibrant.getBodyTextColor();//内容颜色
+                        int color2 = vibrant.getTitleTextColor();//标题颜色
+                        int color3 = vibrant.getRgb();//rgb颜色
                         viewHolderForHost.mCardView.setCardBackgroundColor(color3);
                         viewHolderForHost.mTextView1.setTextColor(color2);
                         viewHolderForHost.mTextView2.setTextColor(color2);

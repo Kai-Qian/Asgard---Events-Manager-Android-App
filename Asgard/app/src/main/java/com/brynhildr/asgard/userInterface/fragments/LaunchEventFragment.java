@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.EventTitle;
 import com.brynhildr.asgard.entities.LaunchEventAdapter;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
+import com.brynhildr.asgard.userInterface.dummy.ChoosePic;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,6 +54,8 @@ public class LaunchEventFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     private LaunchEventAdapter launchEventAdapter;
+
+    private ChoosePic choosePic;
 
     private Button launchbtn;
     private Button cancelbtn;
@@ -154,7 +159,18 @@ public class LaunchEventFragment extends Fragment {
         intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
     }
+    private void choseHeadImageFromCameraCapture() {
+        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+        // 判断存储卡是否可用，存储照片文件
+        if (hasSdcard()) {
+            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+                    .fromFile(new File(Environment
+                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+        }
+
+        startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -241,25 +257,16 @@ public class LaunchEventFragment extends Fragment {
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
         headImage = (ImageView) getActivity().findViewById(R.id.backdrop_launch);
-//        headImage.setImageDrawable(null);
-//        headImage2 = (ImageView) getActivity().findViewById(R.id.imageViewlaunch2);
-
         headImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                choseHeadImageFromGallery();
+                //实例化SelectPicPopupWindow
+                choosePic = new ChoosePic(getActivity(), itemsOnClick);
+                //显示窗口
+                choosePic.showAtLocation(getActivity().findViewById(R.id.launch), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
             }
         });
-
-//        Button buttonCamera = (Button) findViewById(R.id.buttonCamera);
-//        buttonCamera.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                choseHeadImageFromCameraCapture();
-//            }
-//        });
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.launchfab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -296,6 +303,22 @@ public class LaunchEventFragment extends Fragment {
         mListener = null;
     }
 
+    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
+
+        public void onClick(View v) {
+            choosePic.dismiss();
+            switch (v.getId()) {
+                case R.id.btn_take_photo:
+                    choseHeadImageFromCameraCapture();
+                    break;
+                case R.id.btn_pick_photo:
+                    choseHeadImageFromGallery();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
