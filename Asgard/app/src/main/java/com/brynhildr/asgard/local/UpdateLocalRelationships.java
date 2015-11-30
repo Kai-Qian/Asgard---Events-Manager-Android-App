@@ -51,18 +51,7 @@ public class UpdateLocalRelationships {
     }
 
     /**
-     * Convert timestamp to date and time string.
-     * @param timestamp timestamp in long
-     * @return date and time in string
-     */
-    private String getDateTime(long timestamp) {
-        Timestamp ts = new Timestamp(timestamp);
-        String dateAndTime = new SimpleDateFormat("yyyyy.MMMMM.dd GGG hh:mm aaa").format(ts);
-        return dateAndTime.substring(1);
-    }
-
-    /**
-     * Get one single event object.
+     * Get one single relationwithid object.
      * @param reader JasonReader
      * @return event object
      * @throws IOException
@@ -129,13 +118,13 @@ public class UpdateLocalRelationships {
             String curID = iter.next();
             if (remoteMap.get(curID) == null) rdb.deleteRow(localMap.get(curID));
             else {
-                // Remove the event after updating the local database.
+                // Remove the entry after updating the local database.
                 remoteMap.remove(curID);
             }
         }
 
-        // If the remote map still has events to be added, add them to local.
-        while(!remoteMap.isEmpty()) {
+        // If the remote map still has entries to be added, add them to local.
+        if (!remoteMap.isEmpty()) {
             iter = remoteMap.keySet().iterator();
             while(iter.hasNext()) {
                 String curID = iter.next();
