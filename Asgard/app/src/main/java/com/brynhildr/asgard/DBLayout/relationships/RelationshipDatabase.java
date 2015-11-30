@@ -89,6 +89,39 @@ public class RelationshipDatabase {
 
     }
 
+    /**
+     * Get the list of registered event IDs of the userName
+     * @param userName the user name
+     * @return a list of event IDs that the user will attend
+     */
+    public ArrayList<String> getRegisteredEventIDs(String userName) {
+
+        SQLiteDatabase db = relationshipDatabaseHelper.getReadableDatabase();
+
+        String selection = RelationshipSchema.RelationshipEntry.COLUMN_NAME_USERNAME + " = ?";
+        String[] selectionArgs = {userName};
+
+        Cursor cursor = db.query(RelationshipSchema.RelationshipEntry.TABLE_NAME,
+                new String[]{
+
+                        RelationshipSchema.RelationshipEntry.COLUMN_NAME_EVENT_ID
+                },
+
+                selection, selectionArgs, null, null, null);
+
+        ArrayList<String> eventIDs = new ArrayList<String>();
+
+        while (cursor.moveToNext()) {
+            // Create each event object.
+            String eventID;
+            eventID = cursor.getString(cursor.getColumnIndex(RelationshipSchema.RelationshipEntry.COLUMN_NAME_EVENT_ID));
+
+            eventIDs.add(eventID);
+        }
+
+        return eventIDs;
+    }
+
     public void close() {
         relationshipDatabaseHelper.close();
     }
