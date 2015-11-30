@@ -247,23 +247,6 @@ public class EventDatabase {
 //        return event;
 //    }
 
-
-
-    public boolean needUpdate(String eventID) {
-        SQLiteDatabase db = eventDatabaseHelper.getReadableDatabase();
-        String table = EventSchema.EventEntry.TABLE_NAME;
-        String[] columns = new String[]{EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP};
-        String selection = EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID + "= ?";
-        String[] selectionArgs = {
-                eventID
-        };
-
-        Cursor c = db.query(table, columns, selection, selectionArgs,
-                null, null, null, null);
-
-        return false;
-    }
-
     public void close() {
         eventDatabaseHelper.close();
     }
