@@ -67,9 +67,9 @@ public class UpdateLocalRelationships {
             String name = reader.nextName();
 
             switch (name) {
-                case "id": primaryID = Long.toString(reader.nextLong());
+                case "id": primaryID = reader.nextString();
                     break;
-                case "user_name": userName = reader.nextString();
+                case "username": userName = reader.nextString();
                     break;
                 case "event_id": eventID = reader.nextString();
                     break;

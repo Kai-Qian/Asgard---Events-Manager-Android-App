@@ -14,7 +14,7 @@ public class RelationshipDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + RelationshipSchema.RelationshipEntry.TABLE_NAME + " (" +
-                    RelationshipSchema.RelationshipEntry.COLUMN_NAME_ID + " integer primary key, " +
+                    RelationshipSchema.RelationshipEntry.COLUMN_NAME_ID + " TEXT primary key, " +
                     RelationshipSchema.RelationshipEntry.COLUMN_NAME_EVENT_ID + " TEXT, " +
                     RelationshipSchema.RelationshipEntry.COLUMN_NAME_USERNAME + " TEXT " +
                     ")";
