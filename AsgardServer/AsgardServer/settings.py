@@ -107,6 +107,7 @@ MEDIA_ROOT = 'Asgard_Services/static/posters'
 
 MEDIA_URL = '/static/posters/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Asgard_Services/static/posters')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 

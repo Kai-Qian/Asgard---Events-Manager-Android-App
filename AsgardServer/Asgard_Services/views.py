@@ -18,7 +18,7 @@ from django.contrib.auth import logout as logout_func_from_django
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-
+import traceback, sys
 
 @csrf_exempt
 def create_event(request):
@@ -41,8 +41,10 @@ def create_event(request):
                       post=request.FILES['picture']
                       )
         event.save()
+        print(request.FILES['picture'])
     except Exception as e:
         print(e.message)
+        traceback.print_exc()
     return HttpResponse("Event created successfully.", content_type="text/plain")
 
 
