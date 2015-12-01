@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 import com.brynhildr.asgard.local.CreateEventToRemote;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 import com.brynhildr.asgard.userInterface.fragments.LaunchEventFragment;
@@ -326,8 +327,8 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         event.setCOLUMN_NAME_TARGET(tmp.get(4).getmEditText().getText().toString());
                         event.setCOLUMN_NAME_MAX_PEOPLE(tmp.get(5).getmEditText().getText().toString());
                         event.setCOLUMN_NAME_DESCRIPTION(tmp.get(6).getmEditText().getText().toString());
-                        event.setCOLUMN_NAME_POSTER("poster" + ((MainActivity) mContext).getNum());
-                        event.setCOLUMN_NAME_LAUNCHER_ID("test");
+                        event.setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
+                        event.setCOLUMN_NAME_LAUNCHER_ID(SimplifiedUserAuthentication.getUsername());
                         CreateEventToRemote mCreateEventToRemote = new CreateEventToRemote();
                         mCreateEventToRemote.execute(event);
                         /*
