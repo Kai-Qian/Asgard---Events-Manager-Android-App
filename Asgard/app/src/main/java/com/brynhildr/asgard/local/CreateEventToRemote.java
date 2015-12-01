@@ -1,94 +1,53 @@
 package com.brynhildr.asgard.local;
 
 import android.os.AsyncTask;
-import android.util.Log;
-
 import com.brynhildr.asgard.entities.Event;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lqshan on 11/19/15.
  */
 public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
 
+    private final String filePath = "/storage/emulated/0/DCIM/Camera/burger_king_icon.png";
     private static final String TAG = "HttpGetTask";
     private static final String URL = "http://52.34.9.132/create-event";
     private static final String query = "";
-    private String response = "";
+    //private String response = "";
+    private String BOUNDARY = java.util.UUID.randomUUID ( ).toString ( ) ;
+    private String PREFIX = "--" , LINEND = "\r\n" ;
+    private String MULTIPART_FROM_DATA = "multipart/form-data" ;
+    private String CHARSET = "UTF-8" ;
 
     protected String doInBackground(Event... para1) {
+        String charset = "UTF-8";
+        String requestURL = "http://52.34.9.132/create-event";
+        List<String> response = null;
         try {
-            HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(URL)
-                    .openConnection();
-            httpUrlConnection.setReadTimeout(15000);
-            httpUrlConnection.setConnectTimeout(15000);
-            httpUrlConnection.setRequestMethod("POST");
-            httpUrlConnection.setRequestProperty("HTTP_X_SKIP_CSRF", "True");
-            httpUrlConnection.setDoInput(true);
-            httpUrlConnection.setDoOutput(true);
-
-            OutputStream os = httpUrlConnection.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-
+            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
             Event event = para1[0];
-            HashMap<String, String> postDataParams = new HashMap<>();
-            postDataParams.put("name", event.getCOLUMN_NAME_EVENT_NAME());
-            postDataParams.put("venue", event.getCOLUMN_NAME_VENUE());
-            postDataParams.put("description", event.getCOLUMN_NAME_DESCRIPTION());
-            postDataParams.put("dress_code", event.getCOLUMN_NAME_DRESS_CODE());
-            postDataParams.put("target_audience", event.getCOLUMN_NAME_TARGET());
-            postDataParams.put("max_people", event.getCOLUMN_NAME_MAX_PEOPLE());
-            postDataParams.put("username", event.getCOLUMN_NAME_LAUNCHER_ID());
-            postDataParams.put("time", event.getCOLUMN_NAME_DATEANDTIME());
 
-            System.out.println(event.getCOLUMN_NAME_DATEANDTIME());
-
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = httpUrlConnection.getResponseCode();
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br=new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream()));
-                while ((line=br.readLine()) != null) {
-                    response += line;
-                }
-            }
-            else {
-                response = "";
-            }
-            System.out.println(responseCode + " " + response);
-
+            multipart.addFormField("name", event.getCOLUMN_NAME_EVENT_NAME());
+            multipart.addFormField("venue", event.getCOLUMN_NAME_VENUE());
+            multipart.addFormField("description", event.getCOLUMN_NAME_DESCRIPTION());
+            multipart.addFormField("dress_code", event.getCOLUMN_NAME_DRESS_CODE());
+            multipart.addFormField("target_audience", event.getCOLUMN_NAME_TARGET());
+            multipart.addFormField("max_people", event.getCOLUMN_NAME_MAX_PEOPLE());
+            multipart.addFormField("username", event.getCOLUMN_NAME_LAUNCHER_ID());
+            multipart.addFormField("time", event.getCOLUMN_NAME_DATEANDTIME());
+            //multipart.addFilePart("picture", new File(filePath));
+            multipart.addFilePart("picture", new File(event.getCOLUMN_NAME_POSTER()));
+            response = multipart.finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return response;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String temp : response) {
+            stringBuilder.append(temp);
+        }
+        System.out.println(stringBuilder);
+        return stringBuilder.toString();
     }
 
     protected void onProgressUpdate(Integer... progress) {
@@ -97,45 +56,5 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
 
     protected void onPostExecute(String result) {
         //showDialog("Downloaded " + result + " bytes");
-    }
-
-    private String readStream(InputStream in) {
-        BufferedReader reader = null;
-        StringBuffer data = new StringBuffer("");
-        try {
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                data.append(line);
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "IOException");
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return data.toString();
-    }
-
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet()){
-            if (first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-
-        return result.toString();
     }
 }

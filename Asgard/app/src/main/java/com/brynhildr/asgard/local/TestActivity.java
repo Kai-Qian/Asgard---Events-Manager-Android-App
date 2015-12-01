@@ -28,17 +28,18 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-//        new GetEventsFromRemote().execute();
-
+        new GetEventsFromRemote().execute();
 
         Event event = new Event();
-        event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST2").setCOLUMN_NAME_DATEANDTIME("1449878400")
-                .setCOLUMN_NAME_DRESS_CODE("DRESS CODE2").setCOLUMN_NAME_EVENT_NAME("KTV")
+        event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST").setCOLUMN_NAME_DATEANDTIME("1449878400")
+                .setCOLUMN_NAME_DRESS_CODE("DRESS CODE").setCOLUMN_NAME_EVENT_NAME("KTV")
                 .setCOLUMN_NAME_LAUNCHER_ID("test").setCOLUMN_NAME_MAX_PEOPLE("7")
-                .setCOLUMN_NAME_VENUE("huoguo").setCOLUMN_NAME_TARGET("humans");
+                .setCOLUMN_NAME_VENUE("huoguo").setCOLUMN_NAME_TARGET("humans")
+                .setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
 
 
         new CreateEventToRemote().execute(event);
+
     }
 
 }
