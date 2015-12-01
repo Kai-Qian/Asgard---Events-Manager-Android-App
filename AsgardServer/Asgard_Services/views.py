@@ -31,19 +31,22 @@ def create_event(request):
     print("Step into the second step.")
     date = datetime.fromtimestamp(int(request.POST['time']), pytz.UTC)
 
-    event = Event(name=str(request.POST['name']),
-                  venue=str(request.POST['venue']),
-                  description=str(request.POST['description']),
-                  dress_code=str(request.POST['dress_code']),
-                  target_audience=str(request.POST['target_audience']),
-                  max_people=int(request.POST['max_people']),
-                  launcher=launcher,
-                  data=date
-                  )
     try:
+        event = Event(name=str(request.POST['name']),
+                      venue=str(request.POST['venue']),
+                      description=str(request.POST['description']),
+                      dress_code=str(request.POST['dress_code']),
+                      target_audience=str(request.POST['target_audience']),
+                      max_people=int(request.POST['max_people']),
+                      launcher=launcher,
+                      data=date,
+                      post=request.FILES['picture']
+                      )
         event.save()
     except Exception as e:
         print(e.message)
+    #image = request.FILES['picture']
+    #image.save()
     print("Step into this step.")
     return HttpResponse("Event created successfully.", content_type="text/plain")
 

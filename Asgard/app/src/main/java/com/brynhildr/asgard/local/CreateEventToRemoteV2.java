@@ -37,95 +37,45 @@ import java.util.Map;
 /**
  * Created by lqshan on 11/19/15.
  */
-public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
+public class CreateEventToRemoteV2 extends AsyncTask<Event, Integer, String> {
 
+    private final String filePath = "/SDCard/DCIM/P50914-175006-001.jpg";
     private static final String TAG = "HttpGetTask";
     private static final String URL = "http://52.34.9.132/create-event";
     private static final String query = "";
-    private String response = "";
+    //private String response = "";
     private String BOUNDARY = java.util.UUID.randomUUID ( ).toString ( ) ;
     private String PREFIX = "--" , LINEND = "\r\n" ;
     private String MULTIPART_FROM_DATA = "multipart/form-data" ;
     private String CHARSET = "UTF-8" ;
 
     protected String doInBackground(Event... para1) {
+        String charset = "UTF-8";
+        String requestURL = "http://52.34.9.132/create-event";
+        List<String> response = null;
         try {
-
-            HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(URL)
-                    .openConnection();
-            httpUrlConnection.setReadTimeout(15000);
-            httpUrlConnection.setConnectTimeout(15000);
-            httpUrlConnection.setRequestMethod("POST");
-            httpUrlConnection.setRequestProperty("HTTP_X_SKIP_CSRF", "True");
-            //httpUrlConnection.setRequestProperty("Content-type", "multipart/form-data");
-            httpUrlConnection.setDoInput(true);
-            httpUrlConnection.setDoOutput(true);
-
-            OutputStream os = httpUrlConnection.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-
+            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
             Event event = para1[0];
-            HashMap<String, String> postDataParams = new HashMap<>();
-            postDataParams.put("name", event.getCOLUMN_NAME_EVENT_NAME());
-            postDataParams.put("venue", event.getCOLUMN_NAME_VENUE());
-            postDataParams.put("description", event.getCOLUMN_NAME_DESCRIPTION());
-            postDataParams.put("dress_code", event.getCOLUMN_NAME_DRESS_CODE());
-            postDataParams.put("target_audience", event.getCOLUMN_NAME_TARGET());
-            postDataParams.put("max_people", event.getCOLUMN_NAME_MAX_PEOPLE());
-            postDataParams.put("username", event.getCOLUMN_NAME_LAUNCHER_ID());
-            postDataParams.put("time", event.getCOLUMN_NAME_DATEANDTIME());
 
-            //HashMap< String, File > files = new HashMap<>();
-            //files.put("tempAndroid.mp3" , new File()) ;
-            /**************************************************************/
-
-            /*
-            BitmapFactory.Options options = new BitmapFactory.Options();
-
-            options.inSampleSize = 4;
-            options.inPurgeable = true;
-            Bitmap bm = BitmapFactory.decodeFile("res/drawable/asgard.png", options);
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            bm.compress(Bitmap.CompressFormat.PNG, 40, baos);
-            // bitmap object
-            byte [] byteImage_photo = baos.toByteArray();
-
-            //generate base64 string of image
-
-            String encodedImage =Base64.encodeToString(byteImage_photo, Base64.DEFAULT);
-            postDataParams.put("picture", encodedImage);
-            */
-            /***************************************************************/
-
-            System.out.println(getPostDataStringNew(postDataParams));
-
-            writer.write(getPostDataStringNew(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = httpUrlConnection.getResponseCode();
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream()));
-                while ((line=br.readLine()) != null) {
-                    response += line;
-                }
-            }
-            else {
-                response = "";
-            }
-            System.out.println(responseCode + " " + response);
-
+            multipart.addFormField("name", event.getCOLUMN_NAME_EVENT_NAME());
+            multipart.addFormField("venue", event.getCOLUMN_NAME_VENUE());
+            multipart.addFormField("description", event.getCOLUMN_NAME_DESCRIPTION());
+            multipart.addFormField("dress_code", event.getCOLUMN_NAME_DRESS_CODE());
+            multipart.addFormField("target_audience", event.getCOLUMN_NAME_TARGET());
+            multipart.addFormField("max_people", event.getCOLUMN_NAME_MAX_PEOPLE());
+            multipart.addFormField("username", event.getCOLUMN_NAME_LAUNCHER_ID());
+            multipart.addFormField("time", event.getCOLUMN_NAME_DATEANDTIME());
+            multipart.addFilePart("picture", new File(filePath));
+            response = multipart.finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return response;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String temp : response) {
+            stringBuilder.append(temp);
+        }
+        System.out.println(stringBuilder);
+        return stringBuilder.toString();
     }
 
     protected void onProgressUpdate(Integer... progress) {
