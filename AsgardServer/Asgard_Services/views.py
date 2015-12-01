@@ -22,29 +22,27 @@ from django.core.mail import send_mail
 
 @csrf_exempt
 def create_event(request):
-    print("Step into the first step.")
     try:
         launcher = User.objects.get(username=request.POST['username']).user_profile
     except User.DoesNotExist:
         raise Http404("No User matches the given query.")
 
-    print("Step into the second step.")
     date = datetime.fromtimestamp(int(request.POST['time']), pytz.UTC)
 
-    event = Event(name=str(request.POST['name']),
-                  venue=str(request.POST['venue']),
-                  description=str(request.POST['description']),
-                  dress_code=str(request.POST['dress_code']),
-                  target_audience=str(request.POST['target_audience']),
-                  max_people=int(request.POST['max_people']),
-                  launcher=launcher,
-                  data=date
-                  )
     try:
+        event = Event(name=str(request.POST['name']),
+                      venue=str(request.POST['venue']),
+                      description=str(request.POST['description']),
+                      dress_code=str(request.POST['dress_code']),
+                      target_audience=str(request.POST['target_audience']),
+                      max_people=int(request.POST['max_people']),
+                      launcher=launcher,
+                      data=date,
+                      post=request.FILES['picture']
+                      )
         event.save()
     except Exception as e:
         print(e.message)
-    print("Step into this step.")
     return HttpResponse("Event created successfully.", content_type="text/plain")
 
 
@@ -76,11 +74,14 @@ def get_all_relationships(request):
         participants = event.participant.all()
         if participants:
             for participant in participants:
-                relationships.append(Relationship(event.id, participant.user.username))
+                relationships.append(Relationship(event.id,
+                                                  participant.user.username,
+                                                  str(event.pk) + ":" + str(participant.pk)))
     return render(request, 'relationships.json', {'relationships': relationships}, content_type='application/json')
 
 
 class Relationship:
-    def __init__(self, event_id, participant_username):
+    def __init__(self, event_id, participant_username, unique_id):
+        self.unique_id = unique_id
         self.event_id = event_id
         self.participant_username = participant_username
