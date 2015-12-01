@@ -65,7 +65,8 @@ public class CreateEventToRemoteV2 extends AsyncTask<Event, Integer, String> {
             multipart.addFormField("max_people", event.getCOLUMN_NAME_MAX_PEOPLE());
             multipart.addFormField("username", event.getCOLUMN_NAME_LAUNCHER_ID());
             multipart.addFormField("time", event.getCOLUMN_NAME_DATEANDTIME());
-            multipart.addFilePart("picture", new File(filePath));
+            //multipart.addFilePart("picture", new File(filePath));
+            multipart.addFilePart("picture", new File(event.getCOLUMN_NAME_POSTER()));
             response = multipart.finish();
         } catch (Exception e) {
             e.printStackTrace();
