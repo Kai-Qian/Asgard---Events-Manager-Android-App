@@ -13,14 +13,19 @@ import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -34,6 +39,7 @@ import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.entities.ViewEventAdapter;
+import com.brynhildr.asgard.local.GetEventsFromRemote;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -54,6 +60,10 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
     private ViewEventAdapter viewEventAdapter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private ArrayList<Event> eventTmp;
+
+    private DrawerLayout drawer;
 
     private boolean flag = false;
     private ImageButton fab;
@@ -114,12 +124,10 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
         super.onCreate(savedInstanceState);
         System.out.println("ViewEventsonCreate");
         edb = new EventDatabase(getActivity());
-//        edb.deleteTable();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         // TODO: Change Adapter to display your content
 //        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 //                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
@@ -130,7 +138,8 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
                              Bundle savedInstanceState) {
         System.out.println("ViewEventsonCreateView");
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
         // Set the adapter
 //        mListView = (AbsListView) view.findViewById(android.R.id.list);
 //        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
@@ -164,7 +173,7 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_view);
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -180,9 +189,14 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
     public void onResume() {
         System.out.println("ViewEventsonResume");
         super.onResume();
+        collapseFab();
+        flag = true;
         edb = new EventDatabase(getActivity());
-//        edb = new EventDatabase(getActivity());
-        ArrayList<Event> event = edb.readRow();
+        eventTmp = edb.readRow();
+        ArrayList<Event> event = new ArrayList<Event>(eventTmp.size());
+        for (int i = eventTmp.size() - 1; i >= 0; i--) {
+            event.add(eventTmp.get(i));
+        }
 //        events.add(new Event("HO HO HO ALL NIGHT LONG XMAS PARTY", "5000 Forbes AVE, Pittsburgh, PA",
 //                "THU, DEC 24, 10:00 PM", "0", "Casual", "poster1", "21+", "30"));
 //        events.add(new Event("The Dark Knight Rises", "5000 Forbes AVE, Pittsburgh, PA",
@@ -194,7 +208,7 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
         mRecyclerView = (RecyclerView) ((MainActivity)getActivity()).findViewById(R.id.viewEventlist_view);
         System.out.println("" + (mRecyclerView == null));
         // 设置LinearLayoutManager
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         // 设置ItemAnimator
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         // 设置固定大小
@@ -216,37 +230,39 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
         textView4 = (TextView)getActivity().findViewById(R.id.textView4);
         final ViewGroup fabContainer = (ViewGroup) getActivity().findViewById(R.id.fab_container);
         fab = (ImageButton) getActivity().findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_plus);
         fabAction1 = (ImageButton)getActivity().findViewById(R.id.fab_action_1);
         fabAction1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                ViewEventsFragment mViewEvent = new ViewEventsFragment();
-                LaunchEventFragment mManageEvent = new LaunchEventFragment();
-//                transaction.detach(mViewEvent);
-                transaction.attach(mManageEvent);
-                transaction.commit();
+                Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.refresh);
+                fabAction1.startAnimation(animation);
+                onRefresh();
             }
         });
         fabAction2 = getActivity().findViewById(R.id.fab_action_2);
+        fabAction2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                flag = !flag;
                 if (flag == false) {
                     Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.clockwise_rotate);
                     fab.setImageResource(R.drawable.ic_plus);
                     fab.startAnimation(animation);
                     fab.setImageResource(R.drawable.ic_x);
                     expandFab();
-                    flag = true;
                 } else {
                     Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.anticlockwise_rotate);
                     fab.setImageResource(R.drawable.ic_x);
                     fab.startAnimation(animation);
                     fab.setImageResource(R.drawable.ic_plus);
                     collapseFab();
-                    flag = false;
                 }
             }
         });
@@ -254,21 +270,49 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
             @Override
             public boolean onPreDraw() {
                 fabContainer.getViewTreeObserver().removeOnPreDrawListener(this);
-                offset1 = fab.getY() - fabAction1.getY();
-                fabAction1.setTranslationY(offset1);
-                offset2 = fab.getY() - fabAction2.getY();
-                fabAction2.setTranslationY(offset2);
-                offset3 = fab.getY() - textView3.getY() + 50;
-                System.out.println("offset3--->" + offset3);
-                textView3.setTranslationY(offset3);
-                offset4 = fab.getY() - textView4.getY() + 50;
-                textView4.setTranslationY(offset4);
-                offset5 = fab.getX() - textView3.getX() + 100;
-                System.out.println("offset5--->" + offset5);
-                textView3.setTranslationX(offset5);
-                offset6 = fab.getX() - textView4.getX() + 100;
-                textView4.setTranslationX(offset6);
-                collapseFab();
+                if (((MainActivity)getActivity()).isHasOffset() == false) {
+                    System.out.println("onPreDraw---------------->");
+                    ArrayList<Float> offSet = new ArrayList<Float>();
+                    offset1 = fab.getY() - fabAction1.getY();
+                    offSet.add(offset1);
+                    offset2 = fab.getY() - fabAction2.getY();
+                    offSet.add(offset2);
+                    offset3 = fab.getY() - textView3.getY() + 50;
+                    System.out.println("offset3--->" + offset3);
+                    offSet.add(offset3);
+                    offset4 = fab.getY() - textView4.getY() + 50;
+                    offSet.add(offset4);
+                    offset5 = fab.getX() - textView3.getX() + 100;
+                    System.out.println("offset5--->" + offset5);
+                    offSet.add(offset5);
+                    offset6 = fab.getX() - textView4.getX() + 100;
+                    offSet.add(offset6);
+                    fabAction1.setTranslationY(offset1);
+                    fabAction2.setTranslationY(offset2);
+                    textView3.setTranslationY(offset3);
+                    textView4.setTranslationY(offset4);
+                    textView3.setTranslationX(offset5);
+                    textView4.setTranslationX(offset6);
+                    ((MainActivity)getActivity()).setOffSet(offSet);
+                    ((MainActivity)getActivity()).setHasOffset(true);
+                } else {
+                    ArrayList<Float> offSet = new ArrayList<Float>();
+                    offSet = ((MainActivity)getActivity()).getOffSet();
+                    offset1 = offSet.get(0);
+                    offset2 = offSet.get(1);
+                    offset3 = offSet.get(2);
+                    offset4 = offSet.get(3);
+                    offset5 = offSet.get(4);
+                    offset6 = offSet.get(5);
+                    System.out.println("2offset3--->" + offset3);
+                    System.out.println("2offset5--->" + offset5);
+                    fabAction1.setTranslationY(offset1);
+                    fabAction2.setTranslationY(offset2);
+                    textView3.setTranslationY(offset3);
+                    textView4.setTranslationY(offset4);
+                    textView3.setTranslationX(offset5);
+                    textView4.setTranslationX(offset6);
+                }
                 return true;
             }
         });
@@ -323,7 +367,6 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
     public void onStart() {
         System.out.println("ViewEventsonStart");
         super.onStart();
-        collapseFab();
     }
 
     @Override
@@ -338,13 +381,15 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                new GetEventsFromRemote().execute();
                 mSwipeRefreshLayout.setRefreshing(false);
                 FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
-                ViewEventsFragment mViewEvent = new ViewEventsFragment();
+                ViewEventsFragment mViewEvent = ((MainActivity) getActivity()).getmViewEvent();
                 transaction.detach(mViewEvent);
                 transaction.attach(mViewEvent);
                 transaction.commit();
+                fabAction1.clearAnimation();
             }
         }, 1000);
     }
@@ -421,4 +466,54 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
+
+    @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+        super.setHasOptionsMenu(hasMenu);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        System.out.println(" View Menu cleared!!!!!!!!!!!!!!!!!!!!");
+        inflater.inflate(R.menu.view_event_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onOptionsMenuClosed(Menu menu) {
+        super.onOptionsMenuClosed(menu);
+    }
+
+    @Override
+    public void onDestroyOptionsMenu() {
+        System.out.println(" onDestroyOptionsMenuView!!!!!!!!!!!!!!!!!!!!");
+        super.onDestroyOptionsMenu();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.newToOld) {
+            viewEventAdapter.sortNewToOld();
+            return true;
+        } else if(id == R.id.oldToNew) {
+            viewEventAdapter.sortOldToNew();
+            return true;
+        } else if(id == R.id.modified) {
+            viewEventAdapter.sortModified();
+            return true;
+        } else if(id == R.id.list_view) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mRecyclerView.setAdapter(viewEventAdapter);
+            return true;
+        } else if(id == R.id.grid_view) {
+            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            mRecyclerView.setAdapter(viewEventAdapter);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

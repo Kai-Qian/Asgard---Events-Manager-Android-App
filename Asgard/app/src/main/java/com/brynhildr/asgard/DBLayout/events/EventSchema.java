@@ -10,7 +10,7 @@ public class EventSchema {
     public EventSchema() {}
 
     public static abstract class EventEntry implements BaseColumns {
-        public static final String TABLE_NAME = "Events";
+        public static final String TABLE_NAME = "Events5";
         public static final String COLUMN_NAME_ENTRY_ID = "ID";
 
         public static final String COLUMN_NAME_EVENT_NAME = "EventName";

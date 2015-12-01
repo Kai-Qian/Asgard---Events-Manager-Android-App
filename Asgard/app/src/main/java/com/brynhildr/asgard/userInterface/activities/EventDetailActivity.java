@@ -19,6 +19,7 @@ import com.brynhildr.asgard.entities.Event;
 public class EventDetailActivity extends AppCompatActivity {
 
     private TextView dateAndTime;
+    private TextView eventName;
     private TextView address;
     private TextView dressCode;
     private TextView targetParticipant;
@@ -31,6 +32,7 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         Intent intent = getIntent();
         final Event event = (Event) intent.getSerializableExtra("Event");
+        eventName = (TextView) findViewById(R.id.eventName);
         dateAndTime = (TextView) findViewById(R.id.dateandtime);
         address = (TextView) findViewById(R.id.address);
         dressCode = (TextView) findViewById(R.id.dresscode);
@@ -49,6 +51,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 EventDetailActivity.this.startActivity(intent);
             }
         });
+        eventName.setText(event.getCOLUMN_NAME_EVENT_NAME());
         dateAndTime.setText(event.getCOLUMN_NAME_DATEANDTIME());
         address.setText(event.getCOLUMN_NAME_VENUE());
         dressCode.setText(event.getCOLUMN_NAME_DRESS_CODE());
@@ -67,7 +70,7 @@ public class EventDetailActivity extends AppCompatActivity {
         ImageView headImage = (ImageView) findViewById(R.id.backdrop_details);
         headImage.setImageResource(R.drawable.poster2);
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolBarLayout.setTitle(event.getCOLUMN_NAME_EVENT_NAME());
+//        toolBarLayout.setTitle(event.getCOLUMN_NAME_EVENT_NAME());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

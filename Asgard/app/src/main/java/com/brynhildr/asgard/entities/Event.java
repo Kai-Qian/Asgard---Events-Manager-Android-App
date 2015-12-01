@@ -3,6 +3,9 @@ package com.brynhildr.asgard.entities;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by lqshan on 11/13/15.
@@ -154,8 +157,9 @@ public class Event implements Serializable {
         try
         {
 //            System.out.println(R.drawable.p1);
-            int i = context.getResources().getIdentifier(this.COLUMN_NAME_POSTER, "drawable", context.getPackageName());
-            System.out.println("this.COLUMN_NAME_POSTER---->" + this.COLUMN_NAME_POSTER);
+//            int i = context.getResources().getIdentifier(this.COLUMN_NAME_POSTER, "drawable", context.getPackageName());
+            int i = context.getResources().getIdentifier("poster2", "drawable", context.getPackageName());
+//            System.out.println("this.COLUMN_NAME_POSTER---->" + this.COLUMN_NAME_POSTER);
             return i;
 
         }
@@ -165,7 +169,21 @@ public class Event implements Serializable {
             return -1;
         }
     }
+    public Long getDateAndTimeTimeStamp() {
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm E");
+        try {
+            Date date = fmt.parse(COLUMN_NAME_DATEANDTIME);
+            System.out.println("this.date---->" + COLUMN_NAME_DATEANDTIME);
+            return date.getTime();
+        } catch (ParseException e) {
+            System.out.println("this.date---->" + COLUMN_NAME_DATEANDTIME);
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-
+    public Long getModifiedTimeStamp() {
+        return Long.parseLong(COLUMN_NAME_TIMESTAMP);
+    }
 
 }

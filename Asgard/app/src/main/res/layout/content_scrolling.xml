@@ -10,25 +10,52 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
-    <TextView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin1"
-        android:textSize="20dp"
-        android:text="Date and Time:"
-        android:textStyle="bold"/>
-    <TextView android:layout_width="match_parent"
+    android:padding="8dp">
+
+    <TextView android:layout_width="wrap_content"
         android:id="@+id/dateandtime"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="6dp"
+        android:textSize="30dp" />
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:id="@+id/eventName"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView android:layout_width="wrap_content"
+        android:id="@+id/description"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin1"
         android:layout_marginBottom="@dimen/text_margin2"
-        android:textSize="20dp" />
-    <TextView android:layout_width="match_parent"
+        android:textSize="20dp"/>
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin1"
+        android:text="Target Participant:"
+        android:textStyle="bold"
+        android:textSize="25dp"/>
+
+    <TextView android:layout_width="wrap_content"
+        android:id="@+id/targetParticipant"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin1"
+        android:layout_marginBottom="@dimen/text_margin2"
+        android:textSize="20dp"/>
+
+    <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin1"
         android:text="Address:"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="25dp"/>
 
     <TextView android:layout_width="wrap_content"
         android:id="@+id/address"
@@ -43,57 +70,29 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.61" />
 
-    <TextView android:layout_width="match_parent"
+    <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin1"
         android:text="Dress Code:"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="25dp"/>
 
-    <TextView android:layout_width="match_parent"
+    <TextView android:layout_width="wrap_content"
         android:id="@+id/dresscode"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin1"
         android:layout_marginBottom="@dimen/text_margin2"
         android:textSize="20dp"/>
 
-    <TextView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin1"
-        android:text="Target Participant:"
-        android:textStyle="bold"
-        android:textSize="20dp"/>
-
-    <TextView android:layout_width="match_parent"
-        android:id="@+id/targetParticipant"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin1"
-        android:layout_marginBottom="@dimen/text_margin2"
-        android:textSize="20dp"/>
-
-    <TextView android:layout_width="match_parent"
+    <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin1"
         android:text="Maximum People:"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="25dp"/>
 
-    <TextView android:layout_width="match_parent"
+    <TextView android:layout_width="wrap_content"
         android:id="@+id/maximumPeople"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin1"
-        android:layout_marginBottom="@dimen/text_margin2"
-        android:textSize="20dp"/>
-
-    <TextView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin1"
-        android:text="Description:"
-        android:textStyle="bold"
-        android:textSize="20dp"/>
-
-    <TextView android:layout_width="match_parent"
-        android:id="@+id/description"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin1"
         android:layout_marginBottom="@dimen/text_margin2"

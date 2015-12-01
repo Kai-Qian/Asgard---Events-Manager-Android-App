@@ -5,11 +5,6 @@ import android.util.Log;
 
 import com.brynhildr.asgard.entities.Event;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -19,12 +14,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,6 +28,8 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
     private static final String URL = "http://52.34.9.132/create-event";
     private static final String query = "";
     private String response = "";
+    private boolean isSuccess = false;
+    private int responseCode = 0;
 
     protected String doInBackground(Event... para1) {
         try {
@@ -47,11 +41,9 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             httpUrlConnection.setRequestProperty("HTTP_X_SKIP_CSRF", "True");
             httpUrlConnection.setDoInput(true);
             httpUrlConnection.setDoOutput(true);
-
             OutputStream os = httpUrlConnection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
-
             Event event = para1[0];
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("name", event.getCOLUMN_NAME_EVENT_NAME());
@@ -62,7 +54,6 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             postDataParams.put("max_people", event.getCOLUMN_NAME_MAX_PEOPLE());
             postDataParams.put("username", event.getCOLUMN_NAME_LAUNCHER_ID());
             postDataParams.put("time", event.getCOLUMN_NAME_DATEANDTIME());
-
             System.out.println(event.getCOLUMN_NAME_DATEANDTIME());
 
             writer.write(getPostDataString(postDataParams));
@@ -70,9 +61,10 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             writer.flush();
             writer.close();
             os.close();
-            int responseCode = httpUrlConnection.getResponseCode();
-
+            responseCode = httpUrlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
+                isSuccess = true;
+                System.out.println(responseCode + " " + response + isSuccess);
                 String line;
                 BufferedReader br=new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream()));
                 while ((line=br.readLine()) != null) {
@@ -80,15 +72,17 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
                 }
             }
             else {
+                isSuccess = false;
                 response = "";
+                System.out.println(responseCode + " " + response + isSuccess);
             }
-            System.out.println(responseCode + " " + response);
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return response;
+        return responseCode + "";
     }
 
     protected void onProgressUpdate(Integer... progress) {
@@ -96,7 +90,12 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
     }
 
     protected void onPostExecute(String result) {
-        //showDialog("Downloaded " + result + " bytes");
+        if (result.equals("200")) {
+            responseCode = 200;
+        } else {
+            responseCode = 500;
+        }
+//        showDialog("Downloaded " + result + " bytes");
     }
 
     private String readStream(InputStream in) {
@@ -137,5 +136,14 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
         }
 
         return result.toString();
+    }
+
+    public boolean getResponse() {
+        System.out.println("isSuccess--->" + isSuccess);
+        return isSuccess;
+    }
+
+    public int getResponseCode() {
+        return responseCode;
     }
 }

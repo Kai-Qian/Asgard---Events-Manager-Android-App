@@ -18,6 +18,8 @@ import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.userInterface.activities.HostEventDetailsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -108,6 +110,44 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
     }
     public ArrayList<ViewHolderForHost> getmViewHolderForView() {
         return mViewHolderForHost;
+    }
+
+    public void sortNewToOld() {
+        Collections.sort(events, new NewToOldComparator());
+        for (Event i : events) {
+            System.out.println("DateAndTimeTimeStamp----->" + i.getDateAndTimeTimeStamp());
+        }
+        notifyDataSetChanged();
+        System.out.println("sortNewToOld----->");
+//        notifyItemInserted(0);
+    }
+    public void sortOldToNew() {
+        Collections.sort(events, new OldToNewComparator());
+
+//        notifyItemRemoved(0);
+        notifyDataSetChanged();
+    }
+    public void sortModified() {
+        Collections.sort(events, new ModifiedComparator());
+        notifyDataSetChanged();
+    }
+    private static class NewToOldComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        }
+    }
+    private static class OldToNewComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        }
+    }
+    private static class ModifiedComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
+        }
     }
 
     // 重写的自定义ViewHolder

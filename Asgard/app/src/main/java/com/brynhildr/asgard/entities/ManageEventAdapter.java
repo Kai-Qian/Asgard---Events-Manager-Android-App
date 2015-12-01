@@ -21,6 +21,8 @@ import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.userInterface.activities.EventDetailActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -55,7 +57,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
 
 
     @Override
-    public void onBindViewHolder( final ViewHolderForManage viewHolderForManage, int i )
+    public void onBindViewHolder( final ViewHolderForManage viewHolderForManage, final int i )
     {
         // 给ViewHolder设置元素
         if (events.size() == 0) {
@@ -76,11 +78,10 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
                     mContext.startActivity(intent);
                 }
             });
-            viewHolderForManage.mImageButton.setImageResource(R.drawable.ic_cancel);
-            viewHolderForManage.mImageButton.setOnClickListener(new View.OnClickListener() {
+            viewHolderForManage.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialog(viewHolderForManage);
+                    dialog(viewHolderForManage, p);
                 }
             });
             Bitmap bitmap = BitmapFactory.decodeResource(res, p.getImageResourceId(mContext));
@@ -104,7 +105,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
                         viewHolderForManage.mTextView1.setTextColor(color2);
                         viewHolderForManage.mTextView2.setTextColor(color2);
                         viewHolderForManage.mTextView3.setTextColor(color2);
-                        viewHolderForManage.mImageButton.setBackgroundColor(color2);
+                        viewHolderForManage.mButton.setBackgroundColor(color2);
                     }
                 }
             });
@@ -117,7 +118,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
         // 返回数据总数
         return events == null ? 0 : events.size();
     }
-    private void dialog(final ViewHolderForManage viewHolderForManage) {
+    private void dialog(final ViewHolderForManage viewHolderForManage, final Event e) {
         boolean flag = false;
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage("Are you sure you want to unregister this event？");
@@ -126,8 +127,9 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                viewHolderForManage.mImageButton.setClickable(false);
-                viewHolderForManage.mImageButton.setImageResource(R.drawable.ic_cancel_cancel);
+//                viewHolderForManage.mButton.setClickable(false);
+//                viewHolderForManage.mButton.setImageResource(R.drawable.ic_unregistered);
+                removeData(e);
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -142,6 +144,51 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
         return mViewHolderForManage;
     }
 
+    public void sortNewToOld() {
+        Collections.sort(events, new NewToOldComparator());
+        for (Event i : events) {
+            System.out.println("DateAndTimeTimeStamp----->" + i.getDateAndTimeTimeStamp());
+        }
+        notifyDataSetChanged();
+        System.out.println("sortNewToOld----->");
+//        notifyItemInserted(0);
+    }
+    public void sortOldToNew() {
+        Collections.sort(events, new OldToNewComparator());
+
+//        notifyItemRemoved(0);
+        notifyDataSetChanged();
+    }
+    public void sortModified() {
+        Collections.sort(events, new ModifiedComparator());
+        notifyDataSetChanged();
+    }
+    private static class NewToOldComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        }
+    }
+    private static class OldToNewComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        }
+    }
+    private static class ModifiedComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
+        }
+    }
+
+
+    public void removeData(Event e)
+    {
+        int position = events.indexOf(e);
+        events.remove(position);
+        notifyItemRemoved(position);
+    }
     // 重写的自定义ViewHolder
     public static class ViewHolderForManage
             extends RecyclerView.ViewHolder
@@ -159,7 +206,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
             mTextView2 = (TextView) v.findViewById(R.id.cardname);
             mTextView3 = (TextView) v.findViewById(R.id.cardvenue);
             mImageView = (ImageView) v.findViewById(R.id.pic);
-            mImageButton = (ImageButton) v.findViewById(R.id.imageButton);
+            mButton = (ImageButton) v.findViewById(R.id.imageButton);
             mCardView = (CardView) v.findViewById(R.id.card_manage);
         }
 
@@ -205,14 +252,14 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
         public CardView mCardView;
 
         public ImageButton getmImageButton() {
-            return mImageButton;
+            return mButton;
         }
 
-        public void setmImageButton(ImageButton mImageButton) {
-            this.mImageButton = mImageButton;
+        public void setmImageButton(ImageButton mButton) {
+            this.mButton = mButton;
         }
 
-        public ImageButton mImageButton;
+        public ImageButton mButton;
     }
 }
 

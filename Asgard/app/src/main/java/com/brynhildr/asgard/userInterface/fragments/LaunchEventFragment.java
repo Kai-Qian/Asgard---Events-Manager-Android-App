@@ -2,8 +2,6 @@ package com.brynhildr.asgard.userInterface.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,9 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,10 +21,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.brynhildr.asgard.DBLayout.events.EventDatabase;
@@ -41,6 +41,8 @@ import com.brynhildr.asgard.userInterface.dummy.ChoosePic;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,11 +56,19 @@ public class LaunchEventFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     private LaunchEventAdapter launchEventAdapter;
-
     private ChoosePic choosePic;
 
     private Button launchbtn;
-    private Button cancelbtn;
+    private Button clearbtn;
+    private DatePicker mDatePicker;
+    private TimePicker mTimePicker;
+
+    // 定义5个记录当前时间的变量
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+    private int minute;
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
 
@@ -127,6 +137,8 @@ public class LaunchEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_launch_event, container, false);
     }
@@ -151,6 +163,7 @@ public class LaunchEventFragment extends Fragment {
         toggle.syncState();
         NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener((MainActivity) getActivity());
+//        initView();
     }
     private void choseHeadImageFromGallery() {
         Intent intentFromGallery = new Intent();
@@ -168,7 +181,8 @@ public class LaunchEventFragment extends Fragment {
                     .fromFile(new File(Environment
                             .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
         }
-
+        System.out.println("Path--->" + Environment
+                .getExternalStorageDirectory());
         startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
     }
     @Override
@@ -235,18 +249,20 @@ public class LaunchEventFragment extends Fragment {
         eventTitles.add(new EventTitle("Target Participant"));
         eventTitles.add(new EventTitle("Maximum People"));
         eventTitles.add(new EventTitle("Description"));
+        eventTitles.add(new EventTitle("Register"));
         //getActivity().getActionBar().setTitle("View Events");
         // 拿到RecyclerView
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.launchEventlist);
         // 设置LinearLayoutManager
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         // 设置ItemAnimator
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         // 设置固定大小
 //        mRecyclerView.setHasFixedSize(true);
         // 初始化自定义的适配器
         launchEventAdapter = new LaunchEventAdapter(getActivity(), eventTitles);
-        System.out.println("launchEventAdapter.getItemCount()" + launchEventAdapter.getItemCount());
+//        System.out.println("launchEventAdapter.getItemCount()" + launchEventAdapter.getItemCount());
 
         // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(launchEventAdapter);
@@ -267,34 +283,50 @@ public class LaunchEventFragment extends Fragment {
                 choosePic.showAtLocation(getActivity().findViewById(R.id.launch), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
             }
         });
-
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.launchfab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ArrayList<String> eventDetails = new ArrayList<String>();
-                                ArrayList<LaunchEventAdapter.ViewHolderForLaunch> tmp = launchEventAdapter.getmViewHolderForLaunch();
-                                for (LaunchEventAdapter.ViewHolderForLaunch i : tmp) {
-                                    System.out.println("Input" + i.getmEditText().getText().toString());
-                                    eventDetails.add(i.getmEditText().getText().toString());
-                                }
-                                eventDetails.add(posterName + ((MainActivity)getActivity()).getNum());
-                                //edb.insertRow(eventDetails);
-                                FragmentManager fm = ((MainActivity)getActivity()).getFragmentManager();
-                                FragmentTransaction transaction = fm.beginTransaction();
-                                LaunchEventFragment mLaunchEvent = new LaunchEventFragment();
-                                transaction.detach(mLaunchEvent);
-                                transaction.attach(mLaunchEvent);
-                                transaction.commit();
-                                Snackbar snackbar = Snackbar.make(v, "ActionClick", Snackbar.LENGTH_LONG);
-                                snackbar.show();
-                            }
-                        }).show();
-            }});
+//        launchbtn = (Button) getActivity().findViewById(R.id.launchbtn);
+//        clearbtn = (Button) getActivity().findViewById(R.id.clearbtn);
+//        launchbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Event event = new Event();
+//                ArrayList<LaunchEventAdapter.ViewHolderForLaunch> tmp = launchEventAdapter.getmViewHolderForLaunch();
+////                                for (LaunchEventAdapter.ViewHolderForLaunch i : tmp) {
+////                                    System.out.println("Input" + i.getmEditText().getText().toString());
+//////                                    eventDetails.add(i.getmEditText().getText().toString());
+////                                }
+//                event.setCOLUMN_NAME_EVENT_NAME(tmp.get(0).getmEditText().getText().toString());
+//                event.setCOLUMN_NAME_DATEANDTIME(calculateTimeStamp(launchEventAdapter.getYear(), launchEventAdapter.getMonth(),
+//                        launchEventAdapter.getDay(), launchEventAdapter.getHour(), launchEventAdapter.getMinute()) + "");
+//                System.out.println("event.getCOLUMN_NAME_DATEANDTIME()--->" + event.getCOLUMN_NAME_DATEANDTIME());
+//                event.setCOLUMN_NAME_VENUE(tmp.get(2).getmEditText().getText().toString());
+//                event.setCOLUMN_NAME_DRESS_CODE(tmp.get(3).getmEditText().getText().toString());
+//                event.setCOLUMN_NAME_TARGET(tmp.get(4).getmEditText().getText().toString());
+//                event.setCOLUMN_NAME_MAX_PEOPLE(tmp.get(5).getmEditText().getText().toString());
+//                event.setCOLUMN_NAME_DESCRIPTION(tmp.get(6).getmEditText().getText().toString());
+//                event.setCOLUMN_NAME_POSTER(posterName + ((MainActivity) getActivity()).getNum());
+//                event.setCOLUMN_NAME_LAUNCHER_ID("test");
+//                new CreateEventToRemote().execute(event);
+////                                eventDetails.add(posterName + ((MainActivity) getActivity()).getNum());
+//                //edb.insertRow(eventDetails);
+//                FragmentManager fm = ((MainActivity)getActivity()).getFragmentManager();
+//                FragmentTransaction transaction = fm.beginTransaction();
+//                LaunchEventFragment mLaunchEvent = new LaunchEventFragment();
+//                transaction.detach(mLaunchEvent);
+//                transaction.attach(mLaunchEvent);
+//                transaction.commit();
+//            }
+//        });
+//        clearbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentManager fm = ((MainActivity)getActivity()).getFragmentManager();
+//                FragmentTransaction transaction = fm.beginTransaction();
+//                LaunchEventFragment mLaunchEvent = new LaunchEventFragment();
+//                transaction.detach(mLaunchEvent);
+//                transaction.attach(mLaunchEvent);
+//                transaction.commit();
+//            }
+//        });
     }
 
     @Override
@@ -334,7 +366,7 @@ public class LaunchEventFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
     public void cropRawPhoto(Uri uri) {
-
+        System.out.println("Environment.getExternalStorageDirectory()--->" + Environment.getExternalStorageDirectory());
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
 
@@ -407,5 +439,62 @@ public class LaunchEventFragment extends Fragment {
         } else {
             return false;
         }
+    }
+
+//    private void initView() {
+//        mDatePicker = (DatePicker) getActivity().findViewById(R.id.datePicker);
+//        mTimePicker = (TimePicker) getActivity().findViewById(R.id.timePicker);
+//        mDatePicker.setCalendarViewShown(false);
+//        // 获取当前的年、月、日、小时、分钟
+//        Calendar c = Calendar.getInstance();
+//        year = c.get(Calendar.YEAR);
+//        month = c.get(Calendar.MONTH);
+//        day = c.get(Calendar.DAY_OF_MONTH);
+//        hour = c.get(Calendar.HOUR);
+//        minute = c.get(Calendar.MINUTE);
+//
+//
+//        //初始化DatePicker组件，初始化时指定监听器
+//        mDatePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
+//            @Override
+//            public void onDateChanged(DatePicker arg0, int year, int month,
+//                                      int day) {
+//                LaunchEventFragment.this.year = year;
+//                LaunchEventFragment.this.month = month;
+//                LaunchEventFragment.this.day = day;
+//                // 显示当前日期、时间
+////                showDate(year, month, day, hour, minute);
+//            }
+//        });
+//
+//        // 为TimePicker指定监听器
+//        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+//            @Override
+//            public void onTimeChanged(TimePicker arg0, int hour, int minute) {
+//                LaunchEventFragment.this.hour = hour;
+//                LaunchEventFragment.this.minute = minute;
+//                // 显示当前日期、时间
+////                showDate(year, month, day, hour, minute);
+//            }
+//        });
+//    }
+
+    private long calculateTimeStamp(int year, int month, int day, int hour, int minute) {
+        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
+        return calendar.getTimeInMillis() / 1000;
+    }
+
+    @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+        super.setHasOptionsMenu(hasMenu);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        menu.clear();
+        System.out.println("Menu cleared!!!!!!!!!!!!!!!!!!!!----->" + menu.size());
+        inflater.inflate(R.menu.launch_event_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
     }
 }

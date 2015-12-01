@@ -2,6 +2,7 @@ package com.brynhildr.asgard.userInterface.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +11,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +23,7 @@ import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.entities.ManageEventAdapter;
+import com.brynhildr.asgard.local.GetEventsFromRemote;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -40,6 +46,8 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private EventDatabase edb;
+
+    private ArrayList<Event> eventTmp;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,6 +94,8 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events_going, container, false);
     }
@@ -105,12 +115,13 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                new GetEventsFromRemote().execute();
                 mSwipeRefreshLayout.setRefreshing(false);
-                android.app.FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
+                FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
-                ViewEventsFragment mViewEvent = new ViewEventsFragment();
-                transaction.detach(mViewEvent);
-                transaction.attach(mViewEvent);
+                EventsGoingFragment mEventsGoing = ((MainActivity) getActivity()).getmManageEvent().getMfragment1();
+                transaction.detach(mEventsGoing);
+                transaction.attach(mEventsGoing);
                 transaction.commit();
             }
         }, 1000);
@@ -129,7 +140,11 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
     public void onResume() {
         super.onResume();
         edb = new EventDatabase(getActivity());
-        ArrayList<Event> event = edb.readRow();
+        eventTmp = edb.readRow();
+        ArrayList<Event> event = new ArrayList<Event>(eventTmp.size());
+        for (int i = eventTmp.size() - 1; i >= 0; i--) {
+            event.add(eventTmp.get(i));
+        }
         // 拿到RecyclerView
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.viewEventlist_going);
         // 设置LinearLayoutManager
@@ -177,6 +192,42 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+    @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+        super.setHasOptionsMenu(hasMenu);
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        System.out.println(" Going Menu cleared!!!!!!!!!!!!!!!!!!!!");
+        inflater.inflate(R.menu.manage_event_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.newToOld_manage) {
+            manageEventAdapter.sortNewToOld();
+            return true;
+        } else if(id == R.id.oldToNew_manage) {
+            manageEventAdapter.sortOldToNew();
+            return true;
+        } else if(id == R.id.modified_manage) {
+            manageEventAdapter.sortModified();
+            return true;
+        } else if(id == R.id.list_manage) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mRecyclerView.setAdapter(manageEventAdapter);
+            return true;
+        } else if(id == R.id.grid_manage) {
+            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            mRecyclerView.setAdapter(manageEventAdapter);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

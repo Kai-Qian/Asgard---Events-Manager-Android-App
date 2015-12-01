@@ -3,7 +3,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp"
+    android:layout_margin="5dp"
     android:orientation="vertical"
     card_view:cardCornerRadius="13dp"
     card_view:cardElevation="12dp"

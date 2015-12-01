@@ -9,10 +9,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.local.GetEventsFromRemote;
 import com.brynhildr.asgard.userInterface.fragments.AppIntroFragment;
 import com.brynhildr.asgard.userInterface.fragments.EventsGoingFragment;
 import com.brynhildr.asgard.userInterface.fragments.EventsHostingFragment;
@@ -22,6 +22,8 @@ import com.brynhildr.asgard.userInterface.fragments.LaunchEventFragment;
 import com.brynhildr.asgard.userInterface.fragments.ManageEventsFragment;
 import com.brynhildr.asgard.userInterface.fragments.ProfileFragment;
 import com.brynhildr.asgard.userInterface.fragments.ViewEventsFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -46,8 +48,26 @@ public class MainActivity extends AppCompatActivity
     private GeneralPreferenceFragment mPreference = new GeneralPreferenceFragment();
     private AppIntroFragment mIntro = new AppIntroFragment();
     private ManageEventsFragment mManageEvent = new ManageEventsFragment();
-
+    private int num = 0;
     private boolean previousIsManage = false;
+    private boolean hasOffset = false;
+    private ArrayList<Float> offSet = new ArrayList<Float>();
+
+    public ArrayList<Float> getOffSet() {
+        return offSet;
+    }
+
+    public void setOffSet(ArrayList<Float> offSet) {
+        this.offSet = offSet;
+    }
+
+    public boolean isHasOffset() {
+        return hasOffset;
+    }
+
+    public void setHasOffset(boolean hasOffset) {
+        this.hasOffset = hasOffset;
+    }
 
     public int getNum() {
 
@@ -56,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         return num;
     }
 
-    private int num = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,30 +142,30 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            finish();
-//            Intent intent = new Intent();
-//            intent.setClass(MainActivity.this, LoginActivity.class);
-//            MainActivity.this.startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        if (id == R.id.action_settings) {
+//            finish();
+////            Intent intent = new Intent();
+////            intent.setClass(MainActivity.this, LoginActivity.class);
+////            MainActivity.this.startActivity(intent);
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -165,6 +185,7 @@ public class MainActivity extends AppCompatActivity
             transaction.hide(mIntro);
             transaction.hide(mManageEvent);
         } else if (id == R.id.nav_view_events) {
+            new GetEventsFromRemote().execute();
             transaction.show(mViewEvent);
             transaction.hide(mProfile);
             transaction.hide(mLaunchEvent);
@@ -181,6 +202,7 @@ public class MainActivity extends AppCompatActivity
             transaction.hide(mIntro);
             transaction.hide(mManageEvent);
         } else if (id == R.id.nav_manage_events) {
+            new GetEventsFromRemote().execute();
             transaction.show(mManageEvent);
             transaction.hide(mProfile);
             transaction.hide(mLaunchEvent);
@@ -225,6 +247,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        //super.onSaveInstanceState(outState);
+
+    }
+    @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
@@ -233,7 +261,36 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(String id) {
 
     }
-//    public class MyViewPagerAdapter extends FragmentPagerAdapter {
+
+    public ViewEventsFragment getmViewEvent() {
+        return mViewEvent;
+    }
+
+    public ProfileFragment getmProfile() {
+        return mProfile;
+    }
+
+    public LaunchEventFragment getmLaunchEvent() {
+        return mLaunchEvent;
+    }
+
+    public InboxFragment getmInbox() {
+        return mInbox;
+    }
+
+    public GeneralPreferenceFragment getmPreference() {
+        return mPreference;
+    }
+
+    public AppIntroFragment getmIntro() {
+        return mIntro;
+    }
+
+    public ManageEventsFragment getmManageEvent() {
+        return mManageEvent;
+    }
+
+    //    public class MyViewPagerAdapter extends FragmentPagerAdapter {
 //        public MyViewPagerAdapter(FragmentManager fm) {
 //            super(fm);
 //            // TODO Auto-generated constructor stub

@@ -190,4 +190,11 @@ public class ManageEventsFragment extends Fragment {
         }
     }
 
+    public EventsGoingFragment getMfragment1() {
+        return mfragment1;
+    }
+
+    public EventsHostingFragment getMfragment2() {
+        return mfragment2;
+    }
 }

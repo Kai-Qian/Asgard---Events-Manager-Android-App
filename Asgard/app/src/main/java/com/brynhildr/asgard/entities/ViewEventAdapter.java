@@ -18,6 +18,8 @@ import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.userInterface.activities.EventDetailActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -54,11 +56,14 @@ public class ViewEventAdapter
     @Override
     public void onBindViewHolder( final ViewHolderForView viewHolderForView, int i )
     {
+
         // 给ViewHolder设置元素
         if (events.size() == 0) {
+            System.out.println("events.size() == 0--->" + (events.size() == 0));
             return;
         } else {
             final Event p = events.get(i);
+            System.out.println("onBindViewHolder--->" + p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForView.mTextView1.setText(p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForView.mTextView2.setText(p.getCOLUMN_NAME_EVENT_NAME());
             viewHolderForView.mTextView3.setText(p.getCOLUMN_NAME_VENUE());
@@ -96,6 +101,7 @@ public class ViewEventAdapter
                     }
                 }
             });
+            System.out.println("this.COLUMN_NAME_POSTER---->view");
             viewHolderForView.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
         }
     }
@@ -106,6 +112,50 @@ public class ViewEventAdapter
         // 返回数据总数
         return events == null ? 0 : events.size();
     }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    public void sortNewToOld() {
+        Collections.sort(events, new NewToOldComparator());
+        for (Event i : events) {
+            System.out.println("DateAndTimeTimeStamp----->" + i.getDateAndTimeTimeStamp());
+        }
+        notifyDataSetChanged();
+        System.out.println("sortNewToOld----->");
+//        notifyItemInserted(0);
+    }
+    public void sortOldToNew() {
+        Collections.sort(events, new OldToNewComparator());
+
+//        notifyItemRemoved(0);
+        notifyDataSetChanged();
+    }
+    public void sortModified() {
+        Collections.sort(events, new ModifiedComparator());
+        notifyDataSetChanged();
+    }
+    private static class NewToOldComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        }
+    }
+    private static class OldToNewComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        }
+    }
+    private static class ModifiedComparator implements Comparator<Event> {
+        @Override
+        public int compare(Event s1, Event s2) {
+            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
+        }
+    }
+
 
     public ArrayList<ViewHolderForView> getmViewHolderForView() {
         return mViewHolderForView;

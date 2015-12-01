@@ -41,14 +41,14 @@
             android:layout_below="@id/pic">
             <TextView
                 android:id="@+id/cardtime"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
 
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/cardname"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_below="@id/cardtime"
@@ -57,17 +57,25 @@
 
             <TextView
                 android:id="@+id/cardvenue"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_below="@id/cardname"
                 android:textSize="15sp" />
+            <View
+                android:layout_width="5px"
+                android:layout_height="fill_parent"
+                android:background="#aaa8a8"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/imageButton" />
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true" />
+                android:src="@drawable/ic_registered"
+                android:background="#ffffff"
+                android:layout_above="@+id/cardvenue"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
     </LinearLayout>

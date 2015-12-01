@@ -1,14 +1,8 @@
 package com.brynhildr.asgard.local;
 
-import android.database.Cursor;
-import android.os.Message;
 import android.util.JsonReader;
-import android.util.JsonToken;
 
 import com.brynhildr.asgard.DBLayout.events.EventDatabase;
-import com.brynhildr.asgard.DBLayout.events.EventSchema;
-import com.brynhildr.asgard.entities.Event;
-import com.brynhildr.asgard.entities.User;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,9 +53,9 @@ public class UpdateLocalDB {
      * @return date and time in string
      */
     private String getDateTime(long timestamp) {
-        Timestamp ts = new Timestamp(timestamp);
-        String dateAndTime = new SimpleDateFormat("yyyyy.MMMMM.dd GGG hh:mm aaa").format(ts);
-        return dateAndTime.substring(1);
+        Timestamp ts = new Timestamp(timestamp * 1000);
+        String dateAndTime = new SimpleDateFormat("yyyy-MM-dd HH:mm E").format(ts);
+        return dateAndTime;
     }
 
     // Example output from remote server.
@@ -201,6 +195,7 @@ public class UpdateLocalDB {
 
         // If the remote map still has events to be added, add them to local.
         if (!remoteMap.isEmpty()) {
+            System.out.println("Still have some");
             iter = remoteMap.keySet().iterator();
             while(iter.hasNext()) {
                 String curID = iter.next();
