@@ -86,7 +86,7 @@ public class UpdateLocalRelationships {
         return relation;
     }
 
-    private void compareAndUpdate(RelationshipDatabase rdb) {
+    public void compareAndUpdate(RelationshipDatabase rdb) {
         // All entries from local database.
         List<RelationWithID> localList = rdb.readAllRows();
         HashMap<String, RelationWithID> localMap = new HashMap<String, RelationWithID>();

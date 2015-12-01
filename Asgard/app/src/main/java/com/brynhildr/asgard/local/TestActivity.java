@@ -28,6 +28,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
+        /*
         new GetEventsFromRemote().execute();
 
         Event event = new Event();
@@ -39,6 +40,8 @@ public class TestActivity extends AppCompatActivity {
 
 
         new CreateEventToRemote().execute(event);
+        */
+        new GetRelationsFromRemote().execute();
 
     }
 

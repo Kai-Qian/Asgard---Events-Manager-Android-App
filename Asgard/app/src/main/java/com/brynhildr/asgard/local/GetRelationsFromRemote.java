@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.DBLayout.relationships.RelationshipDatabase;
+import com.brynhildr.asgard.entities.Relation;
+import com.brynhildr.asgard.entities.RelationWithID;
 import com.brynhildr.asgard.global.MyApplication;
 
 import java.io.BufferedInputStream;
@@ -37,24 +40,17 @@ public class GetRelationsFromRemote extends AsyncTask<Void, Integer, String> {
             InputStream in = new BufferedInputStream(
                     httpUrlConnection.getInputStream());
 
-            UpdateLocalDB updateLocalDB = new UpdateLocalDB(in);
-            EventDatabase eventDatabase = new EventDatabase(MyApplication.getAppContext());
-            updateLocalDB.compareAndUpdate(eventDatabase);
+            UpdateLocalRelationships updateLocalRelationships = new UpdateLocalRelationships(in);
+            RelationshipDatabase relationshipDatabase = new RelationshipDatabase(MyApplication.getAppContext());
+            updateLocalRelationships.compareAndUpdate(relationshipDatabase);
 
-            ArrayList<EventWithID> events = eventDatabase.readRowWithID();
+            ArrayList<RelationWithID> relationWithIDs = relationshipDatabase.readAllRows();
 
-            for (int i = 0; i < events.size(); ++i) {
-                System.out.println("ID = " + events.get(i).getEventID());
-                System.out.println("Event name = " + events.get(i).getCOLUMN_NAME_EVENT_NAME());
-                System.out.println("Venue = " + events.get(i).getCOLUMN_NAME_VENUE());
-                System.out.println("Date and Time = " + events.get(i).getCOLUMN_NAME_DATEANDTIME());
-                System.out.println("Description = " + events.get(i).getCOLUMN_NAME_DESCRIPTION());
-                System.out.println("Dress code = " + events.get(i).getCOLUMN_NAME_DRESS_CODE());
-                System.out.println("Launcher ID = " + events.get(i).getCOLUMN_NAME_LAUNCHER_ID());
-                System.out.println("Max people = " + events.get(i).getCOLUMN_NAME_MAX_PEOPLE());
-                System.out.println("poster URL = " + events.get(i).getCOLUMN_NAME_POSTER());
-                System.out.println("Target = " + events.get(i).getCOLUMN_NAME_TARGET());
-                System.out.println("Timestamp = " + events.get(i).getCOLUMN_NAME_TIMESTAMP());
+
+            for (int i = 0; i < relationWithIDs.size(); ++i) {
+                System.out.println("Event ID = " + relationWithIDs.get(i).getEventID());
+                System.out.println("user name = " + relationWithIDs.get(i).getUserName());
+                System.out.println("Primary ID = " + relationWithIDs.get(i).getPrimaryID());
             }
 
             //data = readStream(in);
