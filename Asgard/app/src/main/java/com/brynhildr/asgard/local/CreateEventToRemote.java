@@ -1,8 +1,12 @@
 package com.brynhildr.asgard.local;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
+import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
 
 import org.apache.http.NameValuePair;
@@ -12,6 +16,9 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,15 +43,21 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
     private static final String URL = "http://52.34.9.132/create-event";
     private static final String query = "";
     private String response = "";
+    private String BOUNDARY = java.util.UUID.randomUUID ( ).toString ( ) ;
+    private String PREFIX = "--" , LINEND = "\r\n" ;
+    private String MULTIPART_FROM_DATA = "multipart/form-data" ;
+    private String CHARSET = "UTF-8" ;
 
     protected String doInBackground(Event... para1) {
         try {
+
             HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(URL)
                     .openConnection();
             httpUrlConnection.setReadTimeout(15000);
             httpUrlConnection.setConnectTimeout(15000);
             httpUrlConnection.setRequestMethod("POST");
             httpUrlConnection.setRequestProperty("HTTP_X_SKIP_CSRF", "True");
+            //httpUrlConnection.setRequestProperty("Content-type", "multipart/form-data");
             httpUrlConnection.setDoInput(true);
             httpUrlConnection.setDoOutput(true);
 
@@ -63,9 +76,33 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             postDataParams.put("username", event.getCOLUMN_NAME_LAUNCHER_ID());
             postDataParams.put("time", event.getCOLUMN_NAME_DATEANDTIME());
 
-            System.out.println(event.getCOLUMN_NAME_DATEANDTIME());
+            //HashMap< String, File > files = new HashMap<>();
+            //files.put("tempAndroid.mp3" , new File()) ;
+            /**************************************************************/
 
-            writer.write(getPostDataString(postDataParams));
+            /*
+            BitmapFactory.Options options = new BitmapFactory.Options();
+
+            options.inSampleSize = 4;
+            options.inPurgeable = true;
+            Bitmap bm = BitmapFactory.decodeFile("res/drawable/asgard.png", options);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            bm.compress(Bitmap.CompressFormat.PNG, 40, baos);
+            // bitmap object
+            byte [] byteImage_photo = baos.toByteArray();
+
+            //generate base64 string of image
+
+            String encodedImage =Base64.encodeToString(byteImage_photo, Base64.DEFAULT);
+            postDataParams.put("picture", encodedImage);
+            */
+            /***************************************************************/
+
+            System.out.println(getPostDataStringNew(postDataParams));
+
+            writer.write(getPostDataStringNew(postDataParams));
 
             writer.flush();
             writer.close();
@@ -74,7 +111,7 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 String line;
-                BufferedReader br=new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream()));
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream()));
                 while ((line=br.readLine()) != null) {
                     response += line;
                 }
@@ -137,5 +174,68 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
         }
 
         return result.toString();
+    }
+
+    private String getPostDataStringNew(HashMap<String, String> params) {
+        StringBuilder sb = new StringBuilder ( ) ;
+        for ( Map.Entry < String , String > entry : params.entrySet ( ) ) {
+            System.out.println("??????????????????" + entry.getValue());
+            sb.append ( PREFIX ) ;
+            sb.append ( BOUNDARY ) ;
+            sb.append ( LINEND ) ;
+            sb.append ( "Content-Disposition: form-data; name=\""
+                    + entry.getKey ( ) + "\"" + LINEND ) ;
+            sb.append ( "Content-Type: text/plain; charset="
+                    + CHARSET + LINEND ) ;
+            sb.append ( "Content-Transfer-Encoding: 8bit" + LINEND ) ;
+            sb.append ( LINEND ) ;
+            sb.append ( entry.getValue ( ) ) ;
+            sb.append ( LINEND ) ;
+        }
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(sb.toString());
+        String la = sb.toString();
+        System.out.println(la);
+        /*
+        DataOutputStream outStream = new DataOutputStream (
+                conn.getOutputStream ( ) ) ;
+        outStream.write ( sb.toString ( ).getBytes ( ) ) ;
+        */
+        return sb.toString();
+    }
+
+    private String getPostFileString(HashMap<String, File> files) throws UnsupportedEncodingException {
+        for ( Map.Entry < String , File > file : files.entrySet ()) {
+            String BOUNDARY = java.util.UUID.randomUUID().toString() ;
+            String PREFIX = "--" , LINEND = "\r\n" ;
+            String MULTIPART_FROM_DATA = "multipart/form-data" ;
+            String CHARSET = "UTF-8" ;
+            StringBuilder sb1 = new StringBuilder ( ) ;
+            sb1.append (PREFIX) ;
+            sb1.append (BOUNDARY) ;
+            sb1.append (LINEND) ;
+            sb1.append ( "Content-Disposition: form-data; name=\"file\"; filename=\""
+                    + file.getKey( ) + "\"" + LINEND ) ;
+            sb1.append ( "Content-Type: application/octet-stream; charset="
+                    + CHARSET + LINEND ) ;
+            sb1.append ( LINEND ) ;
+            return sb1.toString();
+            //outStream.write ( sb1.toString ( ).getBytes ( ) ) ;
+
+            /*
+            InputStream is = new FileInputStream(
+                    file.getValue ( ) ) ;
+            byte [ ] buffer = new byte [ 1024 ] ;
+            int len = 0 ;
+            while ( ( len = is.read ( buffer ) ) != - 1 )
+            {
+                outStream.write ( buffer , 0 , len ) ;
+            }
+
+            is.close ( ) ;
+            outStream.write ( LINEND.getBytes ( ) ) ;
+            */
+        }
+        return null;
     }
 }
