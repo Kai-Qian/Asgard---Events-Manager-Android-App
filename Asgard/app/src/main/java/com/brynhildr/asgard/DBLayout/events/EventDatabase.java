@@ -255,6 +255,53 @@ public class EventDatabase {
         return events;
     }
 
+    /**
+     * Get all the events hosted by a user
+     * @param userName the user name of the user
+     * @return the list of events hosted by this user
+     */
+    public ArrayList<Event> getHostingEvents(String userName) {
+
+        SQLiteDatabase db = eventDatabaseHelper.getReadableDatabase();
+
+        String selection = EventSchema.EventEntry.COLUMN_NAME_LAUNCHER_ID + " = ?";
+        String[] whereArgs = {userName};
+
+        Cursor cursor = db.query(EventSchema.EventEntry.TABLE_NAME,
+                new String[]{
+                        EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME,
+                        EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME,
+                        EventSchema.EventEntry.COLUMN_NAME_VENUE,
+                        EventSchema.EventEntry.COLUMN_NAME_DRESS_CODE,
+                        EventSchema.EventEntry.COLUMN_NAME_TARGET_AUDIENCE,
+                        EventSchema.EventEntry.COLUMN_NAME_MAX_PEOPLE,
+                        EventSchema.EventEntry.COLUMN_NAME_DESCRIPTION,
+                        EventSchema.EventEntry.COLUMN_NAME_POSTER,
+                        EventSchema.EventEntry.COLUMN_NAME_LAUNCHER_ID,
+                        EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP},
+                selection, whereArgs, null, null, null);
+
+        ArrayList<Event> events = new ArrayList<Event>();
+        while (cursor.moveToNext()) {
+            // Create each event object.
+            Event event = new Event();
+            event.setCOLUMN_NAME_EVENT_NAME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME)));
+            event.setCOLUMN_NAME_VENUE(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_VENUE)));
+            event.setCOLUMN_NAME_DATEANDTIME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME)));
+            event.setCOLUMN_NAME_DESCRIPTION(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_DESCRIPTION)));
+            event.setCOLUMN_NAME_DRESS_CODE(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_DRESS_CODE)));
+            event.setCOLUMN_NAME_POSTER(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_POSTER)));
+            event.setCOLUMN_NAME_TARGET(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_TARGET_AUDIENCE)));
+            event.setCOLUMN_NAME_MAX_PEOPLE(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_MAX_PEOPLE)));
+            event.setCOLUMN_NAME_LAUNCHER_ID(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_LAUNCHER_ID)));
+            event.setCOLUMN_NAME_TIMESTAMP(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP)));
+
+            events.add(event);
+        }
+
+        return events;
+    }
+
     public void close() {
         eventDatabaseHelper.close();
     }
