@@ -24,6 +24,7 @@ import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.entities.HostEventAdapter;
 import com.brynhildr.asgard.local.GetEventsFromRemote;
+import com.brynhildr.asgard.local.GetLaunchedEvents;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -127,8 +128,9 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
-        edb = new EventDatabase(getActivity());
-        eventTmp = edb.readRow();
+//        edb = new EventDatabase(getActivity());
+        eventTmp = new GetLaunchedEvents().getLaunchedEvents();
+//        eventTmp = edb.readRow();
         ArrayList<Event> event = new ArrayList<Event>(eventTmp.size());
         for (int i = eventTmp.size() - 1; i >= 0; i--) {
             event.add(eventTmp.get(i));

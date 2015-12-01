@@ -49,6 +49,8 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             e.printStackTrace();
         }
         StringBuilder stringBuilder = new StringBuilder();
+        if (response == null)
+            return "False";
         for (String temp : response) {
             stringBuilder.append(temp);
         }
