@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class CreateEventToRemoteV2 extends AsyncTask<Event, Integer, String> {
 
-    private final String filePath = "/SDCard/DCIM/P50914-175006-001.jpg";
+    private final String filePath = "/storage/emulated/0/DCIM/Camera/burger_king_icon.png";
     private static final String TAG = "HttpGetTask";
     private static final String URL = "http://52.34.9.132/create-event";
     private static final String query = "";
