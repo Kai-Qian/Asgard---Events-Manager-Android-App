@@ -1,7 +1,11 @@
 package com.brynhildr.asgard.local;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
+
 import com.brynhildr.asgard.entities.Event;
+import com.brynhildr.asgard.global.MyApplication;
+
 import java.io.File;
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
     private String CHARSET = "UTF-8" ;
 
     protected String doInBackground(Event... para1) {
+        String result = null;
         String charset = "UTF-8";
         String requestURL = "http://52.34.9.132/create-event";
         List<String> response = null;
@@ -39,6 +44,7 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             //multipart.addFilePart("picture", new File(filePath));
             multipart.addFilePart("picture", new File(event.getCOLUMN_NAME_POSTER()));
             response = multipart.finish();
+            result = multipart.isSucceeded()?"True":"False";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,7 +53,8 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
             stringBuilder.append(temp);
         }
         System.out.println(stringBuilder);
-        return stringBuilder.toString();
+        //return stringBuilder.toString();
+        return result;
     }
 
     protected void onProgressUpdate(Integer... progress) {
@@ -56,5 +63,13 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
 
     protected void onPostExecute(String result) {
         //showDialog("Downloaded " + result + " bytes");
+        if (result.equals("True"))
+            Toast.makeText(MyApplication.getAppContext(),
+                    "The event is launched successfully",
+                    Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(MyApplication.getAppContext(),
+                    "The event can not be launched. Maybe there is an error in the input ",
+                    Toast.LENGTH_LONG).show();
     }
 }

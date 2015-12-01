@@ -24,6 +24,7 @@ public class MultipartUtility {
     private String charset;
     private OutputStream outputStream;
     private PrintWriter writer;
+    private boolean isSucceeded = false;
 
     /**
      * This constructor initializes a new HTTP POST request with content type
@@ -143,10 +144,15 @@ public class MultipartUtility {
             }
             reader.close();
             httpConn.disconnect();
+            isSucceeded = true;
         } else {
             throw new IOException("Server returned non-OK status: " + status);
         }
 
         return response;
+    }
+
+    public boolean isSucceeded() {
+        return isSucceeded;
     }
 }

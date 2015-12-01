@@ -21,7 +21,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.local.CreateEventToRemote;
@@ -331,6 +330,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         event.setCOLUMN_NAME_LAUNCHER_ID("test");
                         CreateEventToRemote mCreateEventToRemote = new CreateEventToRemote();
                         mCreateEventToRemote.execute(event);
+                        /*
                         while (mCreateEventToRemote.getResponseCode() != 200 && mCreateEventToRemote.getResponseCode() != 500) {
 //                            System.out.println("mCreateEventToRemote.getResponse()-->" + mCreateEventToRemote.getResponseCode());
                         }
@@ -339,6 +339,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         } else {
                             Toast.makeText(mContext, "The event can not be launched. Maybe there is an error in the input ", Toast.LENGTH_LONG).show();
                         }
+                        */
                         FragmentManager fm = ((MainActivity) mContext).getFragmentManager();
                         FragmentTransaction transaction = fm.beginTransaction();
                         LaunchEventFragment mLaunchEvent = ((MainActivity) mContext).getmLaunchEvent();
