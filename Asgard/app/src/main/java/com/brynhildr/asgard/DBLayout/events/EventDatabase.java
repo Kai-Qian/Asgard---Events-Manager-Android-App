@@ -5,11 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.brynhildr.asgard.DBLayout.relationships.RelationshipSchema;
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.local.EventWithID;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -218,7 +216,7 @@ public class EventDatabase {
 
         sb.append("'").append(eventIDs.get(eventIDs.size() - 1)).append("'");
 
-        String selection = EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID + "in (" + sb.toString() + ")";
+        String selection = EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID + " in (" + sb.toString() + ")";
 
         Cursor cursor = db.query(EventSchema.EventEntry.TABLE_NAME,
                 new String[]{

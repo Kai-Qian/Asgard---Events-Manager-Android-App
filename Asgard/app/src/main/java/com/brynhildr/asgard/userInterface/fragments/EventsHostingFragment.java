@@ -23,7 +23,6 @@ import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.entities.HostEventAdapter;
-import com.brynhildr.asgard.local.GetEventsFromRemote;
 import com.brynhildr.asgard.local.GetLaunchedEvents;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
@@ -162,7 +161,7 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                new GetEventsFromRemote().execute();
+//                new GetEventsFromRemote().execute();
                 mSwipeRefreshLayout.setRefreshing(false);
                 FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();

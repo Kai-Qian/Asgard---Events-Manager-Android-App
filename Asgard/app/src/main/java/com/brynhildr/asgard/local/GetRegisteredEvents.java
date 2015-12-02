@@ -13,13 +13,12 @@ import java.util.ArrayList;
  */
 public class GetRegisteredEvents {
 
-    private EventDatabase edb = new EventDatabase(MyApplication.getAppContext());
-    private RelationshipDatabase rdb = new RelationshipDatabase(MyApplication.getAppContext());
-
     public ArrayList<Event> getRegisteredEvents() {
         String userName = SimplifiedUserAuthentication.getUsername();
         new GetEventsFromRemote().execute();
         new GetRelationsFromRemote().execute();
+        EventDatabase edb = new EventDatabase(MyApplication.getAppContext());
+        RelationshipDatabase rdb = new RelationshipDatabase(MyApplication.getAppContext());
         ArrayList<String> listEventIDs = rdb.getRegisteredEventIDs(userName);
         return edb.getRegisteredEvents(listEventIDs);
     }
