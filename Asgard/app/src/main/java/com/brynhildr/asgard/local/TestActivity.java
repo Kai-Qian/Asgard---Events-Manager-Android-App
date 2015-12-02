@@ -46,7 +46,7 @@ public class TestActivity extends AppCompatActivity {
         */
         //new GetRelationsFromRemote().execute();
         try {
-            Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster2.jpg").get();
+            Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
             System.out.println("Bitmap got!");
             imageView.setImageBitmap(posterBitmap);
         } catch (Exception e) {
