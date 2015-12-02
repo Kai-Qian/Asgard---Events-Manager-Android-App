@@ -19,7 +19,7 @@ public class CreateEventToRemote extends AsyncTask<Event, Integer, String> {
     private static final String URL = "http://52.34.9.132/create-event";
     private static final String query = "";
     //private String response = "";
-    private String BOUNDARY = java.util.UUID.randomUUID ( ).toString ( ) ;
+    private String BOUNDARY = java.util.UUID.randomUUID().toString();
     private String PREFIX = "--" , LINEND = "\r\n" ;
     private String MULTIPART_FROM_DATA = "multipart/form-data" ;
     private String CHARSET = "UTF-8" ;
