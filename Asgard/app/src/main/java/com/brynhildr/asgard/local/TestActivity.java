@@ -1,11 +1,13 @@
 package com.brynhildr.asgard.local;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
@@ -18,6 +20,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ImageView imageView = (ImageView) findViewById(R.id.testView);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -41,8 +44,14 @@ public class TestActivity extends AppCompatActivity {
 
         new CreateEventToRemote().execute(event);
         */
-        new GetRelationsFromRemote().execute();
-
+        //new GetRelationsFromRemote().execute();
+        try {
+            Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster2.jpg").get();
+            System.out.println("Bitmap got!");
+            imageView.setImageBitmap(posterBitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
