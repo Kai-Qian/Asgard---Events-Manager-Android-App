@@ -32,9 +32,12 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
+
         /******************************************************************
          *
          * Usage: get events from remote
+         * @para: none
+         * @return: none
          *
          * new GetEventsFromRemote().execute();
          ******************************************************************/
@@ -43,6 +46,8 @@ public class TestActivity extends AppCompatActivity {
         /******************************************************************
          *
          * Usage: Launch event to remote
+         * @para: none
+         * @return: none
          *
          * Event event = new Event();
          * event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST").setCOLUMN_NAME_DATEANDTIME("1449878400")
@@ -56,7 +61,10 @@ public class TestActivity extends AppCompatActivity {
 
 
         /******************************************************************
+         *
          * Usage: get relations from remote
+         * @para: none
+         * @return: none
          *
          * new GetRelationsFromRemote().execute();
          *
@@ -64,7 +72,11 @@ public class TestActivity extends AppCompatActivity {
 
 
         /******************************************************************
+         *
          * Usage: download and display image from remote
+         * @para: string, the url of image.
+         *        e.g. event.getCOLUMN_NAME_POSTER()
+         * @return: none
          *
          * try {
          *     Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
@@ -78,9 +90,12 @@ public class TestActivity extends AppCompatActivity {
 
 
         /******************************************************************
+         *
          * Usage: Login to remote. A toast will be shown.
          * Important: After login successfully, the SimplifiedUserAuthentication info should be revised.
          *            Which means, this function can only be called in SimplifiedUserAuthentication.java
+         * @para: username, password
+         * @return: boolean
          *
          * try {
          *     boolean loginSucceeded = new AuthenticationWithRemote().execute("test", "test").get();
@@ -92,7 +107,11 @@ public class TestActivity extends AppCompatActivity {
 
 
         /******************************************************************
+         *
          * Usage: register user to remote. A toast will be shown.
+         * @para: User
+         * @return: none or string (depends on how to call it. Examples are given below.)
+         *
          * The return string will be one of the following:
          * 1. Failed
          * 2. This username has been registered.
@@ -112,7 +131,11 @@ public class TestActivity extends AppCompatActivity {
 
 
         /******************************************************************
+         *
          * Usage: new RegisterEventToRemote().execute(event_id, username);
+         * @para: event_id, username
+         * @return: none or string (depends on how to call it. Examples are given below.)
+         *
          * The return string will be one of the following:
          * 1. You have already registered.
          * 2. OK
@@ -129,7 +152,10 @@ public class TestActivity extends AppCompatActivity {
 
 
         /******************************************************************
+         *
          * Usage: new UnregisterEventToRemote().execute(event_id, username);
+         * @para: event_id, username
+         * @return: none or string (depends on how to call it. Examples are given below.)
          * The return string will be one of the following:
          * 1. You have already registered.
          * 2. OK
