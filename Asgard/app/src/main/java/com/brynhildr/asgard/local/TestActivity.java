@@ -32,14 +32,15 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        /**
+        /******************************************************************
          *
          * Usage: get events from remote
          *
          * new GetEventsFromRemote().execute();
-         */
+         ******************************************************************/
 
-        /**
+
+        /******************************************************************
          *
          * Usage: Launch event to remote
          *
@@ -50,16 +51,19 @@ public class TestActivity extends AppCompatActivity {
          *       .setCOLUMN_NAME_VENUE("huoguo").setCOLUMN_NAME_TARGET("humans")
          *       .setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
          * new CreateEventToRemote().execute(event);
-         */
+         *
+         ******************************************************************/
 
 
-        /**
+        /******************************************************************
          * Usage: get relations from remote
          *
          * new GetRelationsFromRemote().execute();
-         */
+         *
+         ******************************************************************/
 
-        /**
+
+        /******************************************************************
          * Usage: download and display image from remote
          *
          * try {
@@ -69,16 +73,24 @@ public class TestActivity extends AppCompatActivity {
          * } catch (Exception e) {
          *     e.printStackTrace();
          * }
-         */
+         *
+         ******************************************************************/
 
-        /**
+
+        /******************************************************************
          * Usage: Login to remote. A toast will be shown.
          * Important: After login successfully, the SimplifiedUserAuthentication info should be revised.
          *
-         * boolean loginSucceeded =  new AuthenticationWithRemote().execute("test", "test").get();
-         */
+         * try {
+         *     boolean loginSucceeded = new AuthenticationWithRemote().execute("test", "test").get();
+         * } catch (Exception e) {
+         *     e.printStackTrace();
+         * }
+         *
+         ******************************************************************/
 
-        /**
+
+        /******************************************************************
          * Usage: register user to remote. A toast will be shown.
          * The return string will be one of the following:
          * 1. Failed
@@ -94,9 +106,11 @@ public class TestActivity extends AppCompatActivity {
          * }
          *
          * or new RegisterUserToRemote().execute(user);
-         */
+         *
+         ******************************************************************/
 
-        /**
+
+        /******************************************************************
          * Usage: new RegisterEventToRemote().execute(event_id, username);
          * The return string will be one of the following:
          * 1. You have already registered.
@@ -110,9 +124,10 @@ public class TestActivity extends AppCompatActivity {
          *
          * or  new RegisterEventToRemote().execute("2", "test");
          *
-         */
+         ******************************************************************/
 
-        /**
+
+        /******************************************************************
          * Usage: new UnregisterEventToRemote().execute(event_id, username);
          * The return string will be one of the following:
          * 1. You have already registered.
@@ -126,7 +141,8 @@ public class TestActivity extends AppCompatActivity {
          *
          * or new UnregisterEventToRemote().execute("1", "test");
          *
-         */
+         ******************************************************************/
+
 
     }
 
