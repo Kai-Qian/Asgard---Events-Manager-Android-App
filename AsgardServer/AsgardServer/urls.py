@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^get-events', 'Asgard_Services.views.get_all_events'),
     url(r'^get-relationships', 'Asgard_Services.views.get_all_relationships'),
     url(r'^create-event', 'Asgard_Services.views.create_event'),
+    url(r'^login', 'Asgard_Services.views.login'),
     url(r'^$', 'Asgard_Services.views.index'),
 ]

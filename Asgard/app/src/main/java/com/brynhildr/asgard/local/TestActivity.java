@@ -31,27 +31,51 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        new GetEventsFromRemote().execute();
+        /**
+         *
+         * Usage: get events from remote
+         *
+         * new GetEventsFromRemote().execute();
+         */
 
-        Event event = new Event();
-        event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST").setCOLUMN_NAME_DATEANDTIME("1449878400")
-                .setCOLUMN_NAME_DRESS_CODE("DRESS CODE").setCOLUMN_NAME_EVENT_NAME("KTV")
-                .setCOLUMN_NAME_LAUNCHER_ID("test").setCOLUMN_NAME_MAX_PEOPLE("7")
-                .setCOLUMN_NAME_VENUE("huoguo").setCOLUMN_NAME_TARGET("humans")
-                .setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
+        /**
+         *
+         * Usage: Launch event to remote
+         *
+         * Event event = new Event();
+         * event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST").setCOLUMN_NAME_DATEANDTIME("1449878400")
+         *       .setCOLUMN_NAME_DRESS_CODE("DRESS CODE").setCOLUMN_NAME_EVENT_NAME("KTV")
+         *       .setCOLUMN_NAME_LAUNCHER_ID("test").setCOLUMN_NAME_MAX_PEOPLE("7")
+         *       .setCOLUMN_NAME_VENUE("huoguo").setCOLUMN_NAME_TARGET("humans")
+         *       .setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
+         * new CreateEventToRemote().execute(event);
+         */
 
+        /**
+         * Usage: get relations from remote
+         *
+         * new GetRelationsFromRemote().execute();
+         */
 
-        new CreateEventToRemote().execute(event);
-        */
-        //new GetRelationsFromRemote().execute();
-        try {
-            Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
-            System.out.println("Bitmap got!");
-            imageView.setImageBitmap(posterBitmap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        /**
+         * Usage: download and display image from remote
+         *
+         * try {
+         *    Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
+         *    System.out.println("Bitmap got!");
+         *    imageView.setImageBitmap(posterBitmap);
+         * } catch (Exception e) {
+         *    e.printStackTrace();
+         * }
+         */
+
+        /**
+         * Usage: Login to remote.
+         * Important: After login successfully, the SimplifiedUserAuthentication info should be revised.
+         *
+         * boolean loginSucceeded =  new AuthenticationWithRemote().execute("test", "test").get();
+         */
+
     }
 
 }

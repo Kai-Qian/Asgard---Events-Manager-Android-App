@@ -5,20 +5,23 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.http import Http404
 from django.views.decorators.csrf import csrf_exempt
-from functools import wraps
-from django.utils.decorators import available_attrs, decorator_from_middleware
-from pytz import timezone
-import pytz
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
-from django.db import transaction
 from django.contrib.auth import authenticate
-from django.contrib.auth import login as login_func_from_django
-from django.contrib.auth import logout as logout_func_from_django
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
-import traceback, sys
+import pytz
+import traceback
+
+
+@csrf_exempt
+def login(request):
+    username = str(request.POST['username'])
+    password = str(request.POST['password'])
+    username = username.replace("\r\n", "")
+    password = password.replace("\r\n", "")
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        return HttpResponse("OK", content_type="text/plain")
+    else:
+        return HttpResponse("NOT OK", content_type="text/plain")
+
 
 @csrf_exempt
 def create_event(request):
