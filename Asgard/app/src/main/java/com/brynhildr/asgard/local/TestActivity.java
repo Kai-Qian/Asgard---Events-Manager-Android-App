@@ -80,6 +80,7 @@ public class TestActivity extends AppCompatActivity {
         /******************************************************************
          * Usage: Login to remote. A toast will be shown.
          * Important: After login successfully, the SimplifiedUserAuthentication info should be revised.
+         *            Which means, this function can only be called in SimplifiedUserAuthentication.java
          *
          * try {
          *     boolean loginSucceeded = new AuthenticationWithRemote().execute("test", "test").get();
