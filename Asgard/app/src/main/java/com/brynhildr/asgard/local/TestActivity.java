@@ -92,8 +92,10 @@ public class TestActivity extends AppCompatActivity {
         /******************************************************************
          *
          * Usage: Login to remote. A toast will be shown.
-         * Important: After login successfully, the SimplifiedUserAuthentication info should be revised.
-         *            Which means, this function can only be called in SimplifiedUserAuthentication.java
+         * @Important: After login successfully, the SimplifiedUserAuthentication info should be revised.
+         *             Which means, this function can only be called in SimplifiedUserAuthentication.java
+         *             The skeleton has been built in SimplifiedUserAuthentication.java
+         *             TODO: Handle cases where login failed in SimplifiedUserAuthentication.java
          * @para: username, password
          * @return: boolean
          *
@@ -156,6 +158,7 @@ public class TestActivity extends AppCompatActivity {
          * Usage: new UnregisterEventToRemote().execute(event_id, username);
          * @para: event_id, username
          * @return: none or string (depends on how to call it. Examples are given below.)
+         *
          * The return string will be one of the following:
          * 1. You have already registered.
          * 2. OK
