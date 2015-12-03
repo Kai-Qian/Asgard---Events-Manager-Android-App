@@ -64,7 +64,27 @@ def register_event(request):
         return HttpResponse("You have already registered.", content_type="text/plain")
     user.participate_events.add(event)
     user.save()
-    return HttpResponse("NOT OK", content_type="text/plain")
+    return HttpResponse("OK", content_type="text/plain")
+
+
+@csrf_exempt
+def unregister_event(request):
+    event_id = str(request.POST['event_id'])
+    username = str(request.POST['username'])
+    username = username.replace("\r\n", "")
+    event_id = event_id.replace("\r\n", "")
+    try:
+        user = User.objects.get(username=username).user_profile
+        event = Event.objects.get(pk=event_id)
+    except User.DoesNotExist or Event.DoesNotExist:
+        raise Http404("No result matches the given query.")
+
+    registered_events = user.participate_events.all()
+    if event not in registered_events:
+        return HttpResponse("You have not registered.", content_type="text/plain")
+    user.participate_events.remove(event)
+    user.save()
+    return HttpResponse("OK", content_type="text/plain")
 
 
 @csrf_exempt

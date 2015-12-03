@@ -63,11 +63,11 @@ public class TestActivity extends AppCompatActivity {
          * Usage: download and display image from remote
          *
          * try {
-         *    Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
-         *    System.out.println("Bitmap got!");
-         *    imageView.setImageBitmap(posterBitmap);
+         *     Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
+         *     System.out.println("Bitmap got!");
+         *     imageView.setImageBitmap(posterBitmap);
          * } catch (Exception e) {
-         *    e.printStackTrace();
+         *     e.printStackTrace();
          * }
          */
 
@@ -87,11 +87,13 @@ public class TestActivity extends AppCompatActivity {
          *
          * User user = new User("test2", "test@test.com", "123", "test", "male");
          * try {
-         *    String registerInfo = new RegisterUserToRemote().execute(user).get();
-         *    System.out.println(registerInfo);
+         *     String registerUserInfo = new RegisterUserToRemote().execute(user).get();
+         *     System.out.println(registerInfo);
          * } catch (Exception e) {
-         *    e.printStackTrace();
+         *     e.printStackTrace();
          * }
+         *
+         * or new RegisterUserToRemote().execute(user);
          */
 
         /**
@@ -100,7 +102,30 @@ public class TestActivity extends AppCompatActivity {
          * 1. You have already registered.
          * 2. OK
          *
-         * e.g. new RegisterEventToRemote().execute("1", "test");
+         * try {
+         *     String registerEventInfo = new RegisterEventToRemote().execute("1", "test").get();
+         * } catch (Exception e) {
+         *     e.printStackTrace();
+         * }
+         *
+         * or  new RegisterEventToRemote().execute("2", "test");
+         *
+         */
+
+        /**
+         * Usage: new UnregisterEventToRemote().execute(event_id, username);
+         * The return string will be one of the following:
+         * 1. You have already registered.
+         * 2. OK
+         *
+         * try {
+         *     String unregisterEventInfo = new UnregisterEventToRemote().execute("2", "test").get();
+         * } catch (Exception e) {
+         *    e.printStackTrace();
+         * }
+         *
+         * or new UnregisterEventToRemote().execute("1", "test");
+         *
          */
 
     }
