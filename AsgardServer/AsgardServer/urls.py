@@ -19,9 +19,11 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^get-events/(?P<log_id>\d+)$', 'Asgard_Services.views.get_events', name='get-changes'),
-    url(r'^get-events', 'Asgard_Services.views.get_all_events'),
-    url(r'^get-relationships', 'Asgard_Services.views.get_all_relationships'),
-    url(r'^create-event', 'Asgard_Services.views.create_event'),
-    url(r'^login', 'Asgard_Services.views.login'),
+    url(r'^get-events$', 'Asgard_Services.views.get_all_events'),
+    url(r'^get-relationships$', 'Asgard_Services.views.get_all_relationships'),
+    url(r'^create-event$', 'Asgard_Services.views.create_event'),
+    url(r'^login$', 'Asgard_Services.views.login'),
+    url(r'^register$', 'Asgard_Services.views.register'),
+    url(r'^register-event$', 'Asgard_Services.views.register_event'),
     url(r'^$', 'Asgard_Services.views.index'),
 ]
