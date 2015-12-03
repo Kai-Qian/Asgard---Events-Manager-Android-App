@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
+import com.brynhildr.asgard.entities.User;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -70,10 +71,35 @@ public class TestActivity extends AppCompatActivity {
          */
 
         /**
-         * Usage: Login to remote.
+         * Usage: Login to remote. A toast will be shown.
          * Important: After login successfully, the SimplifiedUserAuthentication info should be revised.
          *
          * boolean loginSucceeded =  new AuthenticationWithRemote().execute("test", "test").get();
+         */
+
+        /**
+         * Usage: register user to remote. A toast will be shown.
+         * The return string will be one of the following:
+         * 1. Failed
+         * 2. This username has been registered.
+         * 3. Register Succeeded
+         *
+         * User user = new User("test2", "test@test.com", "123", "test", "male");
+         * try {
+         *    String registerInfo = new RegisterUserToRemote().execute(user).get();
+         *    System.out.println(registerInfo);
+         * } catch (Exception e) {
+         *    e.printStackTrace();
+         * }
+         */
+
+        /**
+         * Usage: new RegisterEventToRemote().execute(event_id, username);
+         * The return string will be one of the following:
+         * 1. You have already registered.
+         * 2. OK
+         *
+         * e.g. new RegisterEventToRemote().execute("1", "test");
          */
 
     }

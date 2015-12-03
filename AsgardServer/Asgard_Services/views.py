@@ -24,6 +24,50 @@ def login(request):
 
 
 @csrf_exempt
+def register(request):
+    username = str(request.POST['username'])
+    username = username.replace("\r\n", "")
+    users = User.objects.filter(username__exact=username)
+    if len(users) != 0:
+        return HttpResponse("This username has been registered.", content_type="text/plain")
+    password = str(request.POST['password'])
+    email = str(request.POST['email'])
+    phone = str(request.POST['phone'])
+    gender = str(request.POST['gender'])
+
+    password = password.replace("\r\n", "")
+    gender = gender.replace("\r\n", "")
+    email = email.replace("\r\n", "")
+    phone = phone.replace("\r\n", "")
+    user = User(username=username, email=email)
+    user.set_password(password)
+    user.save()
+    user_profile = UserProfile(gender=gender, phone_num=phone, user=user)
+    user_profile.save()
+    return HttpResponse("OK", content_type="text/plain")
+
+
+@csrf_exempt
+def register_event(request):
+    event_id = str(request.POST['event_id'])
+    username = str(request.POST['username'])
+    username = username.replace("\r\n", "")
+    event_id = event_id.replace("\r\n", "")
+    try:
+        user = User.objects.get(username=username).user_profile
+        event = Event.objects.get(pk=event_id)
+    except User.DoesNotExist or Event.DoesNotExist:
+        raise Http404("No result matches the given query.")
+
+    registered_events = user.participate_events.all()
+    if event in registered_events:
+        return HttpResponse("You have already registered.", content_type="text/plain")
+    user.participate_events.add(event)
+    user.save()
+    return HttpResponse("NOT OK", content_type="text/plain")
+
+
+@csrf_exempt
 def create_event(request):
     try:
         launcher = User.objects.get(username=request.POST['username']).user_profile
