@@ -1,5 +1,7 @@
 package com.brynhildr.asgard.global;
 
+import com.brynhildr.asgard.local.AuthenticationWithRemote;
+
 /**
  * Created by lqshan on 11/30/15.
  */
@@ -25,11 +27,14 @@ public class SimplifiedUserAuthentication {
     public static boolean login(String username, String pwd) {
         if (isLoggedIn) // You have already logged in.
             return false;
-        /**
-         *  TODO: Send Post request to server
-         */
+        boolean loginSucceeded = false;
+        try {
+            loginSucceeded = new AuthenticationWithRemote().execute("test", "test").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        if (true) { // Login succeeded
+        if (loginSucceeded) { // Login succeeded
             setUsername(username);
             isLoggedIn = true;
         } else {
