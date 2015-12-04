@@ -260,7 +260,7 @@ public class EventDatabase {
      * @param userName the user name of the user
      * @return the list of events hosted by this user
      */
-    public ArrayList<Event> getHostingEvents(String userName) {
+    public ArrayList<EventWithID> getHostingEvents(String userName) {
 
         SQLiteDatabase db = eventDatabaseHelper.getReadableDatabase();
 
@@ -269,6 +269,7 @@ public class EventDatabase {
 
         Cursor cursor = db.query(EventSchema.EventEntry.TABLE_NAME,
                 new String[]{
+                        EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID,
                         EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME,
                         EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME,
                         EventSchema.EventEntry.COLUMN_NAME_VENUE,
@@ -281,10 +282,11 @@ public class EventDatabase {
                         EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP},
                 selection, whereArgs, null, null, null);
 
-        ArrayList<Event> events = new ArrayList<Event>();
+        ArrayList<EventWithID> events = new ArrayList<EventWithID>();
         while (cursor.moveToNext()) {
             // Create each event object.
-            Event event = new Event();
+            EventWithID event = new EventWithID();
+            event.setCOLUMN_NAME_EVENT_NAME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID)));
             event.setCOLUMN_NAME_EVENT_NAME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME)));
             event.setCOLUMN_NAME_VENUE(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_VENUE)));
             event.setCOLUMN_NAME_DATEANDTIME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME)));
