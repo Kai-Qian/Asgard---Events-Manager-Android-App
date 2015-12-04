@@ -16,7 +16,7 @@ public class UpdateEventToRemote extends AsyncTask<EventWithID, Integer, String>
 
     private final String filePath = "/storage/emulated/0/DCIM/Camera/burger_king_icon.png";
     private static final String TAG = "HttpGetTask";
-    private static final String URL = "http://52.34.9.132/create-event";
+    private static final String URL = "http://52.34.9.132/update-event";
     private static final String query = "";
     //private String response = "";
     private String BOUNDARY = java.util.UUID.randomUUID().toString();
@@ -33,7 +33,7 @@ public class UpdateEventToRemote extends AsyncTask<EventWithID, Integer, String>
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);
             EventWithID event = para1[0];
 
-            multipart.addFormField("event_id", event.getCOLUMN_NAME_LAUNCHER_ID());
+            multipart.addFormField("event_id", event.getEventID());
             multipart.addFormField("name", event.getCOLUMN_NAME_EVENT_NAME());
             multipart.addFormField("venue", event.getCOLUMN_NAME_VENUE());
             multipart.addFormField("description", event.getCOLUMN_NAME_DESCRIPTION());
@@ -68,11 +68,11 @@ public class UpdateEventToRemote extends AsyncTask<EventWithID, Integer, String>
         //showDialog("Downloaded " + result + " bytes");
         if (result.equals("True"))
             Toast.makeText(MyApplication.getAppContext(),
-                    "The event is launched successfully",
+                    "The event is updated successfully",
                     Toast.LENGTH_LONG).show();
         else
             Toast.makeText(MyApplication.getAppContext(),
-                    "The event can not be launched. Maybe there is an error in the input ",
+                    "The event can not be updated. Maybe there is an error in the input ",
                     Toast.LENGTH_LONG).show();
     }
 }

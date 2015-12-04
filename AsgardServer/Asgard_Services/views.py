@@ -166,7 +166,7 @@ def update_event(request):
     date = datetime.fromtimestamp(int(request.POST['time']), pytz.UTC)
 
     try:
-        event = Event.objects.get(pk=request.POST['event_id'])
+        event = Event.objects.get(pk=int(request.POST['event_id']))
         event.name = str(request.POST['name'])
         event.venue = str(request.POST['venue'])
         event.description = str(request.POST['description'])
