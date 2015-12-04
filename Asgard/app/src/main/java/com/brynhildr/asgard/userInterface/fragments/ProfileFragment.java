@@ -119,9 +119,10 @@ public class ProfileFragment extends Fragment {
         TextView email = (TextView) getActivity().findViewById(R.id.email);
         TextView phoneNumber = (TextView) getActivity().findViewById(R.id.phoneNumber);
         TextView gender = (TextView) getActivity().findViewById(R.id.gender);
-        Button editProfile = (Button) getActivity().findViewById(R.id.editProfile);
 
         profilePic.setImageResource(R.drawable.haibara_ai);
+
+
 
     }
 

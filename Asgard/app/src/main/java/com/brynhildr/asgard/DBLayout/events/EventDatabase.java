@@ -209,6 +209,7 @@ public class EventDatabase {
      */
     public ArrayList<EventWithID> getRegisteredEvents(ArrayList<String> eventIDs) {
 
+        if (eventIDs.size() == 0) return new ArrayList<EventWithID>();
         SQLiteDatabase db = eventDatabaseHelper.getReadableDatabase();
 
         StringBuffer sb = new StringBuffer();
