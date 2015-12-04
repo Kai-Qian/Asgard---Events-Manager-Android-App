@@ -16,7 +16,7 @@ public class GetRegisteredEvents {
     private EventDatabase edb = new EventDatabase(MyApplication.getAppContext());
     private RelationshipDatabase rdb = new RelationshipDatabase(MyApplication.getAppContext());
 
-    public ArrayList<Event> getRegisteredEvents() {
+    public ArrayList<EventWithID> getRegisteredEvents() {
         String userName = SimplifiedUserAuthentication.getUsername();
         new GetEventsFromRemote().execute();
         new GetRelationsFromRemote().execute();

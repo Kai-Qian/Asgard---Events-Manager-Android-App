@@ -123,10 +123,6 @@ public class ProfileFragment extends Fragment {
 
         profilePic.setImageResource(R.drawable.haibara_ai);
 
-
-
-
-
     }
 
 }
