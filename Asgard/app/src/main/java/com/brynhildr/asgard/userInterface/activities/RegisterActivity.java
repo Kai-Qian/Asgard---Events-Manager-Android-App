@@ -92,9 +92,11 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         paIntent = PendingIntent.getBroadcast(this, 0, new Intent(), 0);
         smsManager = SmsManager.getDefault();
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email_register);
+
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password_register);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -105,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                 return false;
             }
         });
+
         mUserName = (EditText) findViewById(R.id.username_register);
         mUserName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
