@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.local.GetUserInfoFromRemote;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,6 +122,17 @@ public class ProfileFragment extends Fragment {
         TextView gender = (TextView) getActivity().findViewById(R.id.gender);
 
         profilePic.setImageResource(R.drawable.haibara_ai);
+//
+//        String userName =
+//        // info = user.username + "&" + user_profile.gender + "&" + user_profile.phone_num + "&" +
+//        // user.email
+//        String userInfo;
+//        try {
+//            userInfo = new GetUserInfoFromRemote().execute()
+//        }
+//                = new GetUserInfoFromRemote().execute();
+
+
 
 
 

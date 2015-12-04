@@ -238,7 +238,7 @@ public class EventDatabase {
         while (cursor.moveToNext()) {
             // Create each event object.
             EventWithID event = new EventWithID();
-            event.setCOLUMN_NAME_EVENT_NAME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID)));
+            event.setID(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID)));
             event.setCOLUMN_NAME_EVENT_NAME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME)));
             event.setCOLUMN_NAME_VENUE(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_VENUE)));
             event.setCOLUMN_NAME_DATEANDTIME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME)));
@@ -287,7 +287,7 @@ public class EventDatabase {
         while (cursor.moveToNext()) {
             // Create each event object.
             EventWithID event = new EventWithID();
-            event.setCOLUMN_NAME_EVENT_NAME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID)));
+            event.setID(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_ENTRY_ID)));
             event.setCOLUMN_NAME_EVENT_NAME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME)));
             event.setCOLUMN_NAME_VENUE(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_VENUE)));
             event.setCOLUMN_NAME_DATEANDTIME(cursor.getString(cursor.getColumnIndex(EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME)));

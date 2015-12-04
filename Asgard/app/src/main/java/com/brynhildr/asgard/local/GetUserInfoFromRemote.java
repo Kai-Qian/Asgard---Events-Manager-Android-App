@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by lqshan on 11/19/15.
  */
-public class GetUserInfoToRemote extends AsyncTask<String, Integer, String> {
+public class GetUserInfoFromRemote extends AsyncTask<String, Integer, String> {
 
     protected String doInBackground(String... para1) {
         String result = null;
@@ -35,9 +35,11 @@ public class GetUserInfoToRemote extends AsyncTask<String, Integer, String> {
         for (String temp : response) {
             stringBuilder.append(temp);
         }
+
         System.out.println(stringBuilder);
+        //
         //return stringBuilder.toString();
-        return result;
+        return stringBuilder.toString();
     }
 
     protected void onProgressUpdate(Integer... progress) {
@@ -45,14 +47,5 @@ public class GetUserInfoToRemote extends AsyncTask<String, Integer, String> {
     }
 
     protected void onPostExecute(String result) {
-        //showDialog("Downloaded " + result + " bytes");
-        if (result.equals("True"))
-            Toast.makeText(MyApplication.getAppContext(),
-                    "The event is launched successfully",
-                    Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(MyApplication.getAppContext(),
-                    "The event can not be launched. Maybe there is an error in the input ",
-                    Toast.LENGTH_LONG).show();
     }
 }

@@ -107,9 +107,6 @@
 
     </LinearLayout>
 
-
-    <!--<include layout="@layout/profile_info"/>-->
-
 </android.support.design.widget.CoordinatorLayout>
 
 
