@@ -181,4 +181,14 @@ def update_event(request):
     except Exception as e:
         print(e.message)
         traceback.print_exc()
-    return HttpResponse("Event created successfully.", content_type="text/plain")
+    return HttpResponse("Event updated successfully.", content_type="text/plain")
+
+
+@csrf_exempt
+def get_user_info(request):
+    username = request.POST['username']
+    username = username.replace("\r\n", "")
+    user = User.objects.get(username__exact=username)
+    user_profile = UserProfile.objects.get(user=user)
+    info = user.username + "&" + user_profile.gender + "&" + user_profile.phone_num + "&" + user.email
+    return HttpResponse(info, content_type="text/plain")
