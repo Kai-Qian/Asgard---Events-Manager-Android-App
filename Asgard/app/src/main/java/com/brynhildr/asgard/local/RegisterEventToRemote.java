@@ -52,7 +52,7 @@ public class RegisterEventToRemote extends AsyncTask<String, Integer, String> {
                     Toast.LENGTH_LONG).show();
         else
             Toast.makeText(MyApplication.getAppContext(),
-                    "You have already registered this event! Fuck!",
+                    "You have already registered this event!",
                     Toast.LENGTH_LONG).show();
     }
 }

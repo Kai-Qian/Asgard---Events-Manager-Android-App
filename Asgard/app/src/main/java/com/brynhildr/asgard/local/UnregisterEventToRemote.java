@@ -1,6 +1,9 @@
 package com.brynhildr.asgard.local;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.brynhildr.asgard.global.MyApplication;
 
 import java.util.List;
 
@@ -42,6 +45,13 @@ public class UnregisterEventToRemote extends AsyncTask<String, Integer, String> 
     }
 
     protected void onPostExecute(String result) {
-
+        if (result.equals("OK"))
+            Toast.makeText(MyApplication.getAppContext(),
+                    "You have unregistered successfully.",
+                    Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(MyApplication.getAppContext(),
+                    "You have not registered this event!",
+                    Toast.LENGTH_LONG).show();
     }
 }

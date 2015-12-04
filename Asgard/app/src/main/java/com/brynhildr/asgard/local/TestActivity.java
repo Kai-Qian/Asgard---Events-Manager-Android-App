@@ -160,7 +160,7 @@ public class TestActivity extends AppCompatActivity {
          * @return: none or string (depends on how to call it. Examples are given below.)
          *
          * The return string will be one of the following:
-         * 1. You have already registered.
+         * 1. You have not registered.
          * 2. OK
          *
          * try {
