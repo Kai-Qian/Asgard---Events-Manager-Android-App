@@ -7,6 +7,9 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
 
@@ -105,6 +108,20 @@ public class ProfileFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ImageView profilePic = (ImageView) getActivity().findViewById(R.id.profilePic);
+        TextView userName = (TextView) getActivity().findViewById(R.id.userName);
+        TextView email = (TextView) getActivity().findViewById(R.id.email);
+        TextView phoneNumber = (TextView) getActivity().findViewById(R.id.phoneNumber);
+        TextView gender = (TextView) getActivity().findViewById(R.id.gender);
+        Button editProfile = (Button) getActivity().findViewById(R.id.editProfile);
+
+
     }
 
 }
