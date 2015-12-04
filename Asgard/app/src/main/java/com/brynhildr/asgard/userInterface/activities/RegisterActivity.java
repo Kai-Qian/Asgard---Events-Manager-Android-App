@@ -5,12 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.PendingIntent;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -35,11 +33,10 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.brynhildr.asgard.DBLayout.user.DatabaseHelper;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.User;
+import com.brynhildr.asgard.local.RegisterUserToRemote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +82,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     private Drawable mPicture_1;
     private Drawable mPicture_2;
     private Drawable mPicture_3;
+
+    private String registerUserInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -296,36 +295,45 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             String phoneNum = mPhoneNumber.getText().toString();
             String userName = mUserName.getText().toString();
             User user = new User(userName, email, phoneNum, password, gender);
-            DatabaseHelper dbHelper = new DatabaseHelper(this,"user_db");
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            Cursor cursor1 = db.query("User", new String[]{"Username", "Email"}, null, null, null, null, null);
-            ContentValues values1 = new ContentValues();
-            ContentValues values2 = new ContentValues();
-            while (cursor1.moveToNext()) {
-                if (cursor1.getString(cursor1.getColumnIndex("Username")).equals(userName)) {
-                    Toast.makeText(this, "!!Username has already been used.", Toast.LENGTH_SHORT).show();
-                    showProgress(false);
-                    return;
-                } else if (cursor1.getString(cursor1.getColumnIndex("Email")).equals(email)) {
-                    Toast.makeText(this, "!!Email address has already been used.", Toast.LENGTH_SHORT).show();
-                    showProgress(false);
-                    return;
-                }
+            try {
+                registerUserInfo = new RegisterUserToRemote().execute(user).get();
+                System.out.println(registerUserInfo);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            values1.put("Username", user.getUserName());
-            values1.put("Email", user.getEmail());
-            values2.put("Password", user.getPassWord());
-            values2.put("Phonenum", user.getPhoneNum());
-            values2.put("Sex", user.getGender());
-            long isError1 = db.insert("User", null, values1);
-            long isError2 = db.insert("UserPrivacy", null, values2);
-            System.out.println(isError1);
-            System.out.println(isError2);
-            smsManager.sendTextMessage(user.getPhoneNum(), null, "Hello " + user.getUserName() +
-                            ", you have registered successfully on Asgard.", paIntent, null);
-            Intent intent = new Intent();
-            intent.setClass(RegisterActivity.this, LoginActivity.class);
-            RegisterActivity.this.startActivity(intent);
+            if (registerUserInfo.equals("Register Succeeded")) {
+                Intent intent = new Intent();
+                intent.setClass(RegisterActivity.this, LoginActivity.class);
+                RegisterActivity.this.startActivity(intent);
+            }
+//            DatabaseHelper dbHelper = new DatabaseHelper(this,"user_db");
+//            SQLiteDatabase db = dbHelper.getWritableDatabase();
+//            Cursor cursor1 = db.query("User", new String[]{"Username", "Email"}, null, null, null, null, null);
+//            ContentValues values1 = new ContentValues();
+//            ContentValues values2 = new ContentValues();
+//            while (cursor1.moveToNext()) {
+//                if (cursor1.getString(cursor1.getColumnIndex("Username")).equals(userName)) {
+//                    Toast.makeText(this, "!!Username has already been used.", Toast.LENGTH_SHORT).show();
+//                    showProgress(false);
+//                    return;
+//                } else if (cursor1.getString(cursor1.getColumnIndex("Email")).equals(email)) {
+//                    Toast.makeText(this, "!!Email address has already been used.", Toast.LENGTH_SHORT).show();
+//                    showProgress(false);
+//                    return;
+//                }
+//            }
+//            values1.put("Username", user.getUserName());
+//            values1.put("Email", user.getEmail());
+//            values2.put("Password", user.getPassWord());
+//            values2.put("Phonenum", user.getPhoneNum());
+//            values2.put("Sex", user.getGender());
+//            long isError1 = db.insert("User", null, values1);
+//            long isError2 = db.insert("UserPrivacy", null, values2);
+//            System.out.println(isError1);
+//            System.out.println(isError2);
+//            smsManager.sendTextMessage(user.getPhoneNum(), null, "Hello " + user.getUserName() +
+//                            ", you have registered successfully on Asgard.", paIntent, null);
+
         }
     }
 

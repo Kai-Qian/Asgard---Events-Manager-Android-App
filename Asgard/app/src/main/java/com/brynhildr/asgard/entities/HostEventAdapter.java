@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.local.EventWithID;
 import com.brynhildr.asgard.userInterface.activities.HostEventDetailsActivity;
 
 import java.util.ArrayList;
@@ -28,14 +29,14 @@ import java.util.List;
 public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.ViewHolderForHost>
 {
 
-    private List<Event> events;
+    private List<EventWithID> events;
     private Resources res;
     private Context mContext;
 
     private ArrayList<ViewHolderForHost> mViewHolderForHost = new ArrayList<ViewHolderForHost>();
 
 
-    public HostEventAdapter(Context context, List<Event> events)
+    public HostEventAdapter(Context context, List<EventWithID> events)
     {
         this.mContext = context;
         this.events = events;
@@ -60,7 +61,7 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
         if (events.size() == 0) {
             return;
         } else {
-            final Event p = events.get(i);
+            final EventWithID p = events.get(i);
             viewHolderForHost.mTextView1.setText(p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForHost.mTextView2.setText(p.getCOLUMN_NAME_EVENT_NAME());
             viewHolderForHost.mTextView3.setText(p.getCOLUMN_NAME_VENUE());
@@ -114,7 +115,7 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
 
     public void sortNewToOld() {
         Collections.sort(events, new NewToOldComparator());
-        for (Event i : events) {
+        for (EventWithID i : events) {
             System.out.println("DateAndTimeTimeStamp----->" + i.getDateAndTimeTimeStamp());
         }
         notifyDataSetChanged();
@@ -131,25 +132,25 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
         Collections.sort(events, new ModifiedComparator());
         notifyDataSetChanged();
     }
-    private static class NewToOldComparator implements Comparator<Event> {
+    private static class NewToOldComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
+        public int compare(EventWithID s1, EventWithID s2) {
             return -Long.valueOf(s1.getDateAndTimeTimeStamp())
                     .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
 //            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
-    private static class OldToNewComparator implements Comparator<Event> {
+    private static class OldToNewComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
+        public int compare(EventWithID s1, EventWithID s2) {
             return Long.valueOf(s1.getDateAndTimeTimeStamp())
                     .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
 //            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
-    private static class ModifiedComparator implements Comparator<Event> {
+    private static class ModifiedComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
+        public int compare(EventWithID s1, EventWithID s2) {
             return -Long.valueOf(s1.getModifiedTimeStamp())
                     .compareTo(Long.valueOf(s2.getModifiedTimeStamp()));
 //            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());

@@ -21,8 +21,8 @@ import android.view.ViewGroup;
 
 import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.entities.ManageEventAdapter;
+import com.brynhildr.asgard.local.EventWithID;
 import com.brynhildr.asgard.local.GetEventsFromRemote;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
@@ -47,7 +47,7 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
 
     private EventDatabase edb;
 
-    private ArrayList<Event> eventTmp;
+    private ArrayList<EventWithID> eventTmp;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -140,8 +140,8 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
     public void onResume() {
         super.onResume();
         edb = new EventDatabase(getActivity());
-        eventTmp = edb.readRow();
-        ArrayList<Event> event = new ArrayList<Event>(eventTmp.size());
+        eventTmp = edb.readRowWithID();
+        ArrayList<EventWithID> event = new ArrayList<EventWithID>(eventTmp.size());
         for (int i = eventTmp.size() - 1; i >= 0; i--) {
             event.add(eventTmp.get(i));
         }

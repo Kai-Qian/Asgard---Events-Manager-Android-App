@@ -313,7 +313,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public static  void setPath(String mPath) {
-        path = mPath;
+        LaunchEventAdapter.path = mPath;
     }
 
     private void dialog() {

@@ -21,6 +21,7 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     private ArrayList<EventTitleAndDetail> event;
 
     private Context mContext;
+    private static String path;
 
     private ArrayList<ViewHolderForDetails> mViewHolderForDetails = new ArrayList<ViewHolderForDetails>();
 
@@ -55,6 +56,14 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     {
         // 返回数据总数
         return event == null ? 0 : event.size();
+    }
+
+    public static String getPath() {
+        return path;
+    }
+
+    public static void setPath(String path) {
+        EventDetailsAdapter.path = path;
     }
 
     public ArrayList<ViewHolderForDetails> getmViewHolderForDetail() {

@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
+import com.brynhildr.asgard.local.EventWithID;
+import com.brynhildr.asgard.local.UnregisterEventToRemote;
 import com.brynhildr.asgard.userInterface.activities.EventDetailActivity;
 
 import java.util.ArrayList;
@@ -31,14 +34,14 @@ import java.util.List;
 public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.ViewHolderForManage>
 {
 
-    private List<Event> events;
+    private List<EventWithID> events;
     private Resources res;
     private Context mContext;
 
     private ArrayList<ViewHolderForManage> mViewHolderForManage = new ArrayList<ViewHolderForManage>();
 
 
-    public ManageEventAdapter(Context context, List<Event> events)
+    public ManageEventAdapter(Context context, List<EventWithID> events)
     {
         this.mContext = context;
         this.events = events;
@@ -63,7 +66,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
         if (events.size() == 0) {
             return;
         } else {
-            final Event p = events.get(i);
+            final EventWithID p = events.get(i);
             viewHolderForManage.mTextView1.setText(p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForManage.mTextView2.setText(p.getCOLUMN_NAME_EVENT_NAME());
             viewHolderForManage.mTextView3.setText(p.getCOLUMN_NAME_VENUE());
@@ -118,7 +121,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
         // 返回数据总数
         return events == null ? 0 : events.size();
     }
-    private void dialog(final ViewHolderForManage viewHolderForManage, final Event e) {
+    private void dialog(final ViewHolderForManage viewHolderForManage, final EventWithID e) {
         boolean flag = false;
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage("Are you sure you want to unregister this event？");
@@ -127,6 +130,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                new UnregisterEventToRemote().execute(e.getEventID(), SimplifiedUserAuthentication.getUsername());
 //                viewHolderForManage.mButton.setClickable(false);
 //                viewHolderForManage.mButton.setImageResource(R.drawable.ic_unregistered);
                 removeData(e);
@@ -146,7 +150,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
 
     public void sortNewToOld() {
         Collections.sort(events, new NewToOldComparator());
-        for (Event i : events) {
+        for (EventWithID i : events) {
             System.out.println("DateAndTimeTimeStamp----->" + i.getDateAndTimeTimeStamp());
         }
         notifyDataSetChanged();
@@ -163,25 +167,25 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
         Collections.sort(events, new ModifiedComparator());
         notifyDataSetChanged();
     }
-    private static class NewToOldComparator implements Comparator<Event> {
+    private static class NewToOldComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
+        public int compare(EventWithID s1, EventWithID s2) {
             return -Long.valueOf(s1.getDateAndTimeTimeStamp())
                     .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
 //            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
-    private static class OldToNewComparator implements Comparator<Event> {
+    private static class OldToNewComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
+        public int compare(EventWithID s1, EventWithID s2) {
             return Long.valueOf(s1.getDateAndTimeTimeStamp())
                     .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
 //            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
-    private static class ModifiedComparator implements Comparator<Event> {
+    private static class ModifiedComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
+        public int compare(EventWithID s1, EventWithID s2) {
             return -Long.valueOf(s1.getModifiedTimeStamp())
                     .compareTo(Long.valueOf(s2.getModifiedTimeStamp()));
 //            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
@@ -189,7 +193,7 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
     }
 
 
-    public void removeData(Event e)
+    public void removeData(EventWithID e)
     {
         int position = events.indexOf(e);
         events.remove(position);

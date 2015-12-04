@@ -8,7 +8,6 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,7 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.DBLayout.user.DatabaseHelper;
+import com.brynhildr.asgard.local.AuthenticationWithRemote;
 
 
 /**
@@ -55,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private String username;
     private String password;
     private boolean hasFlag = false;
+    private boolean loginSucceeded;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +143,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(username, password);
-            mAuthTask.execute((Void) null);
+            try {
+                loginSucceeded = new AuthenticationWithRemote().execute(username, password).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (loginSucceeded) {
+                Intent intent = new Intent();
+
+                intent.setClass(LoginActivity.this, MainActivity.class);
+                //使用这个Intent对象来启动ResultActivity
+                LoginActivity.this.startActivity(intent);
+                System.out.println("33333333333333333");
+                finish();
+            } else {
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }
+
+//            mAuthTask = new UserLoginTask(username, password);
+//            mAuthTask.execute((Void) null);
         }
     }
 
@@ -273,32 +291,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            DatabaseHelper dbHelper = new DatabaseHelper(LoginActivity.this,"user_db");
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor cursor1 = db.query("User", new String[]{"UserID", "Username"}, null, null, null, null, null);
-//            Cursor cursor2 = db.query("UserPrivacy", new String[]{"Password"}, "PrivacyID=?", new String[]{}, null, null, null);
-            while (cursor1.moveToNext()) {
-                if (!cursor1.getString(cursor1.getColumnIndex("Username")).equals(username)) {
-                    hasFlag = false;
-                    continue;
-                } else if (cursor1.getString(cursor1.getColumnIndex("Username")).equals(username)) {
-                    hasFlag = true;
-                    String id = cursor1.getString(cursor1.getColumnIndex("UserID"));
-                    Cursor cursor2 = db.query("UserPrivacy", new String[]{"Password"}, "PrivacyID=?", new String[]{id}, null, null, null);
-                    while (cursor2.moveToNext()) {
-                        System.out.println(cursor2.getString(cursor2.getColumnIndex("Password")));
-                        if (cursor2.getString(cursor2.getColumnIndex("Password")).equals(password)) {
-                            return true;
-                        } else {
-                            continue;
-                        }
-                    }
-                }
-            }
-            if (hasFlag == false) {
-//                Toast.makeText(LoginActivity.this, "!!Wrong password.", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+//            DatabaseHelper dbHelper = new DatabaseHelper(LoginActivity.this,"user_db");
+//            SQLiteDatabase db = dbHelper.getReadableDatabase();
+//            Cursor cursor1 = db.query("User", new String[]{"UserID", "Username"}, null, null, null, null, null);
+////            Cursor cursor2 = db.query("UserPrivacy", new String[]{"Password"}, "PrivacyID=?", new String[]{}, null, null, null);
+//            while (cursor1.moveToNext()) {
+//                if (!cursor1.getString(cursor1.getColumnIndex("Username")).equals(username)) {
+//                    hasFlag = false;
+//                    continue;
+//                } else if (cursor1.getString(cursor1.getColumnIndex("Username")).equals(username)) {
+//                    hasFlag = true;
+//                    String id = cursor1.getString(cursor1.getColumnIndex("UserID"));
+//                    Cursor cursor2 = db.query("UserPrivacy", new String[]{"Password"}, "PrivacyID=?", new String[]{id}, null, null, null);
+//                    while (cursor2.moveToNext()) {
+//                        System.out.println(cursor2.getString(cursor2.getColumnIndex("Password")));
+//                        if (cursor2.getString(cursor2.getColumnIndex("Password")).equals(password)) {
+//                            return true;
+//                        } else {
+//                            continue;
+//                        }
+//                    }
+//                }
+//            }
+//            if (hasFlag == false) {
+////                Toast.makeText(LoginActivity.this, "!!Wrong password.", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
 //            for (String credential : DUMMY_CREDENTIALS) {
 //                String[] pieces = credential.split(":");
 //                if (pieces[0].equals(mUsername)) {
@@ -317,13 +335,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Intent intent = new Intent();
-
-                intent.setClass(LoginActivity.this, MainActivity.class);
-                //使用这个Intent对象来启动ResultActivity
-                LoginActivity.this.startActivity(intent);
-                System.out.println("33333333333333333");
-                finish();
+//                Intent intent = new Intent();
+//
+//                intent.setClass(LoginActivity.this, MainActivity.class);
+//                //使用这个Intent对象来启动ResultActivity
+//                LoginActivity.this.startActivity(intent);
+//                System.out.println("33333333333333333");
+//                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
