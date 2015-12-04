@@ -46,6 +46,13 @@ public class RegisterEventToRemote extends AsyncTask<String, Integer, String> {
     }
 
     protected void onPostExecute(String result) {
-
+        if (result.equals("OK"))
+            Toast.makeText(MyApplication.getAppContext(),
+                    "You have registered successfully.",
+                    Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(MyApplication.getAppContext(),
+                    "You have already registered this event! Fuck!",
+                    Toast.LENGTH_LONG).show();
     }
 }
