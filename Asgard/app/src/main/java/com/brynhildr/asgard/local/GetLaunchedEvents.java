@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class GetLaunchedEvents {
 
-    public ArrayList<Event> getLaunchedEvents() {
+    public ArrayList<EventWithID> getLaunchedEvents() {
         String userName = SimplifiedUserAuthentication.getUsername();
         new GetEventsFromRemote().execute();
         EventDatabase edb = new EventDatabase(MyApplication.getAppContext());
