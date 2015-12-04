@@ -154,3 +154,31 @@ class Relationship:
         self.unique_id = unique_id
         self.event_id = event_id
         self.participant_username = participant_username
+
+
+@csrf_exempt
+def update_event(request):
+    try:
+        launcher = User.objects.get(username=request.POST['username']).user_profile
+    except User.DoesNotExist:
+        raise Http404("No User matches the given query.")
+
+    date = datetime.fromtimestamp(int(request.POST['time']), pytz.UTC)
+
+    try:
+        event = Event.objects.get(pk=request.POST['event_id'])
+        event.name = str(request.POST['name'])
+        event.venue = str(request.POST['venue'])
+        event.description = str(request.POST['description'])
+        event.dress_code = str(request.POST['dress_code'])
+        event.target_audience = str(request.POST['target_audience'])
+        event.max_people = int(request.POST['max_people'])
+        event.launcher = launcher
+        event.data = date
+        event.post = request.FILES['picture']
+        event.save()
+        print(request.FILES['picture'])
+    except Exception as e:
+        print(e.message)
+        traceback.print_exc()
+    return HttpResponse("Event created successfully.", content_type="text/plain")

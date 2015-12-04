@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^register$', 'Asgard_Services.views.register'),
     url(r'^register-event$', 'Asgard_Services.views.register_event'),
     url(r'^unregister-event$', 'Asgard_Services.views.unregister_event'),
+    url(r'^update-event$', 'Asgard_Services.views.update_event'),
     url(r'^$', 'Asgard_Services.views.index'),
 ]
