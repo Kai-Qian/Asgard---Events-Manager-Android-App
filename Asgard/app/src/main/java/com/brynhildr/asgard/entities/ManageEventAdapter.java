@@ -166,19 +166,25 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
     private static class NewToOldComparator implements Comparator<Event> {
         @Override
         public int compare(Event s1, Event s2) {
-            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+            return -Long.valueOf(s1.getDateAndTimeTimeStamp())
+                    .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
+//            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
     private static class OldToNewComparator implements Comparator<Event> {
         @Override
         public int compare(Event s1, Event s2) {
-            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+            return Long.valueOf(s1.getDateAndTimeTimeStamp())
+                    .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
+//            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
     private static class ModifiedComparator implements Comparator<Event> {
         @Override
         public int compare(Event s1, Event s2) {
-            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
+            return -Long.valueOf(s1.getModifiedTimeStamp())
+                    .compareTo(Long.valueOf(s2.getModifiedTimeStamp()));
+//            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
         }
     }
 

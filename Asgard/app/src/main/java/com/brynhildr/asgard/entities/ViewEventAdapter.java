@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.local.DownloadImageFromRemote;
+import com.brynhildr.asgard.local.EventWithID;
 import com.brynhildr.asgard.userInterface.activities.EventDetailActivity;
 
 import java.util.ArrayList;
@@ -29,14 +31,14 @@ public class ViewEventAdapter
     extends RecyclerView.Adapter<ViewEventAdapter.ViewHolderForView>
 {
 
-    private List<Event> events;
+    private List<EventWithID> events;
     private Resources res;
     private Context mContext;
 
     private ArrayList<ViewHolderForView> mViewHolderForView = new ArrayList<ViewHolderForView>();
 
 
-    public ViewEventAdapter(Context context, List<Event> events)
+    public ViewEventAdapter(Context context, List<EventWithID> events)
     {
         this.mContext = context;
         this.events = events;
@@ -62,7 +64,7 @@ public class ViewEventAdapter
             System.out.println("events.size() == 0--->" + (events.size() == 0));
             return;
         } else {
-            final Event p = events.get(i);
+            final EventWithID p = events.get(i);
             System.out.println("onBindViewHolder--->" + p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForView.mTextView1.setText(p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForView.mTextView2.setText(p.getCOLUMN_NAME_EVENT_NAME());
@@ -102,7 +104,16 @@ public class ViewEventAdapter
                 }
             });
             System.out.println("this.COLUMN_NAME_POSTER---->view");
-            viewHolderForView.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
+            try {
+                Bitmap posterBitmap = new DownloadImageFromRemote().execute(p.getCOLUMN_NAME_POSTER()).get();
+//                System.out.println("Bitmap got!");
+//                System.out.println("posterBitmap.getHeight()---->" + posterBitmap.getHeight());
+//                System.out.println("posterBitmap.getHeight()---->" + posterBitmap.getWidth());
+                viewHolderForView.mImageView.setImageBitmap(posterBitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            viewHolderForView.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
         }
     }
 
@@ -120,7 +131,7 @@ public class ViewEventAdapter
 
     public void sortNewToOld() {
         Collections.sort(events, new NewToOldComparator());
-        for (Event i : events) {
+        for (EventWithID i : events) {
             System.out.println("DateAndTimeTimeStamp----->" + i.getDateAndTimeTimeStamp());
         }
         notifyDataSetChanged();
@@ -137,22 +148,28 @@ public class ViewEventAdapter
         Collections.sort(events, new ModifiedComparator());
         notifyDataSetChanged();
     }
-    private static class NewToOldComparator implements Comparator<Event> {
+    private static class NewToOldComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
-            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        public int compare(EventWithID s1, EventWithID s2) {
+            return -Long.valueOf(s1.getDateAndTimeTimeStamp())
+                    .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
+//            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
-    private static class OldToNewComparator implements Comparator<Event> {
+    private static class OldToNewComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
-            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
+        public int compare(EventWithID s1, EventWithID s2) {
+            return Long.valueOf(s1.getDateAndTimeTimeStamp())
+                    .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
+//            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
-    private static class ModifiedComparator implements Comparator<Event> {
+    private static class ModifiedComparator implements Comparator<EventWithID> {
         @Override
-        public int compare(Event s1, Event s2) {
-            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
+        public int compare(EventWithID s1, EventWithID s2) {
+            return -Long.valueOf(s1.getModifiedTimeStamp())
+                    .compareTo(Long.valueOf(s2.getModifiedTimeStamp()));
+//            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
         }
     }
 

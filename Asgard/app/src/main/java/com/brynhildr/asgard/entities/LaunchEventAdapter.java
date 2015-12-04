@@ -45,6 +45,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ViewHolderForLaunch mmViewHolderForLaunch = null;
 
     private Context mContext;
+    private static String path;
 
     private Animation mFadeIn;
     private Animation mFadeOut;
@@ -306,6 +307,15 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
         return calendar.getTimeInMillis() / 1000;
     }
+
+    public static String getPath() {
+        return path;
+    }
+
+    public static  void setPath(String mPath) {
+        path = mPath;
+    }
+
     private void dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage("Are you sure you want to launch this event？");
@@ -327,7 +337,9 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         event.setCOLUMN_NAME_TARGET(tmp.get(4).getmEditText().getText().toString());
                         event.setCOLUMN_NAME_MAX_PEOPLE(tmp.get(5).getmEditText().getText().toString());
                         event.setCOLUMN_NAME_DESCRIPTION(tmp.get(6).getmEditText().getText().toString());
-                        event.setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
+                        event.setCOLUMN_NAME_POSTER(getPath());
+                        System.out.println("getPath()--->" + getPath());
+//                        event.setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
                         event.setCOLUMN_NAME_LAUNCHER_ID(SimplifiedUserAuthentication.getUsername());
                         CreateEventToRemote mCreateEventToRemote = new CreateEventToRemote();
                         mCreateEventToRemote.execute(event);

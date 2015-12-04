@@ -3,6 +3,7 @@ package com.brynhildr.asgard.userInterface.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -57,6 +58,7 @@ public class LaunchEventFragment extends Fragment {
 
     private LaunchEventAdapter launchEventAdapter;
     private ChoosePic choosePic;
+    private Uri imguri;
 
     private Button launchbtn;
     private Button clearbtn;
@@ -412,7 +414,9 @@ public class LaunchEventFragment extends Fragment {
     private void setImageToHeadView(Intent intent) {
 //        headImage2.setImageDrawable(null);
         headImage.setBackground(null);
-        Uri imguri = intent.getData();
+        imguri = intent.getData();
+        System.out.println("imguri----->" + getPath(imguri));
+        LaunchEventAdapter.setPath(getPath(imguri));
         if(imguri != null){
             Bitmap bitmap = decodeUriAsBitmap(imguri);//decode bitmap
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -496,5 +500,21 @@ public class LaunchEventFragment extends Fragment {
         System.out.println("Menu cleared!!!!!!!!!!!!!!!!!!!!----->" + menu.size());
         inflater.inflate(R.menu.launch_event_menu, menu);
 //        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public String getPath(Uri mUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = getActivity().managedQuery(mUri, proj, null, null, null);
+
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+
+        cursor.moveToFirst();
+
+        String path = cursor.getString(column_index);
+        return path;
+
     }
 }

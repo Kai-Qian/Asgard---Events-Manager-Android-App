@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.Event;
+import com.brynhildr.asgard.local.EventWithID;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps2);
         Intent intent = getIntent();
-        final Event event = (Event) intent.getSerializableExtra("Event");
+        final EventWithID event = (EventWithID) intent.getSerializableExtra("Event");
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = null;
         try {

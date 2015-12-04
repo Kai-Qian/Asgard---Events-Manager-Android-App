@@ -2,6 +2,7 @@ package com.brynhildr.asgard.userInterface.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.Event;
+import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
+import com.brynhildr.asgard.local.DownloadImageFromRemote;
+import com.brynhildr.asgard.local.EventWithID;
+import com.brynhildr.asgard.local.RegisterEventToRemote;
 
 public class EventDetailActivity extends AppCompatActivity {
 
@@ -26,12 +30,13 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView maximumPeople;
     private TextView description;
     private ImageButton mapBtn;
+    private EventWithID event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         Intent intent = getIntent();
-        final Event event = (Event) intent.getSerializableExtra("Event");
+        event = (EventWithID) intent.getSerializableExtra("Event");
         eventName = (TextView) findViewById(R.id.eventName);
         dateAndTime = (TextView) findViewById(R.id.dateandtime);
         address = (TextView) findViewById(R.id.address);
@@ -68,7 +73,13 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
         ImageView headImage = (ImageView) findViewById(R.id.backdrop_details);
-        headImage.setImageResource(R.drawable.poster2);
+        try {
+            Bitmap posterBitmap = new DownloadImageFromRemote().execute(event.getCOLUMN_NAME_POSTER()).get();
+            headImage.setImageBitmap(posterBitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        headImage.setImageResource(R.drawable.poster2);
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 //        toolBarLayout.setTitle(event.getCOLUMN_NAME_EVENT_NAME());
 
@@ -88,6 +99,7 @@ public class EventDetailActivity extends AppCompatActivity {
            @Override
            public void onClick(DialogInterface dialog, int which) {
                dialog.dismiss();
+               new RegisterEventToRemote().execute(event.getEventID(), SimplifiedUserAuthentication.getUsername());
            }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

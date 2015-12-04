@@ -37,8 +37,8 @@ import android.widget.TextView;
 
 import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.entities.ViewEventAdapter;
+import com.brynhildr.asgard.local.EventWithID;
 import com.brynhildr.asgard.local.GetEventsFromRemote;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
@@ -61,7 +61,7 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private ArrayList<Event> eventTmp;
+    private ArrayList<EventWithID> eventTmp;
 
     private DrawerLayout drawer;
 
@@ -192,8 +192,8 @@ public class ViewEventsFragment extends Fragment implements SwipeRefreshLayout.O
         collapseFab();
         flag = true;
         edb = new EventDatabase(getActivity());
-        eventTmp = edb.readRow();
-        ArrayList<Event> event = new ArrayList<Event>(eventTmp.size());
+        eventTmp = edb.readRowWithID();
+        ArrayList<EventWithID> event = new ArrayList<EventWithID>(eventTmp.size());
         for (int i = eventTmp.size() - 1; i >= 0; i--) {
             event.add(eventTmp.get(i));
         }
