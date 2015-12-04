@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.local.DownloadImageFromRemote;
 import com.brynhildr.asgard.local.EventWithID;
 import com.brynhildr.asgard.userInterface.activities.HostEventDetailsActivity;
 
@@ -65,7 +66,13 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
             viewHolderForHost.mTextView1.setText(p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForHost.mTextView2.setText(p.getCOLUMN_NAME_EVENT_NAME());
             viewHolderForHost.mTextView3.setText(p.getCOLUMN_NAME_VENUE());
-            viewHolderForHost.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
+            try {
+                Bitmap posterBitmap = new DownloadImageFromRemote().execute(p.getCOLUMN_NAME_POSTER()).get();
+                viewHolderForHost.mImageView.setImageBitmap(posterBitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            viewHolderForHost.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
             viewHolderForHost.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,10 +96,10 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
                     Palette.Swatch DarkMuted = palette.getDarkMutedSwatch();//柔和 暗色
                     Palette.Swatch LightMuted = palette.getLightMutedSwatch();//柔和 亮色
 
-                    if (vibrant != null) {
-                        int color1 = vibrant.getBodyTextColor();//内容颜色
-                        int color2 = vibrant.getTitleTextColor();//标题颜色
-                        int color3 = vibrant.getRgb();//rgb颜色
+                    if (Muted != null) {
+                        int color1 = Muted.getBodyTextColor();//内容颜色
+                        int color2 = Muted.getTitleTextColor();//标题颜色
+                        int color3 = Muted.getRgb();//rgb颜色
                         viewHolderForHost.mCardView.setCardBackgroundColor(color3);
                         viewHolderForHost.mTextView1.setTextColor(color2);
                         viewHolderForHost.mTextView2.setTextColor(color2);

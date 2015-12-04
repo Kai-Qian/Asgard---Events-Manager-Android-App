@@ -292,7 +292,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
             String phoneNum = mPhoneNumber.getText().toString();
@@ -304,10 +304,15 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (registerUserInfo.equals("Register Succeeded")) {
+            if (registerUserInfo.equals("OK")) {
+                System.out.println("Register successfully.");
+                showProgress(true);
+                finish();
                 Intent intent = new Intent();
                 intent.setClass(RegisterActivity.this, LoginActivity.class);
                 RegisterActivity.this.startActivity(intent);
+            } else {
+                System.out.println("Register unsuccessfully.");
             }
 //            DatabaseHelper dbHelper = new DatabaseHelper(this,"user_db");
 //            SQLiteDatabase db = dbHelper.getWritableDatabase();

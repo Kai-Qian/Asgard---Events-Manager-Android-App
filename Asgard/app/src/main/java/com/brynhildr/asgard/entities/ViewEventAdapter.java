@@ -92,10 +92,10 @@ public class ViewEventAdapter
                     Palette.Swatch DarkMuted = palette.getDarkMutedSwatch();//柔和 暗色
                     Palette.Swatch LightMuted = palette.getLightMutedSwatch();//柔和 亮色
 
-                    if (vibrant != null) {
-                        int color1 = vibrant.getBodyTextColor();//内容颜色
-                        int color2 = vibrant.getTitleTextColor();//标题颜色
-                        int color3 = vibrant.getRgb();//rgb颜色
+                    if (Muted != null) {
+                        int color1 = Muted.getBodyTextColor();//内容颜色
+                        int color2 = Muted.getTitleTextColor();//标题颜色
+                        int color3 = Muted.getRgb();//rgb颜色
                         viewHolderForView.mCardView.setCardBackgroundColor(color3);
                         viewHolderForView.mTextView1.setTextColor(color2);
                         viewHolderForView.mTextView2.setTextColor(color2);
@@ -106,9 +106,6 @@ public class ViewEventAdapter
             System.out.println("this.COLUMN_NAME_POSTER---->view");
             try {
                 Bitmap posterBitmap = new DownloadImageFromRemote().execute(p.getCOLUMN_NAME_POSTER()).get();
-//                System.out.println("Bitmap got!");
-//                System.out.println("posterBitmap.getHeight()---->" + posterBitmap.getHeight());
-//                System.out.println("posterBitmap.getHeight()---->" + posterBitmap.getWidth());
                 viewHolderForView.mImageView.setImageBitmap(posterBitmap);
             } catch (Exception e) {
                 e.printStackTrace();

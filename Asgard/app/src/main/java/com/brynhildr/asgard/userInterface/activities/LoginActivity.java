@@ -25,7 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.local.AuthenticationWithRemote;
+import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 
 
 /**
@@ -142,13 +142,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            try {
-                loginSucceeded = new AuthenticationWithRemote().execute(username, password).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            loginSucceeded = SimplifiedUserAuthentication.login(username, password);
             if (loginSucceeded) {
+                showProgress(true);
                 Intent intent = new Intent();
 
                 intent.setClass(LoginActivity.this, MainActivity.class);

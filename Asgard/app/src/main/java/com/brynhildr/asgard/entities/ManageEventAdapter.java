@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
+import com.brynhildr.asgard.local.DownloadImageFromRemote;
 import com.brynhildr.asgard.local.EventWithID;
 import com.brynhildr.asgard.local.UnregisterEventToRemote;
 import com.brynhildr.asgard.userInterface.activities.EventDetailActivity;
@@ -70,7 +71,13 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
             viewHolderForManage.mTextView1.setText(p.getCOLUMN_NAME_DATEANDTIME());
             viewHolderForManage.mTextView2.setText(p.getCOLUMN_NAME_EVENT_NAME());
             viewHolderForManage.mTextView3.setText(p.getCOLUMN_NAME_VENUE());
-            viewHolderForManage.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
+            try {
+                Bitmap posterBitmap = new DownloadImageFromRemote().execute(p.getCOLUMN_NAME_POSTER()).get();
+                viewHolderForManage.mImageView.setImageBitmap(posterBitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            viewHolderForManage.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
             viewHolderForManage.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -100,10 +107,10 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
                     Palette.Swatch DarkMuted = palette.getDarkMutedSwatch();//柔和 暗色
                     Palette.Swatch LightMuted = palette.getLightMutedSwatch();//柔和 亮色
 
-                    if (vibrant != null) {
-                        int color1 = vibrant.getBodyTextColor();//内容颜色
-                        int color2 = vibrant.getTitleTextColor();//标题颜色
-                        int color3 = vibrant.getRgb();//rgb颜色
+                    if (Muted != null) {
+                        int color1 = Muted.getBodyTextColor();//内容颜色
+                        int color2 = Muted.getTitleTextColor();//标题颜色
+                        int color3 = Muted.getRgb();//rgb颜色
                         viewHolderForManage.mCardView.setCardBackgroundColor(color3);
                         viewHolderForManage.mTextView1.setTextColor(color2);
                         viewHolderForManage.mTextView2.setTextColor(color2);

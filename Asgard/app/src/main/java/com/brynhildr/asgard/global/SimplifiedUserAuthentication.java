@@ -6,9 +6,9 @@ import com.brynhildr.asgard.local.AuthenticationWithRemote;
  * Created by lqshan on 11/30/15.
  */
 public class SimplifiedUserAuthentication {
-    private static boolean isLoggedIn = true;
+    private static boolean isLoggedIn = false;
 //    private static String username = null;
-    private static String username = "test";
+    private static String username;
 
     private static void setUsername(String username) {
         SimplifiedUserAuthentication.username = username;
@@ -29,7 +29,7 @@ public class SimplifiedUserAuthentication {
             return false;
         boolean loginSucceeded = false;
         try {
-            loginSucceeded = new AuthenticationWithRemote().execute("test", "test").get();
+            loginSucceeded = new AuthenticationWithRemote().execute(username, pwd).get();
         } catch (Exception e) {
             e.printStackTrace();
         }

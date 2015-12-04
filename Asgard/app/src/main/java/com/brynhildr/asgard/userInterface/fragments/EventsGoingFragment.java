@@ -23,7 +23,7 @@ import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.ManageEventAdapter;
 import com.brynhildr.asgard.local.EventWithID;
-import com.brynhildr.asgard.local.GetEventsFromRemote;
+import com.brynhildr.asgard.local.GetRegisteredEvents;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                new GetEventsFromRemote().execute();
+//                new GetEventsFromRemote().execute();
                 mSwipeRefreshLayout.setRefreshing(false);
                 FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
@@ -139,8 +139,10 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onResume() {
         super.onResume();
-        edb = new EventDatabase(getActivity());
-        eventTmp = edb.readRowWithID();
+//        edb = new EventDatabase(getActivity());
+//        edb = new GetRegisteredEvents().getRegisteredEvents();
+//        eventTmp = edb.readRowWithID();
+        eventTmp = new GetRegisteredEvents().getRegisteredEvents();
         ArrayList<EventWithID> event = new ArrayList<EventWithID>(eventTmp.size());
         for (int i = eventTmp.size() - 1; i >= 0; i--) {
             event.add(eventTmp.get(i));

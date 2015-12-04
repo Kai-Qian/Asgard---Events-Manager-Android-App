@@ -9,7 +9,7 @@
     tools:context="com.brynhildr.asgard.userInterface.fragments.ViewEventsFragment">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_height="192dp"
+        android:layout_height="220dp"
         android:layout_width="match_parent">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -22,7 +22,7 @@
             <ImageView
                 android:id="@+id/backdrop_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="220dp"
 
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"
