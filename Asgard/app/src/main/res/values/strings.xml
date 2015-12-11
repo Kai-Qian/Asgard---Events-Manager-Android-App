@@ -46,50 +46,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">
-        Asgard, 北欧神话中的神界。\n
-        Brynhildr, 拥有勇气的女武神。\n\n
+        Welcome to Asgard Amazing Events Manager!
+        Are you confused about what to do after school or after work? Our amazing events manager notifies you of events that are happening nearby. Organisers upload events and you can view them at your will, register interested events and manage your events.
+        Are you worried about nobody will attend the event you hosted? Our amazing events manager is here to bring you close to all the people who use our app. Push them your events and prompt them to register.
 
-        曾经与队友Helen, Will讨论队伍名字和app名字的时候，队友们都愿意随我取名。\n
-        那时候只是对北欧神话稍有兴趣的情况下，便全部用神话为之命名。\n
-        在经历了在Carnegie Mellon University的第一个学期后，心境早已大不相同。\n
-        但如果让我再取一次名的话，我仍旧会用这些符号为之命名。\n\n
 
-        Rainbow Bridge, 北欧神话中连接神界Asgard以及人界Midgard的巨大彩虹桥，原意为“摇晃的天国道路”。
-        何其相似的是，连接着Gates Hall of Computer Science以及School of Fine Art的也是一座彩虹桥。\n
-        我坚信每一位CMU的学生都有过深夜独自走过彩虹桥的经历。蔷薇色的灯光无比绚烂，然而内心情感却无比微妙。\n
-        深夜，繁华褪去后硕大的城市里，是否有一盏灯为等待自己而点亮？\n
-        背井离乡来到了这个国家，这座城市，我们终于也成为了异邦之人。\n
-        初来之时还有各种打算，要在陌生的国度再一次证明自己。\n\n
-
-        哈哈\n\n
-
-        我隐约还记得曾经的理想，然而在忙碌的生活中却难得再次想起。\n
-        我隐约还记得曾经的热血，然而在due与homework的巨浪中再次淹没。\n
-        我隐约还记得曾经的浪漫，然而在压力与现实面前终究还是再难提起。\n
-        终于我们每天不再幻想，而是踏踏实实地写代码，做作业。\n
-        有人称其为这是成熟，有人称其为这是成长。\n
-        人终将要接受自己也是平凡之人的事实，这被称之为蜕变。\n\n
-
-        现在就接受，是否还为时过早？\n\n
-
-        庆幸我仍旧在这里遇到一群好伙伴们，提醒着我，我们仍旧年轻。\n
-        在慢慢老去之前，仍有时间。\n
-        在接受事实之前，仍旧不平凡，不普通。\n
-        在终将踏上平凡之路之前，少年的情怀还不会被磨灭。\n\n
-
-        Java Smart Phone的group project是这个学期通宵最多的project。\n
-        实现诸多功能，是单纯的目的。\n
-        无尽的夜晚，是过程的努力。\n
-        此刻运行在tablet上app，是自我的成就感。\n
-        而这单纯的成就感，却是确确实实驱使着我前进的动力。\n
-        何其单纯，何其热血，何其浪漫。\n\n
-
-        Asgard, 神界, Carnegie Mellon University, 虽然能够给与少年以成人之梦，但同时也能给与成人以少年之梦。\n
-        我愿成为Brynhildr, 拥有足够的勇气, 和年少之时一样敢于大声怒吼，自己绝不平凡绝不普通。\n
-        摇晃的天国之路仍旧摇晃, 然而区别是, 此刻的自己不再像几个月之前。此刻的自己已不再摇晃。\n\n
-
-        Written by Liqin (Lachine) Shan, Midnight, 12/11/2015, \n
-        Thanks to all my team members, Shuqin (Helen) Ye and Kai (Will) Qian.
+        Liqin Shan, Kai Qian, Shuqin Ye @ CMU
+        @Copyright 2015
 
     </string>
     <string name="title_activity_settings">Settings</string>
