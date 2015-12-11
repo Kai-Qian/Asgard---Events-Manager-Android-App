@@ -175,6 +175,7 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.manage_event_menu, menu);
     }
 

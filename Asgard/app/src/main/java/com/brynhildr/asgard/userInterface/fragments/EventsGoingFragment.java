@@ -167,6 +167,7 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.manage_event_menu, menu);
     }
 
