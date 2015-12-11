@@ -2,15 +2,12 @@ package com.brynhildr.asgard.local;
 
 import android.util.JsonReader;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
-import com.brynhildr.asgard.DBLayout.relationships.RelationshipDatabase;
+import com.brynhildr.asgard.databaseLayout.relationships.RelationshipDatabase;
 import com.brynhildr.asgard.entities.RelationWithID;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;

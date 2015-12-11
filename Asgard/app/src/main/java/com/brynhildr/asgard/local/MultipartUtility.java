@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lqshan on 11/29/15.
+ * Cite:
+ * Create a http post request to server
+ * http://stackoverflow.com/questions/14850501/android-multipart-http-request
  */
 public class MultipartUtility {
     private final String boundary;
@@ -48,8 +50,6 @@ public class MultipartUtility {
         httpConn.setDoInput(true);
         httpConn.setRequestProperty("Content-Type",
                 "multipart/form-data; boundary=" + boundary);
-        //httpConn.setRequestProperty("User-Agent", "CodeJava Agent");
-        //httpConn.setRequestProperty("Test", "Bonjour");
         outputStream = httpConn.getOutputStream();
         writer = new PrintWriter(new OutputStreamWriter(outputStream, charset),
                 true);
@@ -97,7 +97,7 @@ public class MultipartUtility {
 
         FileInputStream inputStream = new FileInputStream(uploadFile);
         byte[] buffer = new byte[4096];
-        int bytesRead = -1;
+        int bytesRead;
         while ((bytesRead = inputStream.read(buffer)) != -1) {
             outputStream.write(buffer, 0, bytesRead);
         }

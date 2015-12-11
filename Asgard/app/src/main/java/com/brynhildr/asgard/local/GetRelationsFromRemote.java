@@ -4,11 +4,10 @@ package com.brynhildr.asgard.local;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
-import com.brynhildr.asgard.DBLayout.relationships.RelationshipDatabase;
-import com.brynhildr.asgard.entities.Relation;
+import com.brynhildr.asgard.databaseLayout.relationships.RelationshipDatabase;
 import com.brynhildr.asgard.entities.RelationWithID;
 import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -27,7 +26,8 @@ import java.util.ArrayList;
 public class GetRelationsFromRemote extends AsyncTask<Void, Integer, String> {
 
     private static final String TAG = "HttpGetTask";
-    private static final String URL = "http://52.34.9.132/get-relationships";
+    private static final String URL = RemoteServerInformation.URL_SERVER
+            + RemoteServerInformation.URL_GET_RELATIONSHIPS;
 
     protected String doInBackground(Void... para1) {
         String data = "";
@@ -40,9 +40,13 @@ public class GetRelationsFromRemote extends AsyncTask<Void, Integer, String> {
             InputStream in = new BufferedInputStream(
                     httpUrlConnection.getInputStream());
 
+            MyApplication.startUsingDatabase();
+
             UpdateLocalRelationships updateLocalRelationships = new UpdateLocalRelationships(in);
             RelationshipDatabase relationshipDatabase = new RelationshipDatabase(MyApplication.getAppContext());
             updateLocalRelationships.compareAndUpdate(relationshipDatabase);
+
+            MyApplication.completeUsingDatabase();
 
             ArrayList<RelationWithID> relationWithIDs = relationshipDatabase.readAllRows();
 
@@ -52,8 +56,6 @@ public class GetRelationsFromRemote extends AsyncTask<Void, Integer, String> {
                 System.out.println("user name = " + relationWithIDs.get(i).getUserName());
                 System.out.println("Primary ID = " + relationWithIDs.get(i).getPrimaryID());
             }
-
-            //data = readStream(in);
 
             in.close();
         } catch (MalformedURLException exception) {

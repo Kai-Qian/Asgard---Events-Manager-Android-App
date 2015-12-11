@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.brynhildr.asgard.entities.User;
 import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
 
 import java.util.List;
 
@@ -13,15 +14,14 @@ import java.util.List;
  */
 public class RegisterEventToRemote extends AsyncTask<String, Integer, String> {
 
-    private static final String TAG = "HttpGetTask";
+    private static final String URL = RemoteServerInformation.URL_SERVER
+            + RemoteServerInformation.URL_REGISTER_EVENT;
 
     protected String doInBackground(String... para1) {
-        String result = null;
         String charset = "UTF-8";
-        String requestURL = "http://52.34.9.132/register-event";
         List<String> response = null;
         try {
-            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+            MultipartUtility multipart = new MultipartUtility(URL, charset);
             String event_id = para1[0];
             String username = para1[1];
             multipart.addFormField("username", username);

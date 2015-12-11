@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
 
 import java.util.List;
 
@@ -17,7 +18,8 @@ public class UnregisterEventToRemote extends AsyncTask<String, Integer, String> 
     protected String doInBackground(String... para1) {
         String result = null;
         String charset = "UTF-8";
-        String requestURL = "http://52.34.9.132/unregister-event";
+        String requestURL = RemoteServerInformation.URL_SERVER
+                + RemoteServerInformation.URL_UNREGISTER_EVENT;
         List<String> response = null;
         try {
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);

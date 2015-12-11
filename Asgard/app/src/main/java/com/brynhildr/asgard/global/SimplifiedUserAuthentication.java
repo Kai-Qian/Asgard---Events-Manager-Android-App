@@ -7,7 +7,6 @@ import com.brynhildr.asgard.local.AuthenticationWithRemote;
  */
 public class SimplifiedUserAuthentication {
     private static boolean isLoggedIn = false;
-//    private static String username = null;
     private static String username;
 
     private static void setUsername(String username) {
@@ -17,7 +16,8 @@ public class SimplifiedUserAuthentication {
     public static String getUsername() {
         if (isLoggedIn)
             return username;
-        else return "You have not logged in.";
+        else
+            return "You have not logged in.";
     }
 
     public static boolean isLoggedIn() {
@@ -39,7 +39,6 @@ public class SimplifiedUserAuthentication {
             isLoggedIn = true;
         } else {
             return false;
-            // TODO: login failed;
         }
         return true;
     }

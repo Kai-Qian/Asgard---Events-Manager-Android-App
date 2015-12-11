@@ -2,7 +2,7 @@ package com.brynhildr.asgard.local;
 
 import android.util.JsonReader;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
 
 import java.io.IOException;
 import java.io.InputStream;

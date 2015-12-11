@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
 
 import java.io.File;
 import java.util.List;
@@ -17,7 +18,8 @@ public class GetUserInfoFromRemote extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... para1) {
         String result = null;
         String charset = "UTF-8";
-        String requestURL = "http://52.34.9.132/get-info";
+        String requestURL = RemoteServerInformation.URL_SERVER
+                + RemoteServerInformation.URL_GET_USER_INFO;
         List<String> response = null;
         try {
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);
@@ -25,7 +27,7 @@ public class GetUserInfoFromRemote extends AsyncTask<String, Integer, String> {
 
             multipart.addFormField("username", username);
             response = multipart.finish();
-            result = multipart.isSucceeded()?"True":"False";
+//            result = multipart.isSucceeded()?"True":"False";
         } catch (Exception e) {
             e.printStackTrace();
         }

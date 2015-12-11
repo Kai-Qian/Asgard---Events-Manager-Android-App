@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
+import com.brynhildr.asgard.local.GetUserInfoFromRemote;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -113,20 +115,42 @@ public class ProfileFragment extends Fragment {
         TextView gender = (TextView) getActivity().findViewById(R.id.gender);
 
         profilePic.setImageResource(R.drawable.haibara_ai);
-//
-//        String userName =
-//        // info = user.username + "&" + user_profile.gender + "&" + user_profile.phone_num + "&" +
-//        // user.email
-//        String userInfo;
-//        try {
-//            userInfo = new GetUserInfoFromRemote().execute()
-//        }
-//                = new GetUserInfoFromRemote().execute();
 
+        String curUserName = SimplifiedUserAuthentication.getUsername();
 
+//      Data from the remote database: username=test&gender=male&number=123456&email=
 
+        String userInfo = null;
+        try {
+            userInfo = new GetUserInfoFromRemote().execute(curUserName).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        String[] userInfos = userInfo.split("&");
+        if (userInfos[0].split("=")[1].isEmpty()) {
+            userName.setText("Empty");
+        } else {
+            userName.setText(userInfos[0].split("=")[1]);
+        }
 
+        if (userInfos[1].split("=").length == 1) {
+            gender.setText("Empty");
+        } else {
+            gender.setText(userInfos[1].split("=")[1]);
+        }
+
+        if (userInfos[2].split("=").length == 1) {
+            phoneNumber.setText("Empty");
+        } else {
+            phoneNumber.setText(userInfos[2].split("=")[1]);
+        }
+
+        if (userInfos[3].split("=").length == 1) {
+            email.setText("Empty");
+        } else {
+            email.setText(userInfos[3].split("=")[1]);
+        }
     }
 
 }

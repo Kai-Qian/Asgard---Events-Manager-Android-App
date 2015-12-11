@@ -25,7 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.ViewEventAdapter;
 import com.brynhildr.asgard.local.EventWithID;

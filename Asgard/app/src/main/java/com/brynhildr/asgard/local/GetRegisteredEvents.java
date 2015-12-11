@@ -1,8 +1,7 @@
 package com.brynhildr.asgard.local;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
-import com.brynhildr.asgard.DBLayout.relationships.RelationshipDatabase;
-import com.brynhildr.asgard.entities.Event;
+import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
+import com.brynhildr.asgard.databaseLayout.relationships.RelationshipDatabase;
 import com.brynhildr.asgard.global.MyApplication;
 import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 

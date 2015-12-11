@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.HostEventAdapter;
 import com.brynhildr.asgard.local.EventWithID;
