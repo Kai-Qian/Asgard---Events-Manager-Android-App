@@ -25,7 +25,7 @@ public class GetUserInfoFromRemote extends AsyncTask<String, Integer, String> {
 
             multipart.addFormField("username", username);
             response = multipart.finish();
-            result = multipart.isSucceeded()?"True":"False";
+//            result = multipart.isSucceeded()?"True":"False";
         } catch (Exception e) {
             e.printStackTrace();
         }
