@@ -123,9 +123,9 @@ public class RegisterActivity extends AppCompatActivity {
         mPicture2 = getResources().getDrawable(R.drawable.back2);
         mPicture3 = getResources().getDrawable(R.drawable.back3);
         mShowPicture.setImageDrawable(mPicture1);
-        start = AnimationUtils.loadAnimation(this, R.anim.registerpage1);
-        middle = AnimationUtils.loadAnimation(this, R.anim.registerpage2);
-        last = AnimationUtils.loadAnimation(this, R.anim.registerpage3);
+        start = AnimationUtils.loadAnimation(this, R.anim.register_page1);
+        middle = AnimationUtils.loadAnimation(this, R.anim.register_page2);
+        last = AnimationUtils.loadAnimation(this, R.anim.register_page3);
         mShowPicture.startAnimation(start);
         start.setAnimationListener(new Animation.AnimationListener() {
             public void onAnimationStart(Animation animation) {
