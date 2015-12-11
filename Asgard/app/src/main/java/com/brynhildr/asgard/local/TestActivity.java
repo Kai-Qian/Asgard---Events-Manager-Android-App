@@ -41,7 +41,7 @@ public class TestActivity extends AppCompatActivity {
          *
          * new GetEventsFromRemote().execute();
          ******************************************************************/
-//        new GetEventsFromRemote().execute();
+        new GetEventsFromRemote().execute();
 
         /******************************************************************
          *
@@ -76,7 +76,7 @@ public class TestActivity extends AppCompatActivity {
          * new GetRelationsFromRemote().execute();
          *
          ******************************************************************/
-//        new GetRelationsFromRemote().execute();
+        new GetRelationsFromRemote().execute();
 
         /******************************************************************
          *

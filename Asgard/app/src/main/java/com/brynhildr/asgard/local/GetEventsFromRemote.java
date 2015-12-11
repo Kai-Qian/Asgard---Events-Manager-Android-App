@@ -37,9 +37,11 @@ public class GetEventsFromRemote extends AsyncTask<Void, Integer, String> {
             InputStream in = new BufferedInputStream(
                     httpUrlConnection.getInputStream());
 
+            MyApplication.startUsingDatabase();
             UpdateLocalDB updateLocalDB = new UpdateLocalDB(in);
             EventDatabase eventDatabase = new EventDatabase(MyApplication.getAppContext());
             updateLocalDB.compareAndUpdate(eventDatabase);
+            MyApplication.completeUsingDatabase();
 
             ArrayList<EventWithID> events = eventDatabase.readRowWithID();
 

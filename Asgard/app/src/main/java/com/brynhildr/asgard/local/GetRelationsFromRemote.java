@@ -40,9 +40,13 @@ public class GetRelationsFromRemote extends AsyncTask<Void, Integer, String> {
             InputStream in = new BufferedInputStream(
                     httpUrlConnection.getInputStream());
 
+            MyApplication.startUsingDatabase();
+
             UpdateLocalRelationships updateLocalRelationships = new UpdateLocalRelationships(in);
             RelationshipDatabase relationshipDatabase = new RelationshipDatabase(MyApplication.getAppContext());
             updateLocalRelationships.compareAndUpdate(relationshipDatabase);
+
+            MyApplication.completeUsingDatabase();
 
             ArrayList<RelationWithID> relationWithIDs = relationshipDatabase.readAllRows();
 
