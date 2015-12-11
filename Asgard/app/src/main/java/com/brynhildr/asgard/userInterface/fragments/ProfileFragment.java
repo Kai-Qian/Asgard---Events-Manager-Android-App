@@ -129,7 +129,7 @@ public class ProfileFragment extends Fragment {
         }
 
         String[] userInfos = userInfo.split("&");
-        if (userInfos[0].split("=")[1].isEmpty()) {
+        if (userInfos[0].split("=").length == 1) {
             userName.setText("Empty");
         } else {
             userName.setText(userInfos[0].split("=")[1]);
