@@ -1,16 +1,11 @@
-package com.brynhildr.asgard.DBLayout.relationships;
+package com.brynhildr.asgard.databaseLayout.relationships;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabaseHelper;
-import com.brynhildr.asgard.DBLayout.events.EventSchema;
-import com.brynhildr.asgard.entities.Event;
-import com.brynhildr.asgard.entities.Relation;
 import com.brynhildr.asgard.entities.RelationWithID;
-import com.brynhildr.asgard.local.EventWithID;
 
 import java.util.ArrayList;
 

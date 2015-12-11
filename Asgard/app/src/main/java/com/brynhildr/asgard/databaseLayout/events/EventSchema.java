@@ -1,4 +1,4 @@
-package com.brynhildr.asgard.DBLayout.events;
+package com.brynhildr.asgard.databaseLayout.events;
 
 import android.provider.BaseColumns;
 

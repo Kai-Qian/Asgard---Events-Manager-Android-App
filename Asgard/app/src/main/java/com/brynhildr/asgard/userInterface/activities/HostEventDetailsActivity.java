@@ -23,7 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.entities.EventDetailsAdapter;

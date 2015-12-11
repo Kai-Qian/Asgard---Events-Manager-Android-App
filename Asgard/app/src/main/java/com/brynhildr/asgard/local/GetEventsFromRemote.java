@@ -4,7 +4,7 @@ package com.brynhildr.asgard.local;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
 import com.brynhildr.asgard.global.MyApplication;
 import com.brynhildr.asgard.global.RemoteServerInformation;
 

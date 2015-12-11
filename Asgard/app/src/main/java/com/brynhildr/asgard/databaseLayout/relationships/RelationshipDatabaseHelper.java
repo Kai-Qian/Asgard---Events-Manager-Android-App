@@ -1,4 +1,4 @@
-package com.brynhildr.asgard.DBLayout.relationships;
+package com.brynhildr.asgard.databaseLayout.relationships;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -5,18 +5,11 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
-import com.brynhildr.asgard.entities.Event;
-import com.brynhildr.asgard.global.MyApplication;
 import com.brynhildr.asgard.global.RemoteServerInformation;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * Created by lqshan on 12/2/15.

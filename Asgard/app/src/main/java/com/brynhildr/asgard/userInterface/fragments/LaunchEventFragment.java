@@ -32,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.EventTitle;
 import com.brynhildr.asgard.entities.LaunchEventAdapter;

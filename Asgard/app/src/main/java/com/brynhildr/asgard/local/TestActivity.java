@@ -41,7 +41,7 @@ public class TestActivity extends AppCompatActivity {
          *
          * new GetEventsFromRemote().execute();
          ******************************************************************/
-        new GetEventsFromRemote().execute();
+//        new GetEventsFromRemote().execute();
 
         /******************************************************************
          *
@@ -59,13 +59,13 @@ public class TestActivity extends AppCompatActivity {
          *
          ******************************************************************/
 
-        Event event = new Event();
-        event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST").setCOLUMN_NAME_DATEANDTIME("1449878400")
-                .setCOLUMN_NAME_DRESS_CODE("DRESS CODE").setCOLUMN_NAME_EVENT_NAME("KTV")
-                .setCOLUMN_NAME_LAUNCHER_ID("test").setCOLUMN_NAME_MAX_PEOPLE("7")
-                .setCOLUMN_NAME_VENUE("huoguo").setCOLUMN_NAME_TARGET("humans")
-                .setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
-        new CreateEventToRemote().execute(event);
+//        Event event = new Event();
+//        event.setCOLUMN_NAME_DESCRIPTION("DESCRIPTION TEST").setCOLUMN_NAME_DATEANDTIME("1449878400")
+//                .setCOLUMN_NAME_DRESS_CODE("DRESS CODE").setCOLUMN_NAME_EVENT_NAME("KTV")
+//                .setCOLUMN_NAME_LAUNCHER_ID("test").setCOLUMN_NAME_MAX_PEOPLE("7")
+//                .setCOLUMN_NAME_VENUE("huoguo").setCOLUMN_NAME_TARGET("humans")
+//                .setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
+//        new CreateEventToRemote().execute(event);
 
         /******************************************************************
          *
@@ -76,7 +76,7 @@ public class TestActivity extends AppCompatActivity {
          * new GetRelationsFromRemote().execute();
          *
          ******************************************************************/
-        new GetRelationsFromRemote().execute();
+//        new GetRelationsFromRemote().execute();
 
         /******************************************************************
          *
@@ -95,13 +95,13 @@ public class TestActivity extends AppCompatActivity {
          *
          ******************************************************************/
 
-        try {
-            Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
-            System.out.println("Bitmap got!");
-            imageView.setImageBitmap(posterBitmap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Bitmap posterBitmap = new DownloadImageFromRemote().execute("media/poster1.jpg").get();
+//            System.out.println("Bitmap got!");
+//            imageView.setImageBitmap(posterBitmap);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
         /******************************************************************
@@ -219,16 +219,13 @@ public class TestActivity extends AppCompatActivity {
          * @return String: UserInfo
          * String userInfo = null;
          * try {
-         *     userinfo = new GetUserInfoFromRemote().execute("test").get();
+         *     userInfo = new GetUserInfoFromRemote().execute("test").get();
          * } catch (Exception e) {
          *     e.printStackTrace();
          * }
          * System.out.println(userInfo);
          *
          ******************************************************************/
-
-
-
     }
 
 }
