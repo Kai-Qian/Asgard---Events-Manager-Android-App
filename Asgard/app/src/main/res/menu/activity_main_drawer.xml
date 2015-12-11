@@ -10,10 +10,6 @@
             android:title="Launch Events" />
         <item android:id="@+id/nav_manage_events" android:icon="@drawable/ic_manage"
             android:title="Manage Events" />
-        <item android:id="@+id/nav_inbox" android:icon="@drawable/ic_inbox"
-            android:title="Inbox" />
-        <item android:id="@+id/nav_settings" android:icon="@drawable/ic_setting"
-            android:title="Settings" />
     </group>
 
     <item android:title="About Us &amp; Log Out">

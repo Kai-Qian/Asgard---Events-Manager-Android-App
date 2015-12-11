@@ -1,7 +1,5 @@
 package com.brynhildr.asgard.entities;
 
-import android.content.Context;
-
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,31 +28,6 @@ public class Event implements Serializable {
     public Event() {
 
     }
-
-//    public Event(String COLUMN_NAME_EVENT_NAME, String COLUMN_NAME_VENUE, String COLUMN_NAME_DATEANDTIME,
-//                 String COLUMN_NAME_DESCRIPTION, String COLUMN_NAME_DRESS_CODE,
-//                 String COLUMN_NAME_POSTER, String COLUMN_NAME_TARGET, String COLUMN_NAME_MAX_PEOPLE,
-//                 String COLUMN_NAME_LAUNCHER_ID, String COLUMN_NAME_TIMESTAMP) {
-////        this.COLUMN_NAME_ENTRY_ID = COLUMN_NAME_ENTRY_ID;
-//        this.COLUMN_NAME_EVENT_NAME = COLUMN_NAME_EVENT_NAME;
-//        this.COLUMN_NAME_VENUE = COLUMN_NAME_VENUE;
-//        this.COLUMN_NAME_DATEANDTIME = COLUMN_NAME_DATEANDTIME;
-//        this.COLUMN_NAME_DESCRIPTION = COLUMN_NAME_DESCRIPTION;
-//        this.COLUMN_NAME_DRESS_CODE = COLUMN_NAME_DRESS_CODE;
-//        this.COLUMN_NAME_POSTER = COLUMN_NAME_POSTER;
-//        this.COLUMN_NAME_TARGET = COLUMN_NAME_TARGET;
-//        this.COLUMN_NAME_MAX_PEOPLE = COLUMN_NAME_MAX_PEOPLE;
-//        this.COLUMN_NAME_LAUNCHER_ID = COLUMN_NAME_LAUNCHER_ID;
-//        this.COLUMN_NAME_TIMESTAMP = COLUMN_NAME_TIMESTAMP;
-//    }
-
-//    public int getCOLUMN_NAME_ENTRY_ID() {
-//        return COLUMN_NAME_ENTRY_ID;
-//    }
-//
-//    public void setCOLUMN_NAME_ENTRY_ID(int COLUMN_NAME_ENTRY_ID) {
-//        this.COLUMN_NAME_ENTRY_ID = COLUMN_NAME_ENTRY_ID;
-//    }
 
     public String getCOLUMN_NAME_EVENT_NAME() {
         return COLUMN_NAME_EVENT_NAME;
@@ -152,23 +125,6 @@ public class Event implements Serializable {
         this.COLUMN_NAME_POSTER = picName;
     }
 
-    public int getImageResourceId( Context context )
-    {
-        try
-        {
-//            System.out.println(R.drawable.p1);
-//            int i = context.getResources().getIdentifier(this.COLUMN_NAME_POSTER, "drawable", context.getPackageName());
-            int i = context.getResources().getIdentifier("poster2", "drawable", context.getPackageName());
-//            System.out.println("this.COLUMN_NAME_POSTER---->" + this.COLUMN_NAME_POSTER);
-            return i;
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return -1;
-        }
-    }
     public Long getDateAndTimeTimeStamp() {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm E");
         try {

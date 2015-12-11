@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.HostEventAdapter;
 import com.brynhildr.asgard.local.EventWithID;
@@ -37,6 +36,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class EventsHostingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
     private RecyclerView mRecyclerView;
 
     private HostEventAdapter hostEventAdapter;
@@ -45,7 +45,6 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
 
     private ArrayList<EventWithID> eventTmp;
 
-    private EventDatabase edb;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -97,18 +96,11 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
         return inflater.inflate(R.layout.fragment_events_hosting, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.id_swiperefreshlayout_hosting);
-        // 刷新时，指示器旋转后变化的颜色
         mSwipeRefreshLayout.setColorSchemeResources(R.color.input, R.color.black_overlay);
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -127,26 +119,15 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
-//        edb = new EventDatabase(getActivity());
         eventTmp = new GetLaunchedEvents().getLaunchedEvents();
-//        eventTmp = edb.readRow();
         ArrayList<EventWithID> event = new ArrayList<EventWithID>(eventTmp.size());
         for (int i = eventTmp.size() - 1; i >= 0; i--) {
             event.add(eventTmp.get(i));
         }
-        // 拿到RecyclerView
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.viewEventlist_hosting);
-        // 设置LinearLayoutManager
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // 设置ItemAnimator
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        // 设置固定大小
-//        mRecyclerView.setHasFixedSize(true);
-        // 初始化自定义的适配器
         hostEventAdapter = new HostEventAdapter(getActivity(), event);
-        System.out.println("HostEventAdapter.getItemCount()" + hostEventAdapter.getItemCount());
-
-        // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(hostEventAdapter);
     }
 
@@ -161,7 +142,6 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                new GetEventsFromRemote().execute();
                 mSwipeRefreshLayout.setRefreshing(false);
                 FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
@@ -195,10 +175,7 @@ public class EventsHostingFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        System.out.println(" Hosting Menu cleared!!!!!!!!!!!!!!!!!!!!");
         inflater.inflate(R.menu.manage_event_menu, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

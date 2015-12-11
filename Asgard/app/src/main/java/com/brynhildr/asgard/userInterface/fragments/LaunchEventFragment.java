@@ -5,12 +5,10 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
@@ -20,30 +18,20 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.entities.EventTitle;
 import com.brynhildr.asgard.entities.LaunchEventAdapter;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
-import com.brynhildr.asgard.userInterface.dummy.ChoosePic;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,41 +42,17 @@ import java.util.GregorianCalendar;
  * create an instance of this fragment.
  */
 public class LaunchEventFragment extends Fragment {
+
     private RecyclerView mRecyclerView;
 
     private LaunchEventAdapter launchEventAdapter;
-    private ChoosePic choosePic;
-    private Uri imguri;
 
-    private Button launchbtn;
-    private Button clearbtn;
-    private DatePicker mDatePicker;
-    private TimePicker mTimePicker;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    // 定义5个记录当前时间的变量
-    private int year;
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
-    /* 头像文件 */
-    private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
-
-    /* 请求识别码 */
-    private static final int CODE_GALLERY_REQUEST = 0xa0;
-    private static final int CODE_CAMERA_REQUEST = 0xa1;
-    private static final int CODE_RESULT_REQUEST = 0xa2;
-
-    // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
-    private static int output_X = 300;
-    private static int output_Y = 200;
+    private static int outputX = 300;
+    private static int outputY = 200;
 
     private ImageView headImage = null;
-//    private ImageView headImage2 = null;
-
-    private EventDatabase edb;
-
-    private String posterName = "poster";
 
 
     private ArrayList<EventTitle> eventTitles = new ArrayList<EventTitle>();
@@ -128,8 +92,6 @@ public class LaunchEventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        edb = new EventDatabase(getActivity());
-//        edb.deleteTable();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -145,13 +107,6 @@ public class LaunchEventFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_launch_event, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -165,62 +120,44 @@ public class LaunchEventFragment extends Fragment {
         toggle.syncState();
         NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener((MainActivity) getActivity());
-//        initView();
     }
-    private void choseHeadImageFromGallery() {
-        Intent intentFromGallery = new Intent();
-        // 设置文件类型
-        intentFromGallery.setType("image/*");
-        intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
-    }
-    private void choseHeadImageFromCameraCapture() {
-        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        // 判断存储卡是否可用，存储照片文件
-        if (hasSdcard()) {
-            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-                    .fromFile(new File(Environment
-                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-        }
-        System.out.println("Path--->" + Environment
-                .getExternalStorageDirectory());
-        startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
-    }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == getActivity().RESULT_CANCELED) {
-            Toast.makeText(getActivity(), "取消", Toast.LENGTH_LONG).show();
             return;
         }
-
         switch (requestCode) {
-            case CODE_GALLERY_REQUEST:
-                cropRawPhoto(intent.getData());
+            case 1:
+                //Reference: http://stackoverflow.com/questions/15807766/android-crop-image-size
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(data.getData(), "image/*");
+                intent.putExtra("crop", "true");
+                intent.putExtra("aspectX", 3);
+                intent.putExtra("aspectY", 2);
+                intent.putExtra("outputX", outputX);
+                intent.putExtra("outputY", outputY);
+                intent.putExtra("return-data", false);
+                intent.putExtra("scale", true);
+                intent.putExtra("scaleUpIfNeeded", true);
+                startActivityForResult(intent, 2);
                 break;
+            case 2:
+                LaunchEventAdapter.setPath(getPath(data.getData()));
+                try {
+                    //Reference: http://stackoverflow.com/questions/9638455/uri-returned-after-action-get-content-from-gallery-is-not-working-in-setimageuri
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
 
-            case CODE_CAMERA_REQUEST:
-                if (hasSdcard()) {
-                    File tempFile = new File(
-                            Environment.getExternalStorageDirectory(),
-                            IMAGE_FILE_NAME);
-                    cropRawPhoto(Uri.fromFile(tempFile));
-                } else {
-                    Toast.makeText(getActivity(), "没有SDCard!", Toast.LENGTH_LONG)
-                            .show();
+                    Matrix matrix = new Matrix();
+                    matrix.postScale(1.5f, 1.5f);
+                    Bitmap bit = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    headImage.setImageBitmap(bit);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                break;
-
-            case CODE_RESULT_REQUEST:
-                if (intent != null) {
-                    setImageToHeadView(intent);
-                }
-
                 break;
         }
-
     }
 
     @Override
@@ -238,12 +175,7 @@ public class LaunchEventFragment extends Fragment {
     public void onResume() {
         super.onResume();
         System.out.println("LaunchEventonResume");
-        edb = new EventDatabase(getActivity());
         eventTitles.clear();
-//        edb = new EventDatabase(getActivity());
-//        edb.deleteTable();
-//        launchbtn = (Button)getActivity().findViewById(R.id.launchbtn);
-//        cancelbtn = (Button)getActivity().findViewById(R.id.cancelbtn);
         eventTitles.add(new EventTitle("Event Name"));
         eventTitles.add(new EventTitle("Date & Time"));
         eventTitles.add(new EventTitle("Address"));
@@ -252,83 +184,27 @@ public class LaunchEventFragment extends Fragment {
         eventTitles.add(new EventTitle("Maximum People"));
         eventTitles.add(new EventTitle("Description"));
         eventTitles.add(new EventTitle("Register"));
-        //getActivity().getActionBar().setTitle("View Events");
-        // 拿到RecyclerView
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.launchEventlist);
-        // 设置LinearLayoutManager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        // 设置ItemAnimator
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        // 设置固定大小
-//        mRecyclerView.setHasFixedSize(true);
-        // 初始化自定义的适配器
         launchEventAdapter = new LaunchEventAdapter(getActivity(), eventTitles);
-//        System.out.println("launchEventAdapter.getItemCount()" + launchEventAdapter.getItemCount());
-
-        // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(launchEventAdapter);
-        CollapsingToolbarLayout mCollapsingToolbarLayout = (CollapsingToolbarLayout) getActivity().findViewById(R.id.collapsing_toolbar_layout_launch);
+
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) getActivity().findViewById(R.id.collapsing_toolbar_layout_launch);
         mCollapsingToolbarLayout.setTitle("Launch Event");
-        mCollapsingToolbarLayout.setBackground(null);
-        //通过CollapsingToolbarLayout修改字体颜色
-        mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
-        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
+        mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         headImage = (ImageView) getActivity().findViewById(R.id.backdrop_launch);
         headImage.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                //实例化SelectPicPopupWindow
-                choosePic = new ChoosePic(getActivity(), itemsOnClick);
-                //显示窗口
-                choosePic.showAtLocation(getActivity().findViewById(R.id.launch), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 1);
             }
         });
-//        launchbtn = (Button) getActivity().findViewById(R.id.launchbtn);
-//        clearbtn = (Button) getActivity().findViewById(R.id.clearbtn);
-//        launchbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Event event = new Event();
-//                ArrayList<LaunchEventAdapter.ViewHolderForLaunch> tmp = launchEventAdapter.getmViewHolderForLaunch();
-////                                for (LaunchEventAdapter.ViewHolderForLaunch i : tmp) {
-////                                    System.out.println("Input" + i.getmEditText().getText().toString());
-//////                                    eventDetails.add(i.getmEditText().getText().toString());
-////                                }
-//                event.setCOLUMN_NAME_EVENT_NAME(tmp.get(0).getmEditText().getText().toString());
-//                event.setCOLUMN_NAME_DATEANDTIME(calculateTimeStamp(launchEventAdapter.getYear(), launchEventAdapter.getMonth(),
-//                        launchEventAdapter.getDay(), launchEventAdapter.getHour(), launchEventAdapter.getMinute()) + "");
-//                System.out.println("event.getCOLUMN_NAME_DATEANDTIME()--->" + event.getCOLUMN_NAME_DATEANDTIME());
-//                event.setCOLUMN_NAME_VENUE(tmp.get(2).getmEditText().getText().toString());
-//                event.setCOLUMN_NAME_DRESS_CODE(tmp.get(3).getmEditText().getText().toString());
-//                event.setCOLUMN_NAME_TARGET(tmp.get(4).getmEditText().getText().toString());
-//                event.setCOLUMN_NAME_MAX_PEOPLE(tmp.get(5).getmEditText().getText().toString());
-//                event.setCOLUMN_NAME_DESCRIPTION(tmp.get(6).getmEditText().getText().toString());
-//                event.setCOLUMN_NAME_POSTER(posterName + ((MainActivity) getActivity()).getNum());
-//                event.setCOLUMN_NAME_LAUNCHER_ID("test");
-//                new CreateEventToRemote().execute(event);
-////                                eventDetails.add(posterName + ((MainActivity) getActivity()).getNum());
-//                //edb.insertRow(eventDetails);
-//                FragmentManager fm = ((MainActivity)getActivity()).getFragmentManager();
-//                FragmentTransaction transaction = fm.beginTransaction();
-//                LaunchEventFragment mLaunchEvent = new LaunchEventFragment();
-//                transaction.detach(mLaunchEvent);
-//                transaction.attach(mLaunchEvent);
-//                transaction.commit();
-//            }
-//        });
-//        clearbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fm = ((MainActivity)getActivity()).getFragmentManager();
-//                FragmentTransaction transaction = fm.beginTransaction();
-//                LaunchEventFragment mLaunchEvent = new LaunchEventFragment();
-//                transaction.detach(mLaunchEvent);
-//                transaction.attach(mLaunchEvent);
-//                transaction.commit();
-//            }
-//        });
     }
 
     @Override
@@ -337,22 +213,6 @@ public class LaunchEventFragment extends Fragment {
         mListener = null;
     }
 
-    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
-
-        public void onClick(View v) {
-            choosePic.dismiss();
-            switch (v.getId()) {
-                case R.id.btn_take_photo:
-                    choseHeadImageFromCameraCapture();
-                    break;
-                case R.id.btn_pick_photo:
-                    choseHeadImageFromGallery();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -367,126 +227,7 @@ public class LaunchEventFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-    public void cropRawPhoto(Uri uri) {
-        System.out.println("Environment.getExternalStorageDirectory()--->" + Environment.getExternalStorageDirectory());
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
 
-        // 设置裁剪
-        intent.putExtra("crop", "true");
-
-        // aspectX , aspectY :宽高的比例
-        intent.putExtra("aspectX", 3);
-        intent.putExtra("aspectY", 2);
-
-        // outputX , outputY : 裁剪图片宽高
-        intent.putExtra("outputX", output_X);
-        intent.putExtra("outputY", output_Y);
-        intent.putExtra("return-data", false);
-        intent.putExtra("scale", true);//黑边
-        intent.putExtra("scaleUpIfNeeded", true);//黑边
-
-
-        startActivityForResult(intent, CODE_RESULT_REQUEST);
-    }
-    private Bitmap decodeUriAsBitmap(Uri uri){
-
-        Bitmap bitmap = null;
-
-        try {
-
-            bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri));
-
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-
-            return null;
-
-        }
-        return bitmap;
-
-    }
-
-    /**
-     * 提取保存裁剪之后的图片数据，并设置头像部分的View
-     */
-    private void setImageToHeadView(Intent intent) {
-//        headImage2.setImageDrawable(null);
-        headImage.setBackground(null);
-        imguri = intent.getData();
-        System.out.println("imguri----->" + getPath(imguri));
-        LaunchEventAdapter.setPath(getPath(imguri));
-        if(imguri != null){
-            Bitmap bitmap = decodeUriAsBitmap(imguri);//decode bitmap
-//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 0, stream);
-            Matrix matrix = new Matrix(); //接收图片之后放大 1.5倍
-            matrix.postScale(1.5f, 1.5f);
-            Bitmap bit = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                    bitmap.getHeight(), matrix, true);
-            headImage.setImageBitmap(bit);
-
-        } else {
-            System.out.println("imguri == null");
-        }
-    }
-
-    /**
-     * 检查设备是否存在SDCard的工具方法
-     */
-    public static boolean hasSdcard() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            // 有存储的SDCard
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-//    private void initView() {
-//        mDatePicker = (DatePicker) getActivity().findViewById(R.id.datePicker);
-//        mTimePicker = (TimePicker) getActivity().findViewById(R.id.timePicker);
-//        mDatePicker.setCalendarViewShown(false);
-//        // 获取当前的年、月、日、小时、分钟
-//        Calendar c = Calendar.getInstance();
-//        year = c.get(Calendar.YEAR);
-//        month = c.get(Calendar.MONTH);
-//        day = c.get(Calendar.DAY_OF_MONTH);
-//        hour = c.get(Calendar.HOUR);
-//        minute = c.get(Calendar.MINUTE);
-//
-//
-//        //初始化DatePicker组件，初始化时指定监听器
-//        mDatePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
-//            @Override
-//            public void onDateChanged(DatePicker arg0, int year, int month,
-//                                      int day) {
-//                LaunchEventFragment.this.year = year;
-//                LaunchEventFragment.this.month = month;
-//                LaunchEventFragment.this.day = day;
-//                // 显示当前日期、时间
-////                showDate(year, month, day, hour, minute);
-//            }
-//        });
-//
-//        // 为TimePicker指定监听器
-//        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-//            @Override
-//            public void onTimeChanged(TimePicker arg0, int hour, int minute) {
-//                LaunchEventFragment.this.hour = hour;
-//                LaunchEventFragment.this.minute = minute;
-//                // 显示当前日期、时间
-////                showDate(year, month, day, hour, minute);
-//            }
-//        });
-//    }
-
-    private long calculateTimeStamp(int year, int month, int day, int hour, int minute) {
-        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
-        return calendar.getTimeInMillis() / 1000;
-    }
 
     @Override
     public void setHasOptionsMenu(boolean hasMenu) {
@@ -496,25 +237,16 @@ public class LaunchEventFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        menu.clear();
-        System.out.println("Menu cleared!!!!!!!!!!!!!!!!!!!!----->" + menu.size());
         inflater.inflate(R.menu.launch_event_menu, menu);
 //        super.onCreateOptionsMenu(menu, inflater);
     }
 
+    //Reference: http://stackoverflow.com/questions/20856601/how-to-get-path-of-a-captured-image-in-android
     public String getPath(Uri mUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = getActivity().managedQuery(mUri, proj, null, null, null);
-
-
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-
+        Cursor cursor = getActivity().managedQuery(mUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+        int column = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-
-        String path = cursor.getString(column_index);
+        String path = cursor.getString(column);
         return path;
-
     }
 }

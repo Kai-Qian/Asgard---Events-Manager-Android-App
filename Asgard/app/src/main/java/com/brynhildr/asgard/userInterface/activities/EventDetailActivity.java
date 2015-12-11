@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,8 @@ import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 import com.brynhildr.asgard.local.DownloadImageFromRemote;
 import com.brynhildr.asgard.local.EventWithID;
+import com.brynhildr.asgard.local.GetEventsFromRemote;
+import com.brynhildr.asgard.local.GetRelationsFromRemote;
 import com.brynhildr.asgard.local.RegisterEventToRemote;
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -50,7 +51,6 @@ public class EventDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-
                 intent.putExtra("Event", event);
                 intent.setClass(EventDetailActivity.this, MapsActivity.class);
                 EventDetailActivity.this.startActivity(intent);
@@ -79,10 +79,6 @@ public class EventDetailActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        headImage.setImageResource(R.drawable.poster2);
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-//        toolBarLayout.setTitle(event.getCOLUMN_NAME_EVENT_NAME());
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,22 +88,25 @@ public class EventDetailActivity extends AppCompatActivity {
         });
     }
     private void dialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EventDetailActivity.this);
-        builder.setMessage("Are you sure you want to register this event？");
-        builder.setTitle("Confirmation");
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-               dialog.dismiss();
-               new RegisterEventToRemote().execute(event.getEventID(), SimplifiedUserAuthentication.getUsername());
-           }
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(EventDetailActivity.this);
+        dialogBuilder.setMessage("Are you sure you want to register this event？");
+        dialogBuilder.setTitle("Confirmation");
+        dialogBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                new RegisterEventToRemote().execute(event.getEventID(), SimplifiedUserAuthentication.getUsername());
+                new GetEventsFromRemote().execute();
+                new GetRelationsFromRemote().execute();
+            }
         });
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        dialogBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        builder.create().show();
+        dialogBuilder.create();
+        dialogBuilder.show();
     }
 }

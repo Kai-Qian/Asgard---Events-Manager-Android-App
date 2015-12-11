@@ -14,8 +14,6 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,6 +23,8 @@ import android.widget.TimePicker;
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 import com.brynhildr.asgard.local.CreateEventToRemote;
+import com.brynhildr.asgard.local.GetEventsFromRemote;
+import com.brynhildr.asgard.local.GetRelationsFromRemote;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 import com.brynhildr.asgard.userInterface.fragments.LaunchEventFragment;
 
@@ -46,9 +46,6 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private Context mContext;
     private static String path;
-
-    private Animation mFadeIn;
-    private Animation mFadeOut;
 
     private static final int NORMAL_ITEM = 0;
     private static final int BUTTON_ITEM = 1;
@@ -72,7 +69,6 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i )
     {
         if (i == NORMAL_ITEM) {
-            // 给ViewHolder设置布局文件
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_launch, viewGroup, false);
             ViewHolderForLaunch tmp = new ViewHolderForLaunch(v);
             mViewHolderForLaunch.add(tmp);
@@ -89,26 +85,24 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     {
         if (0 <= i && i <= 6) {
             ViewHolderForLaunch viewHolderForLaunch = (ViewHolderForLaunch) holder;
-            // 给ViewHolder设置元素
             EventTitle p = eventTitles.get(i);
             viewHolderForLaunch.mTextView.setText(p.getTitle());
             if (i == 1) {
                 mmViewHolderForLaunch = viewHolderForLaunch;
-                Calendar mycalendar=Calendar.getInstance(Locale.US);
-                Date mydate=new Date(); //获取当前日期Date对象
-                mycalendar.setTime(mydate);////为Calendar对象设置时间为当前日期
-
-                year=mycalendar.get(Calendar.YEAR); //获取Calendar对象中的年
-                month=mycalendar.get(Calendar.MONTH);//获取Calendar对象中的月
-                day=mycalendar.get(Calendar.DAY_OF_MONTH);//获取这个月的第几天
-                hour = mycalendar.get(Calendar.HOUR);
-                minute = mycalendar.get(Calendar.MINUTE);
+                Calendar mCalendar=Calendar.getInstance(Locale.US);
+                Date mydate=new Date();
+                mCalendar.setTime(mydate);
+                year=mCalendar.get(Calendar.YEAR);
+                month=mCalendar.get(Calendar.MONTH);
+                day=mCalendar.get(Calendar.DAY_OF_MONTH);
+                hour = mCalendar.get(Calendar.HOUR);
+                minute = mCalendar.get(Calendar.MINUTE);
                 viewHolderForLaunch.mEditText.setInputType(InputType.TYPE_NULL);
                 viewHolderForLaunch.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
-                            DatePickerDialog dpd = new DatePickerDialog(mContext, Datelistener, year, month, day);
+                            DatePickerDialog dpd = new DatePickerDialog(mContext, mDatePickerDialogListener, year, month, day);
                             dpd.setTitle("Please choose the date");
                             dpd.show();
                         }
@@ -117,7 +111,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 viewHolderForLaunch.mEditText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatePickerDialog dpd = new DatePickerDialog(mContext, Datelistener, year, month, day);
+                        DatePickerDialog dpd = new DatePickerDialog(mContext, mDatePickerDialogListener, year, month, day);
                         dpd.setTitle("Please choose the date");
                         dpd.show();
                     }
@@ -130,35 +124,6 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             viewHolderForLaunchBtn.mButton1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mFadeIn = AnimationUtils.loadAnimation(mContext,
-                            R.anim.launchchange);
-                    mFadeOut = AnimationUtils.loadAnimation(mContext,
-                            R.anim.launchechangeout);
-                    viewHolderForLaunchBtn.mButton1.startAnimation(mFadeIn);
-                    mFadeIn.setAnimationListener(new Animation.AnimationListener() {
-                        public void onAnimationStart(Animation animation) {
-                        }
-
-                        public void onAnimationRepeat(Animation animation) {
-                        }
-
-                        public void onAnimationEnd(Animation animation) {
-
-                            viewHolderForLaunchBtn.mButton1.startAnimation(mFadeOut);
-                        }
-                    });
-                    mFadeOut.setAnimationListener(new Animation.AnimationListener() {
-                        public void onAnimationStart(Animation animation) {
-                        }
-
-                        public void onAnimationRepeat(Animation animation) {
-                        }
-
-                        public void onAnimationEnd(Animation animation) {
-
-                            viewHolderForLaunchBtn.mButton1.startAnimation(mFadeIn);
-                        }
-                    });
                     dialog();
                 }
             });
@@ -178,7 +143,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    private DatePickerDialog.OnDateSetListener Datelistener=new DatePickerDialog.OnDateSetListener()
+    private DatePickerDialog.OnDateSetListener mDatePickerDialogListener = new DatePickerDialog.OnDateSetListener()
     {
         @Override
         public void onDateSet(DatePicker view, int myear, int monthOfYear, int dayOfMonth) {
@@ -205,8 +170,11 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemCount()
     {
-        // 返回数据总数
-        return eventTitles == null ? 0 : eventTitles.size();
+        if (eventTitles == null) {
+            return 0;
+        } else {
+            return eventTitles.size();
+        }
     }
 
     @Override
@@ -242,7 +210,6 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return mViewHolderForLaunch;
     }
 
-    // 重写的自定义ViewHolder
     public static class ViewHolderForLaunch
             extends RecyclerView.ViewHolder
     {
@@ -317,10 +284,10 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void dialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setMessage("Are you sure you want to launch this event？");
-        builder.setTitle("Confirmation");
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        dialogBuilder.setTitle("Confirmation");
+        dialogBuilder.setMessage("Are you sure you want to launch this event？");
+        dialogBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, int which) {
                 new Handler().postDelayed(new Runnable() {
@@ -339,38 +306,28 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         event.setCOLUMN_NAME_DESCRIPTION(tmp.get(6).getmEditText().getText().toString());
                         event.setCOLUMN_NAME_POSTER(getPath());
                         System.out.println("getPath()--->" + getPath());
-//                        event.setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
                         event.setCOLUMN_NAME_LAUNCHER_ID(SimplifiedUserAuthentication.getUsername());
                         CreateEventToRemote mCreateEventToRemote = new CreateEventToRemote();
                         mCreateEventToRemote.execute(event);
-                        /*
-                        while (mCreateEventToRemote.getResponseCode() != 200 && mCreateEventToRemote.getResponseCode() != 500) {
-//                            System.out.println("mCreateEventToRemote.getResponse()-->" + mCreateEventToRemote.getResponseCode());
-                        }
-                        if (mCreateEventToRemote.getResponse()) {
-                            Toast.makeText(mContext, "The event is launched successfully", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(mContext, "The event can not be launched. Maybe there is an error in the input ", Toast.LENGTH_LONG).show();
-                        }
-                        */
+                        new GetEventsFromRemote().execute();
+                        new GetRelationsFromRemote().execute();
                         FragmentManager fm = ((MainActivity) mContext).getFragmentManager();
                         FragmentTransaction transaction = fm.beginTransaction();
                         LaunchEventFragment mLaunchEvent = ((MainActivity) mContext).getmLaunchEvent();
                         transaction.detach(mLaunchEvent);
                         transaction.attach(mLaunchEvent);
-
                         transaction.commit();
 
                     }
                 }, 500);
             }
         });
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        dialogBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        builder.create().show();
+        dialogBuilder.create().show();
     }
 }

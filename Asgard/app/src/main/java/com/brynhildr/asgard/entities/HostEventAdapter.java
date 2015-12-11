@@ -2,10 +2,7 @@ package com.brynhildr.asgard.entities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,7 +28,6 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
 {
 
     private List<EventWithID> events;
-    private Resources res;
     private Context mContext;
 
     private ArrayList<ViewHolderForHost> mViewHolderForHost = new ArrayList<ViewHolderForHost>();
@@ -41,13 +37,11 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
     {
         this.mContext = context;
         this.events = events;
-        this.res = context.getResources();
     }
 
     @Override
     public ViewHolderForHost onCreateViewHolder( ViewGroup viewGroup, int i )
     {
-        // 给ViewHolder设置布局文件
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_host, viewGroup, false);
         ViewHolderForHost tmp = new ViewHolderForHost(v);
         mViewHolderForHost.add(tmp);
@@ -58,7 +52,6 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
     @Override
     public void onBindViewHolder( final ViewHolderForHost viewHolderForHost, int i )
     {
-        // 给ViewHolder设置元素
         if (events.size() == 0) {
             return;
         } else {
@@ -72,39 +65,13 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            viewHolderForHost.mImageView.setImageDrawable(mContext.getDrawable(p.getImageResourceId(mContext)));
             viewHolderForHost.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
-
                     intent.putExtra("Event", p);
                     intent.setClass(mContext, HostEventDetailsActivity.class);
                     mContext.startActivity(intent);
-                }
-            });
-            Bitmap bitmap = BitmapFactory.decodeResource(res, p.getImageResourceId(mContext));
-            //异步获得bitmap图片颜色值
-            Palette.Builder from = Palette.from(bitmap);
-            from.generate(new Palette.PaletteAsyncListener() {
-                @Override
-                public void onGenerated(Palette palette) {
-                    Palette.Swatch vibrant = palette.getVibrantSwatch();//有活力
-                    Palette.Swatch DarkVibrant = palette.getDarkVibrantSwatch();//有活力 暗色
-                    Palette.Swatch LightVibrant = palette.getLightVibrantSwatch();//有活力 亮色
-                    Palette.Swatch Muted = palette.getMutedSwatch();//柔和
-                    Palette.Swatch DarkMuted = palette.getDarkMutedSwatch();//柔和 暗色
-                    Palette.Swatch LightMuted = palette.getLightMutedSwatch();//柔和 亮色
-
-                    if (Muted != null) {
-                        int color1 = Muted.getBodyTextColor();//内容颜色
-                        int color2 = Muted.getTitleTextColor();//标题颜色
-                        int color3 = Muted.getRgb();//rgb颜色
-                        viewHolderForHost.mCardView.setCardBackgroundColor(color3);
-                        viewHolderForHost.mTextView1.setTextColor(color2);
-                        viewHolderForHost.mTextView2.setTextColor(color2);
-                        viewHolderForHost.mTextView3.setTextColor(color2);
-                    }
                 }
             });
         }
@@ -113,8 +80,11 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
     @Override
     public int getItemCount()
     {
-        // 返回数据总数
-        return events == null ? 0 : events.size();
+        if (events == null) {
+            return 0;
+        } else {
+            return events.size();
+        }
     }
     public ArrayList<ViewHolderForHost> getmViewHolderForView() {
         return mViewHolderForHost;
@@ -122,17 +92,10 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
 
     public void sortNewToOld() {
         Collections.sort(events, new NewToOldComparator());
-        for (EventWithID i : events) {
-            System.out.println("DateAndTimeTimeStamp----->" + i.getDateAndTimeTimeStamp());
-        }
         notifyDataSetChanged();
-        System.out.println("sortNewToOld----->");
-//        notifyItemInserted(0);
     }
     public void sortOldToNew() {
         Collections.sort(events, new OldToNewComparator());
-
-//        notifyItemRemoved(0);
         notifyDataSetChanged();
     }
     public void sortModified() {
@@ -144,7 +107,6 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
         public int compare(EventWithID s1, EventWithID s2) {
             return -Long.valueOf(s1.getDateAndTimeTimeStamp())
                     .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
-//            return -Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
     private static class OldToNewComparator implements Comparator<EventWithID> {
@@ -152,7 +114,6 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
         public int compare(EventWithID s1, EventWithID s2) {
             return Long.valueOf(s1.getDateAndTimeTimeStamp())
                     .compareTo(Long.valueOf(s2.getDateAndTimeTimeStamp()));
-//            return Long.compare(s1.getDateAndTimeTimeStamp(), s2.getDateAndTimeTimeStamp());
         }
     }
     private static class ModifiedComparator implements Comparator<EventWithID> {
@@ -160,13 +121,10 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
         public int compare(EventWithID s1, EventWithID s2) {
             return -Long.valueOf(s1.getModifiedTimeStamp())
                     .compareTo(Long.valueOf(s2.getModifiedTimeStamp()));
-//            return -Long.compare(s1.getModifiedTimeStamp(), s2.getModifiedTimeStamp());
         }
     }
 
-    // 重写的自定义ViewHolder
-    public static class ViewHolderForHost
-            extends RecyclerView.ViewHolder
+    public static class ViewHolderForHost extends RecyclerView.ViewHolder
     {
         public TextView mTextView1;
 

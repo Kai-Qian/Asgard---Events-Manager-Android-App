@@ -50,70 +50,7 @@
             android:layout_height="match_parent"
             tools:context="com.brynhildr.asgard.userInterface.fragments.ViewEventsFragment" />
     </android.support.v4.widget.SwipeRefreshLayout>
-    <RelativeLayout
-        android:id="@+id/fab_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:clipChildren="false" >
 
-        <ImageButton
-            android:id="@+id/fab_action_2"
-            style="@style/FloatingActionButtonMini"
-            android:src="@drawable/ic_mainmenu"
-            android:layout_above="@+id/fab_action_1"
-            android:layout_alignEnd="@id/fab"
-            android:contentDescription="@null"
-            android:onClick="fabAction2" />
-
-        <ImageButton
-            android:id="@+id/fab_action_1"
-            style="@style/FloatingActionButtonMini"
-            android:src="@drawable/ic_refresh"
-            android:layout_above="@id/fab"
-            android:layout_alignEnd="@id/fab"
-            android:contentDescription="@null"
-            android:onClick="fabAction1" />
-
-        <ImageButton
-            android:id="@+id/fab"
-            style="@style/FloatingActionButton"
-            android:src="@drawable/ic_plus"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@null"
-            android:visibility="visible"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Menu"
-            android:textColor="#00afff"
-            android:id="@+id/textView3"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_alignTop="@id/fab_action_2"
-            android:layout_toStartOf="@id/fab_action_2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Refresh"
-            android:textColor="#0eff34"
-            android:id="@+id/textView4"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_alignTop="@+id/fab_action_1"
-            android:layout_toStartOf="@+id/fab_action_1" />
-    </RelativeLayout>
-
-
-    <!--<android.support.design.widget.FloatingActionButton android:id="@+id/viewfab"-->
-        <!--android:layout_width="wrap_content" android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"-->
-        <!--android:src="@android:drawable/ic_dialog_email" />-->
 </android.support.design.widget.CoordinatorLayout>
 
 

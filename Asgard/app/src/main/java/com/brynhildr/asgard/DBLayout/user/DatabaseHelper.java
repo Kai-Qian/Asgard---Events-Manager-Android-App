@@ -88,15 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             System.out.println(e);
             return;
         }
-//        db.execSQL("create table Student(StudentID integer primary key autoincrement," +
-//                "Student integer);");
-//        db.execSQL("create table QuizScores( ScoreID integer primary key," +
-//                "Quiz1 float(2)," +
-//                "Quiz2 float(2)," +
-//                "Quiz3 float(2)," +
-//                "Quiz4 float(2)," +
-//                "Quiz5 float(2)," +
-//                "foreign key(ScoreID) references Student(StudentID));");
     }
 
     /**

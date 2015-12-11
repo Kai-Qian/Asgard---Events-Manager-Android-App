@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:layout_gravity="center_horizontal"
     android:orientation="horizontal"
     android:theme="@style/InputTheme"
     card_view:cardCornerRadius="5dp"
@@ -11,7 +12,7 @@
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp" >
@@ -21,12 +22,14 @@
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:id="@+id/launchbtn1"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal" />
         <Button
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/launchbtn2"
             android:textColor="#ffffff"/>
     </LinearLayout>

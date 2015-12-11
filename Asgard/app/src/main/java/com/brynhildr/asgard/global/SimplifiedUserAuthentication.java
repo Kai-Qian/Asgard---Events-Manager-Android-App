@@ -38,6 +38,7 @@ public class SimplifiedUserAuthentication {
             setUsername(username);
             isLoggedIn = true;
         } else {
+            return false;
             // TODO: login failed;
         }
         return true;

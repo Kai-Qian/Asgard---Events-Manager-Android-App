@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -104,10 +103,8 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.id_swiperefreshlayout_going);
-        // 刷新时，指示器旋转后变化的颜色
         mSwipeRefreshLayout.setColorSchemeResources(R.color.input, R.color.black_overlay);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
     }
 
     @Override
@@ -115,7 +112,6 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                new GetEventsFromRemote().execute();
                 mSwipeRefreshLayout.setRefreshing(false);
                 FragmentManager fm = ((MainActivity) getActivity()).getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
@@ -128,38 +124,18 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
     }
 
 
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-//        edb = new EventDatabase(getActivity());
-//        edb = new GetRegisteredEvents().getRegisteredEvents();
-//        eventTmp = edb.readRowWithID();
         eventTmp = new GetRegisteredEvents().getRegisteredEvents();
         ArrayList<EventWithID> event = new ArrayList<EventWithID>(eventTmp.size());
         for (int i = eventTmp.size() - 1; i >= 0; i--) {
             event.add(eventTmp.get(i));
         }
-        // 拿到RecyclerView
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.viewEventlist_going);
-        // 设置LinearLayoutManager
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // 设置ItemAnimator
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        // 设置固定大小
-//        mRecyclerView.setHasFixedSize(true);
-        // 初始化自定义的适配器
         manageEventAdapter = new ManageEventAdapter(getActivity(), event);
-        System.out.println("manageEventAdapter.getItemCount()" + manageEventAdapter.getItemCount());
-
-        // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(manageEventAdapter);
     }
 
@@ -180,20 +156,10 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
+
     @Override
     public void setHasOptionsMenu(boolean hasMenu) {
         super.setHasOptionsMenu(hasMenu);
@@ -201,10 +167,7 @@ public class EventsGoingFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        System.out.println(" Going Menu cleared!!!!!!!!!!!!!!!!!!!!");
         inflater.inflate(R.menu.manage_event_menu, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

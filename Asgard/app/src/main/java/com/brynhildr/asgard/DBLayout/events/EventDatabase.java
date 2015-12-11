@@ -51,30 +51,6 @@ public class EventDatabase {
         return newRowId;
     }
 
-//    public long insertRow(ArrayList<String> eventDetails) {
-//        SQLiteDatabase db = eventDatabaseHelper.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_EVENT_NAME, eventDetails.get(0));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_DATEANDTIME, eventDetails.get(1));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_VENUE, eventDetails.get(2));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_DRESS_CODE, eventDetails.get(3));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_TARGET_AUDIENCE, eventDetails.get(4));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_MAX_PEOPLE, eventDetails.get(5));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_DESCRIPTION, eventDetails.get(6));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_POSTER, eventDetails.get(7));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_LAUNCHER_ID, eventDetails.get(8));
-//        values.put(EventSchema.EventEntry.COLUMN_NAME_TIMESTAMP, eventDetails.get(9));
-//        long newRowId;
-//        newRowId = db.insert(
-//                EventSchema.EventEntry.TABLE_NAME,
-//                EventSchema.EventEntry.COLUMN_NAME_NULLABLE,
-//                values);
-//        System.out.println("newRowId---->" + newRowId);
-//        return newRowId;
-//    }
-
 
     /**
      * Delete the entry if remote database doesn't have it.

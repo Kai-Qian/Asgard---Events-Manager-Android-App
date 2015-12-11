@@ -33,12 +33,13 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ManageEventsFragment extends Fragment {
-    private ViewPager m_vp;
+
+    private ViewPager mViewPager;
     private EventsGoingFragment mfragment1;
     private EventsHostingFragment mfragment2;
     private ArrayList<Fragment> fragmentList;
-    ArrayList<String>   titleList    = new ArrayList<String>();
-    private PagerTabStrip pagerTabStrip;
+    private ArrayList<String> mTitleList = new ArrayList<String>();
+    private PagerTabStrip tab;
 
     private PagerTitleStrip pagerTitleStrip;
     // TODO: Rename parameter arguments, choose names that match
@@ -90,13 +91,6 @@ public class ManageEventsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_manage_events, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -112,27 +106,23 @@ public class ManageEventsFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        m_vp = (ViewPager) getActivity().findViewById(R.id.viewpager);
+        fragmentList = new ArrayList<Fragment>();
+        mViewPager = (ViewPager) getActivity().findViewById(R.id.viewpager_manage);
+        tab =(PagerTabStrip) getActivity().findViewById(R.id.tab_manage);
+        tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, 80);
+        tab.setTextColor(Color.WHITE);
 
-        pagerTabStrip=(PagerTabStrip) getActivity().findViewById(R.id.pagertab);
-        pagerTabStrip.setTextColor(Color.WHITE);
-        pagerTabStrip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.toolbar));
-        pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-//            pagerTitleStrip=(PagerTitleStrip) findViewById(R.id.pagertab);
-//            pagerTitleStrip.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+        tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        tab.setTabIndicatorColor(Color.WHITE);
 
         mfragment1 = new EventsGoingFragment();
         mfragment2 = new EventsHostingFragment();
-
-        fragmentList = new ArrayList<Fragment>();
         fragmentList.add(mfragment1);
         fragmentList.add(mfragment2);
+        mTitleList.add("Going");
+        mTitleList.add("Hosting");
+        mViewPager.setAdapter(new ManageEventViewPagerAdapter(getFragmentManager()));
 
-        titleList.add("Going");
-        titleList.add("Hosting");
-
-        m_vp.setAdapter(new MyViewPagerAdapter(getFragmentManager()));
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_manage);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle("Manage Events");
@@ -167,26 +157,25 @@ public class ManageEventsFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-    public class MyViewPagerAdapter extends FragmentPagerAdapter {
-        public MyViewPagerAdapter(FragmentManager fm) {
+
+    public class ManageEventViewPagerAdapter extends FragmentPagerAdapter {
+
+        public ManageEventViewPagerAdapter(FragmentManager fm) {
             super(fm);
-            // TODO Auto-generated constructor stub
         }
 
         @Override
-        public Fragment getItem(int arg0) {
-            return fragmentList.get(arg0);
+        public CharSequence getPageTitle(int position) {
+            return mTitleList.get(position);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
         }
 
         @Override
         public int getCount() {
             return fragmentList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            // TODO Auto-generated method stub
-            return titleList.get(position);
         }
     }
 
