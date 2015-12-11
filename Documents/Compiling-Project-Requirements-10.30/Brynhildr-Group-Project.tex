@@ -34,11 +34,16 @@
 \newpage
 
 
+%\noindent\textbf{Description: }
+%This app notifies users of events that are happening nearby. It will track the user's
+%location and displays all events in Google map API. Organizers upload events to database and the users can refresh the event list by scrolling down.
+%Users can register selected events and the app can manage the event list for the users. For example, it can send reminders when the event date comes closer or when something changes about the event information.
+%The main purpose for the app is to inform users of events happening around esp. when they don't know what to do during weekends or holidays.
+
 \noindent\textbf{Description: }
-This app notifies users of events that are happening nearby. It will track the user's
-location and displays all events in Google map API. Organizers upload events to database and the users can refresh the event list by scrolling down.
-Users can register selected events and the app can manage the event list for the users. For example, it can send reminders when the event date comes closer or when something changes about the event information.
+This app notifies users of events that are happening nearby. Organizers upload events to database and the users can refresh the event list, register selected events, manage their hosting events or events they are going.
 The main purpose for the app is to inform users of events happening around esp. when they don't know what to do during weekends or holidays.
+It is also for the organizers to reach out to target audience for their hosted events.
 
 \section{User Story}
 
@@ -130,7 +135,6 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 	\item Touchscreen
 	\item Web Services
 	\item SQL Lite DB
-	\item Third-Party API: Google Calendar
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -148,20 +152,11 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 \subsection{Detailed User activities}
 \begin{enumerate}
 	\item View Profile
-	\begin{enumerate}
-		\item Profile page with edit option
-	\end{enumerate}
 	
 	\item View Events
-	\begin{enumerate}
-		\item calendar with filter (event, location)
 		\begin{enumerate}
 			\item register event
-			\item invite friend
-			\item contact organizer
-			\item add to event waitlist
 		\end{enumerate}
-	\end{enumerate}
 	
 	\item Launch Events
 	\begin{enumerate}
@@ -177,46 +172,45 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 	
 	\item Manage Events
 	\begin{enumerate}
-		\item My launched events
+		\item My hosting events
 		\begin{enumerate}
 			\item list view
 			\begin{enumerate}
-				\item view participants
-				\item modify event information
-				\item delete event
-				\item broadcast event
-				\item invite friends
+				%\item view participants
+				\item view hosting events
+				\item update event information
+				%\item broadcast event
+				%\item invite friends
 			\end{enumerate}
 		\end{enumerate} 
 		
-		\item My registered events
+		\item My going events
 		\begin{enumerate}
 			\item list view
 			\begin{enumerate}
 				\item unregister
-				\item invite friends
-				\item contact organizer
+				\item view events I'm going
 			\end{enumerate}
 		\end{enumerate} 
 		
-		\item Waitlisted events
-		\begin{enumerate}
-			\item list view
-			\begin{enumerate}
-				\item unlike
-				\item register this event
-			\end{enumerate}
-		\end{enumerate} 
+		%\item Waitlisted events
+		%\begin{enumerate}
+		%	\item list view
+		%	\begin{enumerate}
+		%		\item unlike
+		%		\item register this event
+		%	\end{enumerate}
+		%s\end{enumerate} 
 	\end{enumerate}
 	
-	\item Inbox/Message Center
+	%\item Inbox/Message Center
 	
-	\item Settings
-	\begin{enumerate}
-		\item Push notification enable?
-		\item Share my location?
-		\item Frequency of update?
-	\end{enumerate}
+	%\item Settings
+	%\begin{enumerate}
+	%	\item Push notification enable?
+	%	\item Share my location?
+	%	\item Frequency of update?
+	%\end{enumerate}
 \end{enumerate}
 
 
@@ -411,49 +405,49 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Invite Frient
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Invite Friend}
-\label{Invite Friend}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& INVT-FRNDS\\
-	\hline
-	Use Case Name: 	& Invite Friends\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& Invite other friends to come to the event together\\
-	\hline
-	Preconditions		& User has choose the category and all related events have been shown\\
-	\hline
-	Normal Flow of Events:	& 1. User learns the details of the event\\             	
-						& 2. User selects Register an Event\\
-& 3. Events Manager displays people the user can send invitations to\\
-& 4. User choose the people and send the invitations\\
-	\hline
-	Postconditions:			& After step 4, user stays at the invitation page\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& User can choose cancel to not send invitations\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& There are friends in the list which the user can send invitations\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Invite Friend}
+%\label{Invite Friend}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& INVT-FRNDS\\
+%	\hline
+%	Use Case Name: 	& Invite Friends\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& Invite other friends to come to the event together\\
+%	\hline
+%	Preconditions		& User has choose the category and all related events have been shown\\
+%	\hline
+%	Normal Flow of Events:	& 1. User learns the details of the event\\             	
+%						& 2. User selects Register an Event\\
+%& 3. Events Manager displays people the user can send invitations to\\
+%& 4. User choose the people and send the invitations\\
+%	\hline
+%	Postconditions:			& After step 4, user stays at the invitation page\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& User can choose cancel to not send invitations\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& There are friends in the list which the user can send invitations\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Contact Organizer
@@ -505,49 +499,49 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Watch Event
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Watch Event}
-\label{Watch Event}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& WTCH-EVNT\\
-	\hline
-	Use Case Name: 	& Watch the event\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& The user can put the event into the waitlist so that user can make decision in the future\\
-	\hline
-	Preconditions		& User has chosen the category and all related events have been shown\\
-	\hline
-	Normal Flow of Events:	& 1. User learns the details of the event\\
-						& 2. User selects Watch\\
-& 3. The Watch button is on\\
-& 4. If the user does not want to watch the event, he can press the button again and the button is off\\
-	\hline
-	Postconditions:			& After step 4, if the Watch button is on, then the event is put in waitlist. If the Watch button is off, the event is removed from the waitlist\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& N/A\\
-	\hline
-	Exceptions:			& The event is not available any longer\\
-	\hline
-	Assumptions:			& The event is still available\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Watch Event}
+%\label{Watch Event}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& WTCH-EVNT\\
+%	\hline
+%	Use Case Name: 	& Watch the event\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& The user can put the event into the waitlist so that user can make decision in the future\\
+%	\hline
+%	Preconditions		& User has chosen the category and all related events have been shown\\
+%	\hline
+%	Normal Flow of Events:	& 1. User learns the details of the event\\
+%						& 2. User selects Watch\\
+%& 3. The Watch button is on\\
+%& 4. If the user does not want to watch the event, he can press the button again and the button is off\\
+%	\hline
+%	Postconditions:			& After step 4, if the Watch button is on, then the event is put in waitlist. If the Watch button is off, the event is removed from the waitlist\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& N/A\\
+%	\hline
+%	Exceptions:			& The event is not available any longer\\
+%	\hline
+%	Assumptions:			& The event is still available\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Launch Event
@@ -655,146 +649,146 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Delete Event
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Delete Event}
-\label{Delete Event}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& DLT-EVNT\\
-	\hline
-	Use Case Name: 	& Delete Event\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& Delete an event which has been launched\\
-	\hline
-	Preconditions		& User has launched a few events\\
-	\hline
-	Normal Flow of Events:	& 1. User press the My Launched Events button\\
-                        & 2. There shows the events which have been launched\\\	
-						& 3. User can view the number of participants and their information\\
-& 4. User chooses to delete an event\\
-& 5. User presses the ok button on the the confirmation message\\
-	\hline
-	Postconditions:			& After step 5, user successfully delete the event\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& User can choose return button to return to the previous page\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& User wants to delete an event and there are events in the launched list\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD\\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Delete Event}
+%\label{Delete Event}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& DLT-EVNT\\
+%	\hline
+%	Use Case Name: 	& Delete Event\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& Delete an event which has been launched\\
+%	\hline
+%	Preconditions		& User has launched a few events\\
+%	\hline
+%	Normal Flow of Events:	& 1. User press the My Launched Events button\\
+%                    & 2. There shows the events which have been launched\\\	
+%						& 3. User can view the number of participants and their information\\
+%& 4. User chooses to delete an event\\
+%& 5. User presses the ok button on the the confirmation message\\
+%	\hline
+%	Postconditions:			& After step 5, user successfully delete the event\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& User can choose return button to return to the previous page\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& User wants to delete an event and there are events in the launched list\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD\\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Broadcast an Event
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Broadcast an Event}
-\label{Broadcast an Event}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& BRDCST-EVNT\\
-	\hline
-	Use Case Name: 	& Broadcast an Event\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& Broadcast an event which has been launched\\
-	\hline
-	Preconditions		& User has launched a few events\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the My Launched Events button\\
-                        & 2. There shows the events which have been launched\\\	
-						& 3. User can view the number of participants and their information\\
-& 4. User chooses to broadcast an event\\
-& 5. User presses the ok button on the the confirmation message\\
-	\hline
-	Postconditions:			& After step 5, user successfully broadcast the event\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& User can choose return button to return to the previous page\\
-	\hline
-	Exceptions:			& There are no friends in the broadcast list\\
-	\hline
-	Assumptions:			& User wants to broadcast an event and there are events in the launched list\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD\\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Broadcast an Event}
+%\label{Broadcast an Event}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& BRDCST-EVNT\\
+%	\hline
+%	Use Case Name: 	& Broadcast an Event\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& Broadcast an event which has been launched\\
+%	\hline
+%	Preconditions		& User has launched a few events\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the My Launched Events button\\
+%                        & 2. There shows the events which have been launched\\\	
+%						& 3. User can view the number of participants and their information\\
+%& 4. User chooses to broadcast an event\\
+%& 5. User presses the ok button on the the confirmation message\\
+%	\hline
+%	Postconditions:			& After step 5, user successfully broadcast the event\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& User can choose return button to return to the previous page\\
+%	\hline
+%	Exceptions:			& There are no friends in the broadcast list\\
+%	\hline
+%	Assumptions:			& User wants to broadcast an event and there are events in the launched list\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD\\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Invite Friends
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Invite Friends}
-\label{Invite Friends}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& INVT-FRNDS\\
-	\hline
-	Use Case Name: 	& Invite Friends\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& Invite other friends to come to the event together\\
-	\hline
-	Preconditions		& User has launched a few events\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the My Launched Events button\\
-                        & 2. There shows the events which have been launched\\\	
-						& 3. User can view the number of participants and their information\\
-& 4. User chooses to broadcast an event\\
-& 5. User presses the ok button on the the confirmation message\\
-	\hline
-	Postconditions:			& After step5, user stays at the invitation page\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& User can choose cancel to not send invitations\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& There are friends in the list which the user can send invitations\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Invite Friends}
+%\label{Invite Friends}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& INVT-FRNDS\\
+%	\hline
+%	Use Case Name: 	& Invite Friends\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& Invite other friends to come to the event together\\
+%	\hline
+%	Preconditions		& User has launched a few events\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the My Launched Events button\\
+%                        & 2. There shows the events which have been launched\\\	
+%						& 3. User can view the number of participants and their information\\
+%& 4. User chooses to broadcast an event\\
+%& 5. User presses the ok button on the the confirmation message\\
+%	\hline
+%	Postconditions:			& After step5, user stays at the invitation page\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& User can choose cancel to not send invitations\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& There are friends in the list which the user can send invitations\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Unregister Event
@@ -850,102 +844,102 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Invite Friends (Registered Events)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Invite Friends (Registered Events)}
-\label{Invite Friends (Registered Events)}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& INVT-FRNDS\\
-	\hline
-	Use Case Name: 	& Invite Friends\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& Invite other friends to come to the event together\\
-	\hline
-	Preconditions		& User has launched a few events\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the My Registered Events button\\
-                        & 2. There shows the events which have been launched\\\	
-						& 3. User can view vent's details\\
-& 4. User presses the Invite Friends button\\
-& 5. User presses the ok button on the the confirmation message\\
-	\hline
-	Postconditions:			& After step5, user stays at the invitation page and invitations are sent\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& User can choose cancel to not send invitations\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& There are friends in the list which the user can send invitations\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Invite Friends (Registered Events)}
+%\label{Invite Friends (Registered Events)}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& INVT-FRNDS\\
+%	\hline
+%	Use Case Name: 	& Invite Friends\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& Invite other friends to come to the event together\\
+%	\hline
+%	Preconditions		& User has launched a few events\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the My Registered Events button\\
+%                        & 2. There shows the events which have been launched\\\	
+%						& 3. User can view vent's details\\
+%& 4. User presses the Invite Friends button\\
+%& 5. User presses the ok button on the the confirmation message\\
+%	\hline
+%	Postconditions:			& After step5, user stays at the invitation page and invitations are sent\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& User can choose cancel to not send invitations\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& There are friends in the list which the user can send invitations\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 \clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Unwatch the event (Wailist)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Unwatch the event (Wailist)}
-\label{Unwatch the event (Wailist)}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& UNWTCH-EVNT\\
-	\hline
-	Use Case Name: 	& Unwatch the event\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& The user can remove the event from the waitlist if they do not want the pay attention to the event\\
-	\hline
-	Preconditions		& User does not want to pay attention to a certain event\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the My Waitlisted Events button. There are events which user selects to watch them for further decision\\
-    & 2. User learns the details of the event\\
-    & 3. There are three buttons user can choose\\
-    &   a. Unwatch the Event\\	
-        &   b. Register Event\\
-        &   c. Invite Friends\\
-						& 4. User selects Unwatch the Event button\\
-& 5. The event is removed from the waitlist\\
-	\hline
-	Postconditions:			& After step 3, user will not watch the event any longer\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& N/A\\
-	\hline
-	Exceptions:			& The event is not available any longer\\
-	\hline
-	Assumptions:			& The event is still available\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Unwatch the event (Wailist)}
+%\label{Unwatch the event (Wailist)}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& UNWTCH-EVNT\\
+%	\hline
+%	Use Case Name: 	& Unwatch the event\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& The user can remove the event from the waitlist if they do not want the pay attention to the event\\
+%	\hline
+%	Preconditions		& User does not want to pay attention to a certain event\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the My Waitlisted Events button. There are events which user selects to watch them for further decision\\
+%    & 2. User learns the details of the event\\
+%    & 3. There are three buttons user can choose\\
+%    &   a. Unwatch the Event\\	
+%        &   b. Register Event\\
+%        &   c. Invite Friends\\
+%						& 4. User selects Unwatch the Event button\\
+%& 5. The event is removed from the waitlist\\
+%	\hline
+%	Postconditions:			& After step 3, user will not watch the event any longer\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& N/A\\
+%	\hline
+%	Exceptions:			& The event is not available any longer\\
+%	\hline
+%	Assumptions:			& The event is still available\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -999,189 +993,189 @@ Our app can help you solve all the problems, as shown in Figure \ref{fig:Context
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Invite Friends (Wailist)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Invite Friends (Wailist)}
-\label{Invite Friends (Wailist)}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& INVT-FRNDS\\
-	\hline
-	Use Case Name: 	& Invite Friends\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& Invite other friends to come to the event together\\
-	\hline
-	Preconditions		& User has a few events in the waitlist\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the My Waitlisted Events button\\
-       				   & 2. There are events which user selects to watch them for further decision\\
-    & 3. User learns the details of the event\\
-& 4. User presses the Invite Friends button\\
-& 5. User presses the ok button on the the confirmation message\\
-	\hline
-	Postconditions:			& After step5, user stays at the invitation page and invitations are sent\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& User can choose cancel to not send invitations\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& There are friends in the list which the user can send invitations\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Invite Friends (Wailist)}
+%\label{Invite Friends (Wailist)}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& INVT-FRNDS\\
+%	\hline
+%	Use Case Name: 	& Invite Friends\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& Invite other friends to come to the event together\\
+%	\hline
+%	Preconditions		& User has a few events in the waitlist\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the My Waitlisted Events button\\
+%       				   & 2. There are events which user selects to watch them for further decision\\
+%    & 3. User learns the details of the event\\
+%& 4. User presses the Invite Friends button\\
+%& 5. User presses the ok button on the the confirmation message\\
+%	\hline
+%	Postconditions:			& After step5, user stays at the invitation page and invitations are sent\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& User can choose cancel to not send invitations\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& There are friends in the list which the user can send invitations\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Push Notification
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Push Notification}
-\label{Push Notification}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& PSH-NTFC\\
-	\hline
-	Use Case Name: 	& Push Notification\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& The user can choose whether to enable the Push Notification function\\
-	\hline
-	Preconditions		& N/A\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the Setting button.\\
-    & 2. There are three choices user can choose\\
-    &   a. Push Notification\\	
-        &   b. Share My Location\\
-        &   c. Frequency of Update\\
-						& 3. User press the Push Notification button\\
-	\hline
-	Postconditions:			& After step 3, if the button is on, user enables the Push Notification function. If the button is off, user disables the Push Notification function\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& N/A\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& N/A\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Push Notification}
+%\label{Push Notification}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& PSH-NTFC\\
+%	\hline
+%	Use Case Name: 	& Push Notification\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& The user can choose whether to enable the Push Notification function\\
+%	\hline
+%	Preconditions		& N/A\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the Setting button.\\
+%    & 2. There are three choices user can choose\\
+%    &   a. Push Notification\\	
+%        &   b. Share My Location\\
+%        &   c. Frequency of Update\\
+%						& 3. User press the Push Notification button\\
+%	\hline
+%	Postconditions:			& After step 3, if the button is on, user enables the Push Notification function. If the button is off, user disables the Push Notification function\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& N/A\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& N/A\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Share Location
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Share Location}
-\label{Share Location}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& SHR-LCTN\\
-	\hline
-	Use Case Name: 	& Share Location\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& The user can choose whether to share user's location\\
-	\hline
-	Preconditions		& N/A\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the Setting button.\\
-						& 2. User press the Share My Location button\\
-	\hline
-	Postconditions:			& After step 2, if the button is on, user will share his location. If the button is off, user will not share his location\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& N/A\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& N/A\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Share Location}
+%\label{Share Location}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& SHR-LCTN\\
+%	\hline
+%	Use Case Name: 	& Share Location\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& The user can choose whether to share user's location\\
+%	\hline
+%	Preconditions		& N/A\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the Setting button.\\
+%						& 2. User press the Share My Location button\\
+%	\hline
+%	Postconditions:			& After step 2, if the button is on, user will share his location. If the button is off, user will not share his location\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& N/A\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& N/A\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%	Section: Select Frequecy
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[!htbp]
-\centering
-\caption{Select Frequecy}
-\label{Select Frequecy}
-\begin{tabular}{ | l | p{11cm} | }
-	\hline
-	Use Case ID 		& SLT-FQCY\\
-	\hline
-	Use Case Name: 	& Select Frequecy\\
-	\hline
-	Primary Actor(s)	& All authorized users of Events Manager\\
-	\hline
-	Secondary Actor(s)	& N/A\\
-	\hline
-	Description		& The user can choose the frequency of events update\\
-	\hline
-	Preconditions		& N/A\\
-	\hline
-	Normal Flow of Events:	& 1. User presses the Setting button.\\
-						& 2. User type in the Frequency of Update in the text field\\
-	\hline
-	Postconditions:			& After step 3, user determines the frequency of event update\\
-	\hline
-	Frequency of Use:		& High\\
-	\hline
-	Alternative Flows:		& N/A\\
-	\hline
-	Exceptions:			& N/A\\
-	\hline
-	Assumptions:			& N/A\\
-	\hline
-	Issues:				& N/A\\
-	\hline
-	Source:				& TBD \\
-	\hline
-	Includes:				& TBD\\
-	\hline
-	Associated Requirements: &TBD\\
-	\hline
-\end{tabular}
-\end{table}
+%\begin{table}[!htbp]
+%\centering
+%\caption{Select Frequecy}
+%\label{Select Frequecy}
+%\begin{tabular}{ | l | p{11cm} | }
+%	\hline
+%	Use Case ID 		& SLT-FQCY\\
+%	\hline
+%	Use Case Name: 	& Select Frequecy\\
+%	\hline
+%	Primary Actor(s)	& All authorized users of Events Manager\\
+%	\hline
+%	Secondary Actor(s)	& N/A\\
+%	\hline
+%	Description		& The user can choose the frequency of events update\\
+%	\hline
+%	Preconditions		& N/A\\
+%	\hline
+%	Normal Flow of Events:	& 1. User presses the Setting button.\\
+%						& 2. User type in the Frequency of Update in the text field\\
+%	\hline
+%	Postconditions:			& After step 3, user determines the frequency of event update\\
+%	\hline
+%	Frequency of Use:		& High\\
+%	\hline
+%	Alternative Flows:		& N/A\\
+%	\hline
+%	Exceptions:			& N/A\\
+%	\hline
+%	Assumptions:			& N/A\\
+%	\hline
+%	Issues:				& N/A\\
+%	\hline
+%	Source:				& TBD \\
+%	\hline
+%	Includes:				& TBD\\
+%	\hline
+%	Associated Requirements: &TBD\\
+%	\hline
+%\end{tabular}
+%\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%
