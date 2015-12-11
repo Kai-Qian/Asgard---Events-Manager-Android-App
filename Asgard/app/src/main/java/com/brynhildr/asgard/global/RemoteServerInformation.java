@@ -16,4 +16,6 @@ public abstract class RemoteServerInformation {
     public final static String URL_UPDATE_EVENT = "update-event";
     public final static String URL_GET_USER_INFO = "get-info";
     public final static String URL_UNREGISTER_EVENT = "unregister-event";
+    public final static String URL_LOGIN = "login";
+
 }

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class AuthenticationWithRemote extends AsyncTask<String, Integer, Boolean
 
     protected Boolean doInBackground(String... para1) {
         String charset = "UTF-8";
-        String requestURL = "http://52.34.9.132/login";
+        String requestURL = RemoteServerInformation.URL_SERVER + RemoteServerInformation.URL_LOGIN;
         List<String> response = null;
         try {
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);
