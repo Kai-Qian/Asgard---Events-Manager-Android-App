@@ -24,6 +24,7 @@ public class AuthenticationWithRemote extends AsyncTask<String, Integer, Boolean
 
             multipart.addFormField("username", username);
             multipart.addFormField("password", password);
+
             response = multipart.finish();
         } catch (Exception e) {
             e.printStackTrace();

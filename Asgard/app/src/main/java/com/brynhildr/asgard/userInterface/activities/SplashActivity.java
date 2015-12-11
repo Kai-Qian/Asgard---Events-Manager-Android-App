@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Bundle;
 
 import com.brynhildr.asgard.R;
+import com.brynhildr.asgard.connection.GetEventsFromRemote;
+import com.brynhildr.asgard.connection.GetRelationsFromRemote;
 
 public class SplashActivity extends Activity {
 
@@ -15,7 +17,8 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        new GetEventsFromRemote().execute();
+        new GetRelationsFromRemote().execute();
         new Handler().postDelayed(new Runnable() {
 
             @Override
