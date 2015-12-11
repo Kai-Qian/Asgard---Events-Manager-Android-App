@@ -19,8 +19,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -101,8 +99,6 @@ public class LaunchEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        getActivity().invalidateOptionsMenu();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_launch_event, container, false);
     }
@@ -229,18 +225,6 @@ public class LaunchEventFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-
-    @Override
-    public void setHasOptionsMenu(boolean hasMenu) {
-        super.setHasOptionsMenu(hasMenu);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.launch_event_menu, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-    }
 
     //Reference: http://stackoverflow.com/questions/20856601/how-to-get-path-of-a-captured-image-in-android
     public String getPath(Uri mUri) {

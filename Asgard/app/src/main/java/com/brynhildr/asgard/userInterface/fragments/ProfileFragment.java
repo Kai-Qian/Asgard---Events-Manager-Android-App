@@ -2,8 +2,13 @@ package com.brynhildr.asgard.userInterface.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 import com.brynhildr.asgard.connection.GetUserInfoFromRemote;
+import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
+import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,8 +72,26 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_profile);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitle("Profile");
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener((MainActivity) getActivity());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
@@ -128,7 +152,7 @@ public class ProfileFragment extends Fragment {
         }
 
         String[] userInfos = userInfo.split("&");
-        if (userInfos[0].split("=")[1].isEmpty()) {
+        if (userInfos[0].split("=").length == 1) {
             userName.setText("Empty");
         } else {
             userName.setText(userInfos[0].split("=")[1]);

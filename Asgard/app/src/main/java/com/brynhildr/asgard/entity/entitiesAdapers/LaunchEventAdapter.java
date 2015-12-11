@@ -212,8 +212,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return mViewHolderForLaunch;
     }
 
-    public static class ViewHolderForLaunch
-            extends RecyclerView.ViewHolder
+    public static class ViewHolderForLaunch extends RecyclerView.ViewHolder
     {
         public TextView mTextView;
 
@@ -243,8 +242,7 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    public static class ViewHolderForLaunchBtn
-            extends RecyclerView.ViewHolder
+    public static class ViewHolderForLaunchBtn extends RecyclerView.ViewHolder
     {
         public Button mButton1;
         public Button mButton2;
