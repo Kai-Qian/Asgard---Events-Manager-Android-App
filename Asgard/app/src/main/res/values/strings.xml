@@ -46,10 +46,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">
-        Welcome to Asgard Amazing Events Manager!\n
+        Welcome to Asgard Amazing Events Manager!\n\n
+
         Are you confused about what to do after school or after work? Our amazing events manager
         notifies you of events that are happening nearby. Organisers upload events and you can view
-        them at your will, register interested events and manage your events.\n
+        them at your will, register interested events and manage your events.\n\n
+
         Are you worried about nobody will attend the event you hosted? Our amazing events manager
         is here to bring you close to all the people who use our app. Push them your events and
         prompt them to register.\n\n\n
