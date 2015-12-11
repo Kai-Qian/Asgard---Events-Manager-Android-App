@@ -115,15 +115,15 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     private DatePickerDialog.OnDateSetListener mDatePickerDialogListener = new DatePickerDialog.OnDateSetListener()
     {
         @Override
-        public void onDateSet(DatePicker view, int myear, int monthOfYear, int dayOfMonth) {
-            year=myear;
+        public void onDateSet(DatePicker view, int mYear, int monthOfYear, int dayOfMonth) {
+            year=mYear;
             month=monthOfYear;
             day=dayOfMonth;
             str.delete(0, str.length());
             str.append((month + 1) + "/" + day + "/" + year + " ");
             TimePickerDialog timeDialog = new TimePickerDialog(mContext, new TimePickerDialog.OnTimeSetListener() {
                 @Override
-                public void onTimeSet(TimePicker tp, int hourOfDay, int minuteOfHour) {
+                public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfHour) {
                     hour = hourOfDay;
                     minute = minuteOfHour;
                     str.append(hour + ":" + minute);
