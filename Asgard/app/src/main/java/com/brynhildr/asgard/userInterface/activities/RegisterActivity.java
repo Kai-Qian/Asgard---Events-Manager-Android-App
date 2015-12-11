@@ -21,8 +21,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.User;
-import com.brynhildr.asgard.local.RegisterUserToRemote;
+import com.brynhildr.asgard.entity.entities.User;
+import com.brynhildr.asgard.connection.RegisterUserToRemote;
 
 
 /**

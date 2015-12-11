@@ -15,11 +15,11 @@ import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
-import com.brynhildr.asgard.local.DownloadImageFromRemote;
+import com.brynhildr.asgard.connection.DownloadImageFromRemote;
 import com.brynhildr.asgard.local.EventWithID;
-import com.brynhildr.asgard.local.GetEventsFromRemote;
-import com.brynhildr.asgard.local.GetRelationsFromRemote;
-import com.brynhildr.asgard.local.RegisterEventToRemote;
+import com.brynhildr.asgard.connection.GetEventsFromRemote;
+import com.brynhildr.asgard.connection.GetRelationsFromRemote;
+import com.brynhildr.asgard.connection.RegisterEventToRemote;
 
 public class EventDetailActivity extends AppCompatActivity {
 

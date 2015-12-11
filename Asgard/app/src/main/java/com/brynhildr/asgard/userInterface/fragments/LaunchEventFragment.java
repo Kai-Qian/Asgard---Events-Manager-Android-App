@@ -26,8 +26,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.EventTitle;
-import com.brynhildr.asgard.entities.LaunchEventAdapter;
+import com.brynhildr.asgard.entity.entities.EventTitle;
+import com.brynhildr.asgard.entity.entitiesAdapers.LaunchEventAdapter;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
 import java.io.IOException;

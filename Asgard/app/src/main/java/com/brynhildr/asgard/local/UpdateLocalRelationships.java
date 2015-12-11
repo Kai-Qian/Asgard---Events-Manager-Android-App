@@ -2,8 +2,8 @@ package com.brynhildr.asgard.local;
 
 import android.util.JsonReader;
 
-import com.brynhildr.asgard.databaseLayout.relationships.RelationshipDatabase;
-import com.brynhildr.asgard.entities.RelationWithID;
+import com.brynhildr.asgard.dblayout.relationships.RelationshipDatabase;
+import com.brynhildr.asgard.entity.entities.RelationWithID;
 
 import java.io.IOException;
 import java.io.InputStream;

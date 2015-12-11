@@ -25,11 +25,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
+import com.brynhildr.asgard.dblayout.events.EventDatabase;
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.ViewEventAdapter;
+import com.brynhildr.asgard.entity.entitiesAdapers.ViewEventAdapter;
 import com.brynhildr.asgard.local.EventWithID;
-import com.brynhildr.asgard.local.GetEventsFromRemote;
+import com.brynhildr.asgard.connection.GetEventsFromRemote;
 import com.brynhildr.asgard.userInterface.activities.MainActivity;
 
 import java.util.ArrayList;

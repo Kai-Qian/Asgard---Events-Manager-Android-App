@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
 import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
-import com.brynhildr.asgard.local.GetUserInfoFromRemote;
+import com.brynhildr.asgard.connection.GetUserInfoFromRemote;
 
 /**
  * A simple {@link Fragment} subclass.

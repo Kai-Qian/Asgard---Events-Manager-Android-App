@@ -1,6 +1,7 @@
 package com.brynhildr.asgard.local;
 
-import com.brynhildr.asgard.databaseLayout.events.EventDatabase;
+import com.brynhildr.asgard.connection.GetEventsFromRemote;
+import com.brynhildr.asgard.dblayout.events.EventDatabase;
 import com.brynhildr.asgard.global.MyApplication;
 import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 

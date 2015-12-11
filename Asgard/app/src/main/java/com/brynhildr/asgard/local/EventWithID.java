@@ -1,6 +1,6 @@
 package com.brynhildr.asgard.local;
 
-import com.brynhildr.asgard.entities.Event;
+import com.brynhildr.asgard.entity.entities.Event;
 
 /**
  * Created by ShuqinYe on 24/11/15.

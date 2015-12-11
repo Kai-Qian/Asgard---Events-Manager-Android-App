@@ -19,9 +19,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.EventDetailsAdapter;
-import com.brynhildr.asgard.entities.EventTitleAndDetail;
-import com.brynhildr.asgard.local.DownloadImageFromRemote;
+import com.brynhildr.asgard.entity.entitiesAdapers.EventDetailsAdapter;
+import com.brynhildr.asgard.entity.entities.EventTitleAndDetail;
+import com.brynhildr.asgard.connection.DownloadImageFromRemote;
 import com.brynhildr.asgard.local.EventWithID;
 
 import java.io.IOException;

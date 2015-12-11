@@ -11,7 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.local.GetEventsFromRemote;
+import com.brynhildr.asgard.connection.GetEventsFromRemote;
+import com.brynhildr.asgard.global.SimplifiedUserAuthentication;
 import com.brynhildr.asgard.userInterface.fragments.AppIntroFragment;
 import com.brynhildr.asgard.userInterface.fragments.EventsGoingFragment;
 import com.brynhildr.asgard.userInterface.fragments.EventsHostingFragment;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity
             transaction.hide(mViewEvent);
             transaction.hide(mManageEvent);
         } else if (id == R.id.logout) {
+            SimplifiedUserAuthentication.logout();
             finish();
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

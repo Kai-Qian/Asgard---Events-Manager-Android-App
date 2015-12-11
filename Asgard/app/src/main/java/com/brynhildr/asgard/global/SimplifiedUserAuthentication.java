@@ -1,6 +1,6 @@
 package com.brynhildr.asgard.global;
 
-import com.brynhildr.asgard.local.AuthenticationWithRemote;
+import com.brynhildr.asgard.connection.AuthenticationWithRemote;
 
 /**
  * Created by lqshan on 11/30/15.

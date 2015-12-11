@@ -1,6 +1,5 @@
 package com.brynhildr.asgard.local;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,8 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entities.Event;
-import com.brynhildr.asgard.entities.User;
+import com.brynhildr.asgard.connection.GetEventsFromRemote;
+import com.brynhildr.asgard.connection.GetRelationsFromRemote;
 
 public class TestActivity extends AppCompatActivity {
 
