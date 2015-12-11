@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -21,8 +22,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.brynhildr.asgard.R;
-import com.brynhildr.asgard.entity.entities.User;
 import com.brynhildr.asgard.connection.RegisterUserToRemote;
+import com.brynhildr.asgard.entity.entities.User;
+import com.brynhildr.asgard.global.MyApplication;
 
 
 /**
@@ -119,9 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         mShowPicture = (ImageView) findViewById(R.id.guide_picture);
-        mPicture1 = getResources().getDrawable(R.drawable.back1);
-        mPicture2 = getResources().getDrawable(R.drawable.back2);
-        mPicture3 = getResources().getDrawable(R.drawable.back3);
+        mPicture1 = ContextCompat.getDrawable(MyApplication.getAppContext(), R.drawable.back1);
+        mPicture2 = ContextCompat.getDrawable(MyApplication.getAppContext(), R.drawable.back2);
+        mPicture3 = ContextCompat.getDrawable(MyApplication.getAppContext(), R.drawable.back3);
         mShowPicture.setImageDrawable(mPicture1);
         start = AnimationUtils.loadAnimation(this, R.anim.register_page1);
         middle = AnimationUtils.loadAnimation(this, R.anim.register_page2);
