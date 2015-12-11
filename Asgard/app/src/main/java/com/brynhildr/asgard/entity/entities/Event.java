@@ -10,7 +10,6 @@ import java.util.Date;
  */
 public class Event implements Serializable {
 
-    //    private int COLUMN_NAME_ENTRY_ID;
     private String COLUMN_NAME_EVENT_NAME;
     private String COLUMN_NAME_VENUE;
     private String COLUMN_NAME_DATEANDTIME; // long type presented in string (timestamp)
