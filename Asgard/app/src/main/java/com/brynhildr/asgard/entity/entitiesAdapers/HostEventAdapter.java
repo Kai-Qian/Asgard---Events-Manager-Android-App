@@ -3,7 +3,6 @@ package com.brynhildr.asgard.entity.entitiesAdapers;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,7 +130,6 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
         public TextView mTextView2;
         public TextView mTextView3;
         public ImageView mImageView;
-        public CardView mCardView;
 
         public ViewHolderForHost(View v)
         {
@@ -140,7 +138,6 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
             mTextView2 = (TextView) v.findViewById(R.id.cardname);
             mTextView3 = (TextView) v.findViewById(R.id.cardvenue);
             mImageView = (ImageView) v.findViewById(R.id.pic);
-            mCardView = (CardView) v.findViewById(R.id.card_manage);
         }
 
         public TextView getmTextView1() {
@@ -173,13 +170,6 @@ public class HostEventAdapter extends RecyclerView.Adapter<HostEventAdapter.View
 
         public void setmImageView(ImageView mImageView) {
             this.mImageView = mImageView;
-        }
-        public CardView getmCardView() {
-            return mCardView;
-        }
-
-        public void setmCardView(CardView mCardView) {
-            this.mCardView = mCardView;
         }
 
     }
