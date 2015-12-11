@@ -1,40 +1,30 @@
 package com.brynhildr.asgard.local;
 
 
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.brynhildr.asgard.DBLayout.events.EventDatabase;
+import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
+
 import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import android.app.Activity;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.brynhildr.asgard.DBLayout.events.EventDatabase;
-import com.brynhildr.asgard.global.MyApplication;
-
 /**
  * Created by lqshan on 11/18/15.
+ * Get request to remote
  */
 
 public class GetEventsFromRemote extends AsyncTask<Void, Integer, String> {
 
     private static final String TAG = "HttpGetTask";
-    private static final String URL = "http://52.34.9.132/get-events";
+    private static final String URL = RemoteServerInformation.URL_SERVER + RemoteServerInformation.URL_GET_EVENTS;
 
     protected String doInBackground(Void... para1) {
         String data = "";

@@ -41,7 +41,7 @@ public class TestActivity extends AppCompatActivity {
          *
          * new GetEventsFromRemote().execute();
          ******************************************************************/
-
+        new GetEventsFromRemote().execute();
 
         /******************************************************************
          *
@@ -103,7 +103,8 @@ public class TestActivity extends AppCompatActivity {
          *            Which means, this function can only be called in SimplifiedUserAuthentication.java
          *            The skeleton has been built in SimplifiedUserAuthentication.java
          *            TODO: Handle cases where login failed in SimplifiedUserAuthentication.java
-         * @param  username,password
+         * @param username
+         * @param password
          * @return boolean
          *
          * try {
@@ -142,7 +143,8 @@ public class TestActivity extends AppCompatActivity {
         /******************************************************************
          *
          * Usage: new RegisterEventToRemote().execute(event_id, username);
-         * @param event_id,username
+         * @param event_id
+         * @param username
          * @return none or string (depends on how to call it. Examples are given below.)
          *
          * The return string will be one of the following:
@@ -163,7 +165,8 @@ public class TestActivity extends AppCompatActivity {
         /******************************************************************
          *
          * Usage: new UnregisterEventToRemote().execute(event_id, username);
-         * @param event_id,username
+         * @param event_id
+         * @param username
          * @return: none or string (depends on how to call it. Examples are given below.)
          *
          * The return string will be one of the following:
@@ -199,6 +202,15 @@ public class TestActivity extends AppCompatActivity {
 //                    .setCOLUMN_NAME_VENUE("huoguo!!!").setCOLUMN_NAME_TARGET("humans!!!")
 //                    .setCOLUMN_NAME_POSTER("/storage/emulated/0/DCIM/Camera/burger_king_icon.png");
 //        new UpdateEventToRemote().execute(eventWithID);
+
+        String userinfo = null;
+        try {
+            userinfo = new GetUserInfoFromRemote().execute("test").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(userinfo);
+
     }
 
 }

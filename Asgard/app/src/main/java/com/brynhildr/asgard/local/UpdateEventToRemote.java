@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
 
 import java.io.File;
 import java.util.List;
@@ -14,23 +15,15 @@ import java.util.List;
  */
 public class UpdateEventToRemote extends AsyncTask<EventWithID, Integer, String> {
 
-    private final String filePath = "/storage/emulated/0/DCIM/Camera/burger_king_icon.png";
-    private static final String TAG = "HttpGetTask";
-    private static final String URL = "http://52.34.9.132/update-event";
-    private static final String query = "";
-    //private String response = "";
-    private String BOUNDARY = java.util.UUID.randomUUID().toString();
-    private String PREFIX = "--" , LINEND = "\r\n" ;
-    private String MULTIPART_FROM_DATA = "multipart/form-data" ;
-    private String CHARSET = "UTF-8" ;
+    private static final String URL = RemoteServerInformation.URL_SERVER
+            + RemoteServerInformation.URL_UPDATE_EVENT;
 
     protected String doInBackground(EventWithID... para1) {
         String result = null;
         String charset = "UTF-8";
-        String requestURL = "http://52.34.9.132/update-event";
         List<String> response = null;
         try {
-            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+            MultipartUtility multipart = new MultipartUtility(URL, charset);
             EventWithID event = para1[0];
 
             multipart.addFormField("event_id", event.getEventID());

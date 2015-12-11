@@ -1,11 +1,8 @@
-from django.db import models
-from django.db.models import Max
-from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractBaseUser
-from django.shortcuts import get_object_or_404
-from django.template import loader, Context
-from django.utils.html import escape
-from datetime import timedelta
+from django.contrib.auth.models import User
+from django.db import models
+
+
 # Create your models here.
 
 

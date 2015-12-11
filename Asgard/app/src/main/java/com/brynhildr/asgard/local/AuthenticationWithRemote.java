@@ -14,12 +14,7 @@ import java.util.List;
  */
 public class AuthenticationWithRemote extends AsyncTask<String, Integer, Boolean> {
 
-    private static final String TAG = "HttpPostLoginTask";
-    private static final String URL = "http://52.34.9.132/login";
-    private static final String query = "";
-
     protected Boolean doInBackground(String... para1) {
-        String result = null;
         String charset = "UTF-8";
         String requestURL = "http://52.34.9.132/login";
         List<String> response = null;
@@ -45,11 +40,10 @@ public class AuthenticationWithRemote extends AsyncTask<String, Integer, Boolean
     }
 
     protected void onProgressUpdate(Integer... progress) {
-        //setProgressPercent(progress[0]);
+
     }
 
     protected void onPostExecute(Boolean result) {
-        //showDialog("Downloaded " + result + " bytes");
         if (result)
             Toast.makeText(MyApplication.getAppContext(),
                     "Login Succeeded",

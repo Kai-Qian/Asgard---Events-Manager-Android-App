@@ -8,6 +8,7 @@ import android.util.Log;
 import com.brynhildr.asgard.DBLayout.events.EventDatabase;
 import com.brynhildr.asgard.entities.Event;
 import com.brynhildr.asgard.global.MyApplication;
+import com.brynhildr.asgard.global.RemoteServerInformation;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -22,7 +23,9 @@ import java.util.ArrayList;
  */
 public class DownloadImageFromRemote extends AsyncTask<String, Integer, Bitmap> {
     private static final String TAG = "HttpGetImageTask";
-    private static final String base_URL = "http://52.34.9.132/static/posters/";
+    //private static final String base_URL = "http://52.34.9.132/static/posters/";
+    private static final String base_URL = RemoteServerInformation.URL_SERVER
+            + RemoteServerInformation.URL_REMOTE_IMAGE_DIR;
 
     protected Bitmap doInBackground(String... para1) {
         String data = "";

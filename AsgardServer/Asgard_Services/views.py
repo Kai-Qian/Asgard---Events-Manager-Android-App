@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
-from Asgard_Services.models import *
-from django.http import HttpResponse
-from datetime import datetime
-from django.http import Http404
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate
-import pytz
 import traceback
+from datetime import datetime
+
+import pytz
+from django.contrib.auth import authenticate
+from django.http import Http404
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
+from Asgard_Services.models import *
 
 
 @csrf_exempt
@@ -188,7 +189,10 @@ def update_event(request):
 def get_user_info(request):
     username = request.POST['username']
     username = username.replace("\r\n", "")
-    user = User.objects.get(username__exact=username)
+    user = User.objects.get(username=username)
     user_profile = UserProfile.objects.get(user=user)
-    info = user.username + "&" + user_profile.gender + "&" + user_profile.phone_num + "&" + user.email
+    info = "username=" + user.username + "&" \
+           "gender=" + user_profile.gender + "&"\
+           "number=" + user_profile.phone_num + "&" \
+           "email=" + user.email
     return HttpResponse(info, content_type="text/plain")
