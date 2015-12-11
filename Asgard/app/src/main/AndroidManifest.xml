@@ -86,7 +86,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".local.TestActivity"
+            android:name=".test.TestActivity"
             android:label="@string/title_activity_host_event_details"
             android:theme="@style/AppTheme.NoActionBar">
             <!--<intent-filter>-->

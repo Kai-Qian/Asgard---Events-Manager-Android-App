@@ -1,4 +1,4 @@
-package com.brynhildr.asgard.local;
+package com.brynhildr.asgard.test;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
