@@ -121,10 +121,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         mShowPicture = (ImageView) findViewById(R.id.guide_picture);
+        //Reference: http://stackoverflow.com/questions/29041027/android-getresources-getdrawable-deprecated-api-22
         mPicture1 = ContextCompat.getDrawable(MyApplication.getAppContext(), R.drawable.back1);
         mPicture2 = ContextCompat.getDrawable(MyApplication.getAppContext(), R.drawable.back2);
         mPicture3 = ContextCompat.getDrawable(MyApplication.getAppContext(), R.drawable.back3);
         mShowPicture.setImageDrawable(mPicture1);
+        //Reference: http://stackoverflow.com/questions/3386116/set-animation-listener-to-activity-animations
         start = AnimationUtils.loadAnimation(this, R.anim.register_page1);
         middle = AnimationUtils.loadAnimation(this, R.anim.register_page2);
         last = AnimationUtils.loadAnimation(this, R.anim.register_page3);
