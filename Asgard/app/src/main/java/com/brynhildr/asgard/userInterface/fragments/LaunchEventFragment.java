@@ -160,6 +160,7 @@ public class LaunchEventFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
