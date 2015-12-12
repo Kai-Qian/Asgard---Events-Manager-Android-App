@@ -41,17 +41,13 @@ import java.util.Locale;
  */
 public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
-
-    private ArrayList<EventTitle> eventTitles;
-
-    private ViewHolderForLaunch mmViewHolderForLaunch = null;
-
-    private Context mContext;
     private static String path;
-
     private static final int NORMAL_ITEM = 0;
     private static final int BUTTON_ITEM = 1;
 
+    private ArrayList<EventTitle> eventTitles;
+    private ViewHolderForLaunch mmViewHolderForLaunch = null;
+    private Context mContext;
     private int year;
     private int month;
     private int day;
@@ -60,6 +56,14 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private StringBuilder str = new StringBuilder("");
 
     private ArrayList<ViewHolderForLaunch> mViewHolderForLaunch = new ArrayList<ViewHolderForLaunch>();
+
+    public static String getPath() {
+        return path;
+    }
+
+    public static  void setPath(String mPath) {
+        LaunchEventAdapter.path = mPath;
+    }
 
     public LaunchEventAdapter(Context context, ArrayList<EventTitle> eventTitles)
     {
@@ -275,13 +279,6 @@ public class LaunchEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return calendar.getTimeInMillis() / 1000;
     }
 
-    public static String getPath() {
-        return path;
-    }
-
-    public static  void setPath(String mPath) {
-        LaunchEventAdapter.path = mPath;
-    }
 
     private void dialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
