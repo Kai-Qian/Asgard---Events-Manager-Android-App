@@ -1,124 +1,133 @@
-<!DOCTYPE HTML>
-<!--
-	Retrospect by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
-<html>
-	<head>
-		<title>This is a web page for mengjing</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/static/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-	</head>
-	<body class="landing">
+{% extends "_base.html" %}
 
-		<!-- Banner -->
-			<section id="banner">
-                <i class="icon fa-bell"></i>
-                <i class="icon fa-bookmark"></i>
-                <i class="icon fa-wifi"></i>
-				<h2>This is a web page for mengjin</h2>
-				<p>Cong!!!</p>
-			</section>
+{% block content %}
+<section id="banner">
+    <i class="icon fa-spinner"></i>
+    <h2>This is a web page for mengjin</h2>
+    <p>due这么多48分也是太辛苦</p>
+</section>
 
-			<section id="one" class="wrapper style1">
-				<div class="inner">
-					<article class="feature left">
-						<span class="image"><img src="/static/images/pic02.jpg" alt="" /></span>
-						<div class="content">
-							<h2>LinkedIn is coming soon.</h2>
-							<p></p>
-						</div>
-					</article>
-					<article class="feature right">
-						<span class="image"><img src="/static/images/pic01.jpg" alt="" /></span>
-						<div class="content">
-							<h2>Best luck for you</h2>
-                            <p></p>
-						</div>
-					</article>
-                    <article class="feature left">
-                        <span class="image"><img src="/static/images/pic03.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>CC做完点赞!(居然支持中文)</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature right">
-                        <span class="image"><img src="/static/images/pic04.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>Tomorrow is Monday and hopes good news from LinkedIn.</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature left">
-                        <span class="image"><img src="/static/images/pic05.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>果然有好消息!大赞!</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature right">
-                        <span class="image"><img src="/static/images/pic06.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>Good news from HR after thanksgiving.</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature left">
-                        <span class="image"><img src="/static/images/pic07.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>Shenye baofu shehui xilie</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature right">
-                        <span class="image"><img src="/static/images/pic08.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>Recently becomes much mengmengda.</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature left">
-                        <span class="image"><img src="/static/images/pic09.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>Good luck to Friday's matching process!</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature right">
-                        <span class="image"><img src="/static/images/pic10.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>真的是贤惠呀!包装得是好!</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature left">
-                        <span class="image"><img src="/static/images/pic11.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>Embedded 加油!</h2>
-                            <p></p>
-                        </div>
-                    </article>
-                    <article class="feature right">
-                        <span class="image"><img src="/static/images/pic12.jpg" alt="" /></span>
-                        <div class="content">
-                            <h2>和Recruiter聊天什么的都会顺利的!</h2>
-                            <p></p>
-                        </div>
-                    </article>
-				</div>
-			</section>
-		<!-- Scripts -->
-			<script src="/static/js/jquery.min.js"></script>
-			<script src="/static/js/skel.min.js"></script>
-			<script src="/static/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/static/js/main.js"></script>
-
-	</body>
-</html>
+<section id="one" class="wrapper style1">
+    <div class="inner">
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic02.jpg" alt="" /></span>
+            <div class="content">
+                <h2>LinkedIn is coming soon.</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic01.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Best luck for you</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic03.jpg" alt="" /></span>
+            <div class="content">
+                <h2>CC做完点赞!(居然支持中文)</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic04.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Tomorrow is Monday and hopes good news from LinkedIn.</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic05.jpg" alt="" /></span>
+            <div class="content">
+                <h2>果然有好消息!大赞!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic06.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Good news from HR after thanksgiving.</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic07.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Shenye baofu shehui xilie</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic08.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Recently becomes much mengmengda.</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic09.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Good luck to Friday's matching process!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic10.jpg" alt="" /></span>
+            <div class="content">
+                <h2>真的是贤惠呀!包装得是好!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic11.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Embedded 加油!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic12.jpg" alt="" /></span>
+            <div class="content">
+                <h2>和Recruiter聊天什么的都会顺利的!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic13.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Cong!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic14.jpg" alt="" /></span>
+            <div class="content">
+                <h2>一路顺风也好逆风也好反正一路顺利到北京!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic15.gif" alt="" /></span>
+            <div class="content">
+                <h2>据说国内是上不了AWS的</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature right">
+            <span class="image"><img src="/static/images/pic16.gif" alt="" /></span>
+            <div class="content">
+                <h2>虽说是逆风飞行不过说一路逆风好像不是那么回事所以还是一路顺风地回到匹村来!</h2>
+                <p></p>
+            </div>
+        </article>
+        <article class="feature left">
+            <span class="image"><img src="/static/images/pic17.jpg" alt="" /></span>
+            <div class="content">
+                <h2>Happy Birthday!</h2>
+                <p></p>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}
